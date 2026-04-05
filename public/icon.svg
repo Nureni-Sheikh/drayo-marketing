@@ -1,20 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -35 100 70" width="512" height="512">
-  <rect width="512" height="512" x="-256" y="-256" fill="#04060f"/>
   
-  <!-- Input node — small filled circle -->
   <circle cx="-33" cy="0" r="5" fill="#00d4a0"/>
   
-  <!-- Line from input to main circle edge -->
   <line x1="-28" y1="0" x2="-13" y2="0" stroke="#00d4a0" stroke-width="2.5" stroke-linecap="round"/>
   
-  <!-- Main centre ring — no inner dot -->
   <circle cx="0" cy="0" r="12" fill="none" stroke="#00d4a0" stroke-width="2.5"/>
   
-  <!-- Top right output — shorter line -->
   <line x1="8" y1="-9" x2="18" y2="-16" stroke="#00d4a0" stroke-width="2.5" stroke-linecap="round"/>
   <circle cx="22" cy="-19" r="5" fill="#00d4a0"/>
   
-  <!-- Bottom right output — shorter line -->
   <line x1="8" y1="9" x2="18" y2="16" stroke="#00d4a0" stroke-width="2.5" stroke-linecap="round"/>
   <circle cx="22" cy="19" r="5" fill="#00d4a0"/>
 </svg>
