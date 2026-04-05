@@ -548,30 +548,54 @@ function WhatsAppCard() {
 
 function ShipmentCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[160px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Live Tracking</div>
-      <div className="text-foreground/50 font-mono text-[10px] mb-3">TCKU3954821</div>
-      <div className="relative pl-3 space-y-2.5">
-        <div className="absolute left-[3px] top-1 bottom-1 w-px bg-gradient-to-b from-primary via-primary/50 to-foreground/10" />
-        {[
-          { done: true, label: "Departed Rotterdam" },
-          { done: true, label: "Customs Cleared" },
-          { done: false, label: "In Transit", active: true },
-          { done: false, label: "Delivered" },
-        ].map((step, i) => (
-          <div key={i} className="relative flex items-center gap-2">
-            <div className={`absolute -left-[5px] w-2.5 h-2.5 rounded-full border-2 ${
-              step.done ? "bg-primary border-primary" : step.active ? "bg-background border-accent" : "bg-background border-foreground/20"
-            } ${step.active ? "animate-pulse" : ""}`} />
-            <span className={`text-[9px] pl-2 ${step.done ? "text-foreground/50" : step.active ? "text-foreground" : "text-foreground/20"}`}>
-              {step.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-3 w-[165px]">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Live Tracking</div>
+  {/* Mini map visualization */}
+  <div className="relative h-[80px] bg-foreground/[0.02] rounded-lg overflow-hidden mb-2">
+  {/* Simplified route line */}
+  <svg viewBox="0 0 140 70" className="w-full h-full">
+  {/* Europe coastline hint */}
+  <path d="M 20 25 Q 35 20, 50 25 Q 65 30, 70 35 Q 75 45, 65 55" 
+        fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+  {/* UK coastline hint */}
+  <path d="M 100 20 Q 105 30, 100 45 Q 95 55, 105 60" 
+        fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
+  {/* Route line - Rotterdam to Felixstowe */}
+  <path d="M 40 32 Q 70 25, 100 38" 
+        fill="none" stroke="url(#route-gradient)" strokeWidth="2" strokeDasharray="4,2" />
+  {/* Animated dot on route */}
+  <circle r="3" fill="#00d4a0">
+  <animateMotion dur="3s" repeatCount="indefinite" path="M 40 32 Q 70 25, 100 38" />
+  </circle>
+  {/* Origin point - Rotterdam */}
+  <circle cx="40" cy="32" r="4" fill="#00d4a0" opacity="0.6" />
+  <circle cx="40" cy="32" r="2" fill="#00d4a0" />
+  {/* Destination point - Felixstowe */}
+  <circle cx="100" cy="38" r="4" fill="rgba(255,255,255,0.2)" />
+  <circle cx="100" cy="38" r="2" fill="rgba(255,255,255,0.4)" />
+  <defs>
+  <linearGradient id="route-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%" stopColor="#00d4a0" />
+  <stop offset="100%" stopColor="rgba(255,255,255,0.3)" />
+  </linearGradient>
+  </defs>
+  </svg>
+  </div>
+  {/* Route info */}
+  <div className="flex items-center justify-between">
+  <div>
+  <div className="text-[9px] text-primary font-medium">Rotterdam</div>
+  <div className="text-[8px] text-foreground/30">Origin</div>
+  </div>
+  <div className="flex-1 mx-2 h-px bg-gradient-to-r from-primary/40 to-foreground/10" />
+  <div className="text-right">
+  <div className="text-[9px] text-foreground/50">Felixstowe</div>
+  <div className="text-[8px] text-foreground/30">ETA 9 AM</div>
+  </div>
+  </div>
+  </div>
   )
-}
+  }
 
 function ComplianceCard() {
   return (
@@ -614,156 +638,29 @@ function EmailCard() {
 }
 
 // ============================================================================
-// CENTRAL DEVICE - Floating Terminal Card with document processing animation
+// CENTRAL DEVICE - Simple icon that blends with other cards
 // ============================================================================
 function CentralDevice() {
-  const [animationKey, setAnimationKey] = useState(0)
-  const [row1Text, setRow1Text] = useState('')
-  const [row2Status, setRow2Status] = useState<'typing' | 'extracting' | 'complete'>('typing')
-  const [row3Progress, setRow3Progress] = useState(0)
-  const [showRow2, setShowRow2] = useState(false)
-  const [showRow3, setShowRow3] = useState(false)
-  
-  const fullDocText = "Bill of Lading — TCKU3954821"
-  
-  useEffect(() => {
-    // Reset state for animation
-    setRow1Text('')
-    setRow2Status('typing')
-    setRow3Progress(0)
-    setShowRow2(false)
-    setShowRow3(false)
-    
-    // Type Row 1
-    let charIndex = 0
-    const typeInterval = setInterval(() => {
-      if (charIndex < fullDocText.length) {
-        setRow1Text(fullDocText.slice(0, charIndex + 1))
-        charIndex++
-      } else {
-        clearInterval(typeInterval)
-        // Show Row 2 after delay
-        setTimeout(() => {
-          setShowRow2(true)
-          setRow2Status('extracting')
-          // After extracting, show complete
-          setTimeout(() => {
-            setRow2Status('complete')
-            // Show Row 3
-            setTimeout(() => {
-              setShowRow3(true)
-              // Animate progress bar
-              let progress = 0
-              const progressInterval = setInterval(() => {
-                if (progress < 96) {
-                  progress += 4
-                  setRow3Progress(progress)
-                } else {
-                  clearInterval(progressInterval)
-                }
-              }, 30)
-            }, 400)
-          }, 1500)
-        }, 800)
-      }
-    }, 45)
-    
-    // Reset and loop after full animation
-    const loopTimeout = setTimeout(() => {
-      setAnimationKey(k => k + 1)
-    }, 8000)
-    
-    return () => {
-      clearInterval(typeInterval)
-      clearTimeout(loopTimeout)
-    }
-  }, [animationKey])
-
   return (
-    <div className="relative z-10 animate-float" style={{ animation: 'float 4.4s ease-in-out infinite' }}>
-      {/* Terminal card */}
-      <div className="relative w-[320px] rounded-xl bg-[#0a1a14] border border-primary/20 shadow-[0_0_40px_rgba(0,212,160,0.15)] overflow-hidden">
+    <div className="relative z-10" style={{ animation: 'float 5s ease-in-out infinite' }}>
+      {/* Simple floating card matching other panels */}
+      <div className="floating-card rounded-2xl p-6 w-[140px] h-[140px] flex flex-col items-center justify-center">
+        {/* Drayo Icon */}
+        <DrayoIcon className="h-12 w-auto text-primary mb-3" />
         
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-primary/10">
-          {/* macOS dots */}
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-red-500/70" />
-            <div className="w-2 h-2 rounded-full bg-yellow-500/70" />
-            <div className="w-2 h-2 rounded-full bg-green-500/70" />
-          </div>
-          
-          {/* DRAYO title */}
-          <span className="text-[11px] text-primary font-medium tracking-[0.1em] uppercase">DRAYO</span>
-          
-          {/* Connected status */}
-          <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] text-primary">Connected</span>
-          </div>
-        </div>
+        {/* Simple label */}
+        <span className="text-[10px] text-foreground/40 uppercase tracking-wider">Drayo</span>
         
-        {/* Body - Document processing */}
-        <div className="p-4 space-y-4">
-          {/* Row 1: Document */}
-          <div>
-            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Document</div>
-            <div className="font-mono text-[12px] text-foreground/90 h-5 flex items-center">
-              {row1Text}
-              {row1Text.length < fullDocText.length && (
-                <span className="w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
-              )}
-            </div>
-          </div>
-          
-          {/* Row 2: Status */}
-          <div className={`transition-all duration-300 ${showRow2 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
-            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Status</div>
-            <div className="font-mono text-[12px] h-5 flex items-center">
-              {row2Status === 'extracting' && (
-                <span className="text-foreground/70">
-                  Extracting fields<span className="animate-ellipsis">...</span>
-                </span>
-              )}
-              {row2Status === 'complete' && (
-                <span className="text-primary flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Complete
-                </span>
-              )}
-            </div>
-          </div>
-          
-          {/* Row 3: Confidence */}
-          <div className={`transition-all duration-300 ${showRow3 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
-            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Confidence</div>
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-[3px] bg-foreground/10 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-primary rounded-full transition-all duration-100"
-                  style={{ width: `${row3Progress}%` }}
-                />
-              </div>
-              <span className={`font-mono text-[11px] text-primary transition-opacity duration-300 ${row3Progress >= 96 ? 'opacity-100' : 'opacity-0'}`}>
-                96%
-              </span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Bottom divider and summary */}
-        <div className="border-t border-primary/10 px-4 py-3">
-          <div className={`text-[9px] text-primary/40 text-center tracking-wider transition-opacity duration-500 ${row3Progress >= 96 ? 'opacity-100' : 'opacity-0'}`}>
-            20 fields extracted · Compliance passed · Email sent
-          </div>
+        {/* Status indicator */}
+        <div className="mt-2 flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-[8px] text-primary/60">Active</span>
         </div>
       </div>
       
-      {/* Glow effect */}
-      <div className="absolute inset-0 -z-10 blur-[50px] opacity-20">
-        <div className="absolute inset-0 bg-primary rounded-xl" />
+      {/* Subtle glow */}
+      <div className="absolute inset-0 -z-10 blur-[40px] opacity-15">
+        <div className="absolute inset-0 bg-primary rounded-full" />
       </div>
     </div>
   )
@@ -835,12 +732,14 @@ function HeroSection() {
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6">
-            <span className="text-primary">Drayo</span>
-            <span className="text-foreground"> operates your freight systems</span>
+            <span className="text-foreground">Automate </span>
+            <span className="text-primary">compliance</span>
+            <span className="text-foreground"> and </span>
+            <span className="text-primary">documentation</span>
           </h1>
           
           <p className="text-foreground/40 text-lg max-w-xl mx-auto">
-            Autonomous AI for logistics operations
+            AI agents that handle freight operations end-to-end
           </p>
         </div>
         
