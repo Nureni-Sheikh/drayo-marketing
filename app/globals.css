@@ -1,0 +1,185 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Dark teal/green palette - Lance.ai style */
+  --background: #040908;
+  --foreground: #e0ebe8;
+  --card: #0a1614;
+  --card-foreground: #e0ebe8;
+  --popover: #0a1614;
+  --popover-foreground: #e0ebe8;
+  --primary: #34d399;
+  --primary-foreground: #040908;
+  --secondary: #2dd4bf;
+  --secondary-foreground: #040908;
+  --muted: #0d1f1a;
+  --muted-foreground: #5a7a70;
+  --accent: #5eead4;
+  --accent-foreground: #040908;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(52, 211, 153, 0.06);
+  --input: rgba(52, 211, 153, 0.04);
+  --ring: #34d399;
+  --radius: 12px;
+}
+
+@theme inline {
+  --font-sans: var(--font-space), 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Floating card - very transparent, blends into background */
+.floating-card {
+  background: rgba(10, 22, 20, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(52, 211, 153, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Device mockup */
+.device-frame {
+  background: linear-gradient(145deg, rgba(20, 50, 45, 0.6), rgba(10, 22, 20, 0.8));
+  border: 1px solid rgba(52, 211, 153, 0.1);
+  box-shadow: 
+    0 0 80px rgba(52, 211, 153, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.device-screen {
+  background: #040908;
+  border: 1px solid rgba(52, 211, 153, 0.04);
+}
+
+/* Float animations - subtle and smooth */
+@keyframes float1 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-10px) translateX(3px); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-8px) translateX(-4px); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-12px) translateX(2px); }
+}
+@keyframes float4 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-6px) translateX(-3px); }
+}
+@keyframes float5 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-9px) translateX(4px); }
+}
+@keyframes float6 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-11px) translateX(-2px); }
+}
+@keyframes float7 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-7px) translateX(1px); }
+}
+
+.animate-float-1 { animation: float1 10s ease-in-out infinite; }
+.animate-float-2 { animation: float2 11s ease-in-out infinite; animation-delay: -1s; }
+.animate-float-3 { animation: float3 9s ease-in-out infinite; animation-delay: -2s; }
+.animate-float-4 { animation: float4 12s ease-in-out infinite; animation-delay: -3s; }
+.animate-float-5 { animation: float5 10s ease-in-out infinite; animation-delay: -1.5s; }
+.animate-float-6 { animation: float6 11s ease-in-out infinite; animation-delay: -4s; }
+.animate-float-7 { animation: float7 9s ease-in-out infinite; animation-delay: -2.5s; }
+
+/* Aurora animations for background */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  33% { transform: translate(30px, 20px) scale(1.1); opacity: 0.5; }
+  66% { transform: translate(-20px, 30px) scale(0.95); opacity: 0.35; }
+}
+
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  33% { transform: translate(-25px, -20px) scale(1.05); opacity: 0.4; }
+  66% { transform: translate(20px, -25px) scale(0.9); opacity: 0.25; }
+}
+
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+  50% { transform: translate(25px, -15px) scale(1.1); opacity: 0.35; }
+}
+
+.animate-aurora-1 { animation: aurora-1 20s ease-in-out infinite; }
+.animate-aurora-2 { animation: aurora-2 25s ease-in-out infinite; }
+.animate-aurora-3 { animation: aurora-3 18s ease-in-out infinite; }
+
+/* Line draw animation */
+@keyframes line-draw {
+  0% { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+  100% { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+}
+
+.animate-line-draw {
+  animation: line-draw 2s ease-out forwards;
+}
+
+/* Slow pulse for particles */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #040908;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 153, 0.1);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(52, 211, 153, 0.2);
+}
