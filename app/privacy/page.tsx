@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <p className="text-foreground/60 leading-relaxed">
               Registered in England and Wales.<br />
-              Contact: <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a>
+              Contact: <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a>
             </p>
           </section>
 
@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
               <li>Data portability</li>
             </ul>
             <p className="text-foreground/60 leading-relaxed mt-4">
-              Submit requests to <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a>. We respond within 30 days.
+              Submit requests to <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a>. We respond within 30 days.
             </p>
           </section>
 
@@ -144,7 +144,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">9. Complaints</h2>
             <p className="text-foreground/60 leading-relaxed mb-2">
-              Contact <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a> with any concerns. You also have the right to complain to the ICO:
+              Contact <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a> with any concerns. You also have the right to complain to the ICO:
             </p>
             <p className="text-foreground/60 leading-relaxed">
               <a href="https://ico.org.uk/make-a-complaint" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">ico.org.uk/make-a-complaint</a><br />
@@ -165,7 +165,7 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-xl font-semibold text-foreground mb-4">11. Contact</h2>
             <p className="text-foreground/60 leading-relaxed">
               Drayo AI Ltd<br />
-              <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a><br />
+              <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a><br />
               <a href="https://drayo.ai" className="text-primary hover:underline">drayo.ai</a>
             </p>
           </section>

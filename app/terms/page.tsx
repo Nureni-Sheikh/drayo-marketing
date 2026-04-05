@@ -38,7 +38,7 @@ export default function TermsPage() {
             </p>
             <p className="text-foreground/60 leading-relaxed">
               Drayo AI Ltd is registered in England and Wales.<br />
-              Contact: <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a>
+              Contact: <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a>
             </p>
           </section>
 
@@ -140,7 +140,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-4">11. Termination</h2>
             <p className="text-foreground/60 leading-relaxed mb-4">
-              You may cancel at any time by emailing <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a>. We may suspend accounts for breach of these Terms or non-payment after 14 days notice.
+              You may cancel at any time by emailing <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a>. We may suspend accounts for breach of these Terms or non-payment after 14 days notice.
             </p>
             <p className="text-foreground/60 leading-relaxed">
               On termination we provide a 30-day data export window before deletion.
@@ -168,7 +168,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-foreground mb-4">14. Contact</h2>
             <p className="text-foreground/60 leading-relaxed">
               Drayo AI Ltd<br />
-              <a href="mailto:nureni@drayo.ai" className="text-primary hover:underline">nureni@drayo.ai</a><br />
+              <a href="mailto:info@drayo.ai" className="text-primary hover:underline">info@drayo.ai</a><br />
               <a href="https://drayo.ai" className="text-primary hover:underline">drayo.ai</a>
             </p>
           </section>
