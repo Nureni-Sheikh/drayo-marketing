@@ -169,6 +169,93 @@
   animation: pulse-slow 3s ease-in-out infinite;
 }
 
+/* Slow spin for orbiting elements */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Scan line effect for AI core */
+@keyframes scan-line {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.animate-scan-line {
+  animation: scan-line 3s ease-in-out infinite;
+}
+
+/* Logo splash animations */
+@keyframes splash-particle {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance));
+    opacity: 0;
+  }
+}
+
+@keyframes logo-dot-pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Splash logo color transition - white to primary */
+.splash-logo-color {
+  color: #ffffff;
+  animation: splash-color-shift 1.8s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes splash-color-shift {
+  0% { color: #ffffff; }
+  100% { color: #34d399; }
+}
+
+/* Float animation for central terminal */
+@keyframes float {
+  0%, 100% { transform: translateY(-8px); }
+  50% { transform: translateY(8px); }
+}
+
+/* Ellipsis animation */
+@keyframes ellipsis {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+.animate-ellipsis::after {
+  content: '...';
+  animation: ellipsis-dots 1.5s infinite;
+}
+
+@keyframes ellipsis-dots {
+  0%, 20% { opacity: 0.2; }
+  40% { opacity: 0.6; }
+  60%, 100% { opacity: 1; }
+}
+
+/* Cursor blink animation for TMS typing effect */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;

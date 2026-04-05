@@ -4,22 +4,189 @@ import { useEffect, useRef, useState } from "react"
 import Script from "next/script"
 
 // ============================================================================
-// DRAYO LOGO - Connected nodes design with repositioned circles
+// LOGO SPLASH ANIMATION - Shows for 2.5 seconds on page load
+// ============================================================================
+// Deterministic particle data to avoid hydration mismatch
+const PARTICLE_DATA = [
+  { duration: 1.72, delay: 0.28, distance: 180 },
+  { duration: 1.85, delay: 0.35, distance: 220 },
+  { duration: 1.63, delay: 0.42, distance: 195 },
+  { duration: 1.91, delay: 0.25, distance: 250 },
+  { duration: 1.78, delay: 0.38, distance: 175 },
+  { duration: 1.55, delay: 0.31, distance: 230 },
+  { duration: 1.88, delay: 0.44, distance: 200 },
+  { duration: 1.67, delay: 0.22, distance: 265 },
+  { duration: 1.74, delay: 0.36, distance: 185 },
+  { duration: 1.82, delay: 0.29, distance: 240 },
+  { duration: 1.59, delay: 0.41, distance: 210 },
+  { duration: 1.95, delay: 0.33, distance: 170 },
+  { duration: 1.71, delay: 0.27, distance: 255 },
+  { duration: 1.64, delay: 0.45, distance: 190 },
+  { duration: 1.86, delay: 0.24, distance: 225 },
+  { duration: 1.79, delay: 0.39, distance: 205 },
+  { duration: 1.58, delay: 0.32, distance: 260 },
+  { duration: 1.93, delay: 0.26, distance: 180 },
+  { duration: 1.68, delay: 0.43, distance: 235 },
+  { duration: 1.76, delay: 0.30, distance: 215 },
+]
+
+function LogoSplash({ onComplete }: { onComplete: () => void }) {
+  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter')
+  
+  useEffect(() => {
+    // Enter animation
+    const enterTimer = setTimeout(() => setPhase('hold'), 400)
+    // Hold for a moment
+    const holdTimer = setTimeout(() => setPhase('exit'), 2200)
+    // Complete and unmount
+    const exitTimer = setTimeout(onComplete, 2700)
+    
+    return () => {
+      clearTimeout(enterTimer)
+      clearTimeout(holdTimer)
+      clearTimeout(exitTimer)
+    }
+  }, [onComplete])
+
+  return (
+    <div 
+      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-500 ${
+        phase === 'exit' ? 'opacity-0' : 'opacity-100'
+      }`}
+    >
+      {/* Logo container */}
+      <div 
+        className={`relative transition-all duration-700 ease-out ${
+          phase === 'enter' ? 'scale-75 opacity-0' : 
+          phase === 'hold' ? 'scale-100 opacity-100' : 
+          'scale-110 opacity-0'
+        }`}
+      >
+        {/* Animated logo SVG with color transition */}
+        <svg viewBox="-42 -28 70 56" className="h-20 w-auto splash-logo-color" fill="none">
+          {/* Small left circle */}
+          <circle 
+            cx="-33" cy="0" r="5" 
+            fill="currentColor"
+            style={{
+              animation: phase !== 'enter' ? 'logo-dot-pop 0.4s ease-out forwards' : 'none',
+              opacity: phase === 'enter' ? 0 : 1,
+            }}
+          />
+          
+          {/* Connection line to center */}
+          <line 
+            x1="-28" y1="0" x2="-13" y2="0" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+            style={{
+              strokeDasharray: 15,
+              strokeDashoffset: phase === 'enter' ? 15 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.2s',
+            }}
+          />
+          
+          {/* Main center circle (hollow) */}
+          <circle 
+            cx="0" cy="0" r="12" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            fill="none"
+            style={{
+              strokeDasharray: 76,
+              strokeDashoffset: phase === 'enter' ? 76 : 0,
+              transition: 'stroke-dashoffset 0.5s ease-out 0.3s',
+            }}
+          />
+          
+          {/* Upper right connection line */}
+          <line 
+            x1="8" y1="-9" x2="16" y2="-15" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.5s',
+            }}
+          />
+          
+          {/* Upper right circle */}
+          <circle 
+            cx="20" cy="-18" r="5" 
+            fill="currentColor"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '20px -18px',
+              transition: 'opacity 0.3s ease-out 0.6s, transform 0.3s ease-out 0.6s',
+            }}
+          />
+          
+          {/* Lower right connection line */}
+          <line 
+            x1="8" y1="9" x2="16" y2="15" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.55s',
+            }}
+          />
+          
+          {/* Lower right circle */}
+          <circle 
+            cx="20" cy="18" r="5" 
+            fill="currentColor"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '20px 18px',
+              transition: 'opacity 0.3s ease-out 0.7s, transform 0.3s ease-out 0.7s',
+            }}
+          />
+        </svg>
+      </div>
+      
+      {/* DRAYO text - appears after logo */}
+      <div 
+        className={`mt-6 transition-all duration-500 ${
+          phase === 'enter' ? 'opacity-0 translate-y-2' : 
+          phase === 'hold' ? 'opacity-100 translate-y-0' : 
+          'opacity-0 translate-y-2'
+        }`}
+        style={{ transitionDelay: phase === 'hold' ? '0.8s' : '0s' }}
+      >
+        <span className="text-lg font-semibold tracking-[0.25em] text-foreground/80">DRAYO</span>
+      </div>
+    </div>
+  )
+}
+
+// ============================================================================
+// DRAYO LOGO - New connected nodes design from user SVG
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 140 32" className={className} fill="none">
-      {/* Node network - circle connected to two smaller circles */}
-      <circle cx="8" cy="16" r="4" fill="currentColor" className="text-primary" />
-      <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="2" className="text-primary" />
-      <circle cx="24" cy="16" r="6" stroke="currentColor" strokeWidth="2" fill="none" className="text-primary" />
-      {/* Small circles repositioned to the right of main circle */}
-      <circle cx="34" cy="12" r="2" fill="currentColor" className="text-primary/60" />
-      <circle cx="34" cy="20" r="2" fill="currentColor" className="text-primary/60" />
-      <line x1="30" y1="14" x2="32" y2="12" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
-      <line x1="30" y1="18" x2="32" y2="20" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
-      {/* DRAYO text */}
-      <text x="44" y="22" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
+    <svg viewBox="0 0 180 50" className={className} fill="none">
+      {/* Small left circle */}
+      <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
+      {/* Connection line to center */}
+      <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+      {/* Main center circle (hollow) */}
+      <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
+      {/* Upper right connection and circle */}
+      <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
+      {/* Lower right connection and circle */}
+      <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
+      {/* DRAYO text - bolder and larger */}
+      <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
         DRAYO
       </text>
     </svg>
@@ -27,18 +194,23 @@ function DrayoLogo({ className = "" }: { className?: string }) {
 }
 
 // ============================================================================
-// DRAYO ICON ONLY - For footer
+// DRAYO ICON ONLY - For footer and other uses
 // ============================================================================
 function DrayoIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 32" className={className} fill="none">
-      <circle cx="8" cy="16" r="4" fill="currentColor" className="text-primary" />
-      <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="2" className="text-primary" />
-      <circle cx="24" cy="16" r="6" stroke="currentColor" strokeWidth="2" fill="none" className="text-primary" />
-      <circle cx="34" cy="12" r="2" fill="currentColor" className="text-primary/60" />
-      <circle cx="34" cy="20" r="2" fill="currentColor" className="text-primary/60" />
-      <line x1="30" y1="14" x2="32" y2="12" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
-      <line x1="30" y1="18" x2="32" y2="20" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
+    <svg viewBox="-40 -28 70 56" className={className} fill="none">
+      {/* Small left circle */}
+      <circle cx="-33" cy="0" r="5" fill="currentColor" className="text-primary" />
+      {/* Connection line to center */}
+      <line x1="-28" y1="0" x2="-13" y2="0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      {/* Main center circle (hollow) */}
+      <circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
+      {/* Upper right connection and circle */}
+      <line x1="8" y1="-9" x2="16" y2="-15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="20" cy="-18" r="5" fill="currentColor" className="text-primary" />
+      {/* Lower right connection and circle */}
+      <line x1="8" y1="9" x2="16" y2="15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="20" cy="18" r="5" fill="currentColor" className="text-primary" />
     </svg>
   )
 }
@@ -274,228 +446,196 @@ function SectionNav({ activeSection }: { activeSection: string }) {
 
 function DriverCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[180px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Driver Verification</div>
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center text-primary text-sm font-semibold border border-primary/20">
-          JM
-        </div>
-        <div>
-          <div className="text-foreground text-xs font-medium">James Morrison</div>
-          <div className="text-foreground/30 text-[10px]">HGV Class 1</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-2 text-[10px]">
-        <span className="text-primary bg-primary/10 px-2 py-0.5 rounded-full">Verified</span>
-        <span className="text-foreground/40">CPC Valid</span>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Driver Verification</div>
+  <div className="flex items-center gap-3 mb-3">
+  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground/50 font-medium text-[11px]">JM</div>
+  <div>
+  <div className="text-foreground/80 font-medium text-[11px]">James Morrison</div>
+  <div className="text-primary/60 text-[9px]">HGV Class 1</div>
+  </div>
+  </div>
+  <div className="flex gap-1.5">
+  <span className="px-2 py-0.5 bg-primary/10 text-primary text-[8px] rounded">Verified</span>
+  <span className="px-2 py-0.5 bg-foreground/5 text-foreground/40 text-[8px] rounded">CPC Valid</span>
+  </div>
+  </div>
   )
-}
+  }
 
 function CalendarCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[200px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Delivery Schedule</div>
-      <div className="grid grid-cols-7 gap-1 text-center mb-2">
-        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="text-[8px] text-foreground/20 py-0.5">{d}</div>
-        ))}
-      </div>
-      <div className="grid grid-cols-7 gap-1 text-center">
-        {[...Array(21)].map((_, i) => {
-          const day = i + 8
-          const booked = [12, 13, 18, 19].includes(day)
-          const today = day === 15
-          return (
-            <div 
-              key={i} 
-              className={`text-[9px] py-1 rounded-md transition-all ${
-                today ? 'bg-primary text-background font-medium' : 
-                booked ? 'bg-primary/15 text-primary' : 'text-foreground/20 hover:bg-foreground/5'
-              }`}
-            >
-              {day}
-            </div>
-          )
-        })}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Delivery Schedule</div>
+  <div className="grid grid-cols-7 gap-1 text-[8px] text-center">
+  {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+  <div key={i} className="text-foreground/20">{d}</div>
+  ))}
+  {Array(7).fill(0).map((_, i) => {
+  const day = 8 + i
+  const hasDelivery = [12, 13, 15, 18, 19].includes(day)
+  const isToday = day === 15
+  return (
+  <div 
+  key={i} 
+  className={`py-1 rounded ${
+  isToday ? "bg-primary text-background" : hasDelivery ? "bg-primary/20 text-primary" : "text-foreground/30"
+  }`}
+  >
+  {day}
+  </div>
   )
-}
+  })}
+  </div>
+  </div>
+  )
+  }
 
 function InvoiceCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[170px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Auto Invoice</div>
-      <div className="text-foreground/50 font-mono text-[10px] mb-3">INV-2024-0892</div>
-      <div className="space-y-2 text-[10px]">
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Haulage</span>
-          <span className="text-foreground/70">£485.00</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Port fees</span>
-          <span className="text-foreground/70">£125.00</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Customs</span>
-          <span className="text-foreground/70">£95.00</span>
-        </div>
-        <div className="h-px bg-foreground/10 my-1" />
-        <div className="flex justify-between font-medium">
-          <span className="text-foreground/50">Total</span>
-          <span className="text-primary">£705.00</span>
-        </div>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Auto Invoice</div>
+  <div className="font-mono text-[10px] text-foreground/50 mb-3">INV-2024-0892</div>
+  <div className="space-y-1.5 mb-3">
+  {[
+  { label: "Haulage", amount: "£485.00" },
+  { label: "Port fees", amount: "£125.00" },
+  { label: "Customs", amount: "£96.00" },
+  ].map((line, i) => (
+  <div key={i} className="flex justify-between text-[9px]">
+  <span className="text-foreground/30">{line.label}</span>
+  <span className="text-foreground/60">{line.amount}</span>
+  </div>
+  ))}
+  </div>
+  <div className="pt-2 border-t border-foreground/5 flex justify-between text-[10px]">
+  <span className="text-foreground/40">Total</span>
+  <span className="text-primary font-medium">£705.00</span>
+  </div>
+  </div>
   )
-}
+  }
 
 function WhatsAppCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[190px]">
-      <div className="flex items-center gap-2 mb-3">
-        <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        <span className="text-[8px] text-foreground/30 uppercase tracking-[0.2em]">WhatsApp</span>
-      </div>
-      <div className="space-y-2">
-        <div className="bg-foreground/5 rounded-xl rounded-tl-sm px-3 py-2">
-          <span className="text-[10px] text-foreground/50">Container ETA?</span>
-        </div>
-        <div className="bg-primary/10 rounded-xl rounded-tr-sm px-3 py-2 border border-primary/10">
-          <span className="text-[10px] text-foreground/70">TCKU395XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</span>
-        </div>
-      </div>
-      <div className="mt-2 text-[8px] text-primary/60">Auto-reply sent</div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="flex items-center gap-2 mb-3">
+  <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span className="text-[8px] text-foreground/30 uppercase tracking-[0.2em]">WhatsApp</span>
+  </div>
+  <div className="space-y-2">
+  <div className="bg-foreground/5 rounded-lg p-2">
+  <div className="text-[9px] text-foreground/30 mb-1">Customer inquiry</div>
+  <div className="text-[10px] text-foreground/60">Container ETA?</div>
+  </div>
+  <div className="bg-primary/5 rounded-lg p-2 border-l-2 border-primary/30">
+  <div className="text-[10px] text-foreground/70">TCKU396XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</div>
+  </div>
+  <div className="text-[8px] text-primary/50 flex items-center gap-1">
+  <span className="w-1 h-1 rounded-full bg-primary/50" />
+  Auto-reply sent
+  </div>
+  </div>
+  </div>
   )
-}
+  }
 
 function ShipmentCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[160px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Live Tracking</div>
-      <div className="text-foreground/50 font-mono text-[10px] mb-3">TCKU3954821</div>
-      <div className="relative pl-3 space-y-2.5">
-        <div className="absolute left-[3px] top-1 bottom-1 w-px bg-gradient-to-b from-primary via-primary/50 to-foreground/10" />
-        {[
-          { done: true, label: "Departed Rotterdam" },
-          { done: true, label: "Customs Cleared" },
-          { done: false, label: "In Transit", active: true },
-          { done: false, label: "Delivered" },
-        ].map((step, i) => (
-          <div key={i} className="relative flex items-center gap-2">
-            <div className={`absolute -left-[5px] w-2.5 h-2.5 rounded-full border-2 ${
-              step.done ? "bg-primary border-primary" : step.active ? "bg-background border-accent" : "bg-background border-foreground/20"
-            } ${step.active ? "animate-pulse" : ""}`} />
-            <span className={`text-[9px] pl-2 ${step.done ? "text-foreground/50" : step.active ? "text-foreground" : "text-foreground/20"}`}>
-              {step.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-3 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Live Tracking</div>
+  {/* Mini map visualization */}
+  <div className="relative h-[80px] bg-foreground/[0.02] rounded-lg overflow-hidden mb-2">
+  {/* Simplified route line */}
+  <svg viewBox="0 0 140 70" className="w-full h-full">
+  {/* Europe coastline hint */}
+  <path d="M 20 25 Q 35 20, 50 25 Q 65 30, 70 35 Q 75 45, 65 55" 
+        fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+  {/* UK coastline hint */}
+  <path d="M 100 20 Q 105 30, 100 45 Q 95 55, 105 60" 
+        fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
+  {/* Route line - Rotterdam to Felixstowe */}
+  <path d="M 40 32 Q 70 25, 100 38" 
+        fill="none" stroke="url(#route-gradient)" strokeWidth="2" strokeDasharray="4,2" />
+  {/* Animated dot on route */}
+  <circle r="3" fill="#00d4a0">
+  <animateMotion dur="3s" repeatCount="indefinite" path="M 40 32 Q 70 25, 100 38" />
+  </circle>
+  {/* Origin point - Rotterdam */}
+  <circle cx="40" cy="32" r="4" fill="#00d4a0" opacity="0.6" />
+  <circle cx="40" cy="32" r="2" fill="#00d4a0" />
+  {/* Destination point - Felixstowe */}
+  <circle cx="100" cy="38" r="4" fill="rgba(255,255,255,0.2)" />
+  <circle cx="100" cy="38" r="2" fill="rgba(255,255,255,0.4)" />
+  <defs>
+  <linearGradient id="route-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%" stopColor="#00d4a0" />
+  <stop offset="100%" stopColor="rgba(255,255,255,0.3)" />
+  </linearGradient>
+  </defs>
+  </svg>
+  </div>
+  {/* Route info */}
+  <div className="flex items-center justify-between">
+  <div>
+  <div className="text-[9px] text-primary font-medium">Rotterdam</div>
+  <div className="text-[8px] text-foreground/30">Origin</div>
+  </div>
+  <div className="flex-1 mx-2 h-px bg-gradient-to-r from-primary/40 to-foreground/10" />
+  <div className="text-right">
+  <div className="text-[9px] text-foreground/50">Felixstowe</div>
+  <div className="text-[8px] text-foreground/30">ETA 9 AM</div>
+  </div>
+  </div>
+  </div>
   )
-}
+  }
 
 function ComplianceCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[150px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Compliance</div>
-      <div className="space-y-2">
-        {[
-          { label: "HMRC", done: true },
-          { label: "T1 Transit", done: true },
-          { label: "Health Cert", done: true },
-        ].map((item, i) => (
-          <div key={i} className="flex items-center justify-between">
-            <span className="text-[10px] text-foreground/40">{item.label}</span>
-            <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center">
-              <svg className="w-2.5 h-2.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Compliance</div>
+  <div className="space-y-2">
+  {[
+  { name: "HMRC", checked: true },
+  { name: "T1 Transit", checked: true },
+  { name: "Health Cert", checked: true },
+  ].map((item, i) => (
+  <div key={i} className="flex items-center justify-between">
+  <span className="text-[10px] text-foreground/50">{item.name}</span>
+  <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+  </div>
+  ))}
+  </div>
+  </div>
   )
-}
+  }
 
 function EmailCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[180px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Email Sent</div>
-      <div className="text-[9px] text-foreground/30 mb-2">To: dispatch@customer.com</div>
-      <div className="text-[10px] text-foreground/50 leading-relaxed line-clamp-3">
-        Your shipment TCKU395XXX has cleared customs and is scheduled for delivery tomorrow...
-      </div>
-      <div className="mt-3 flex items-center gap-1.5">
-        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-        <span className="text-[8px] text-primary/70">Sent automatically</span>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="flex items-center gap-3">
+  <div className="flex-shrink-0">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Email Sent</div>
+  <div className="text-[9px] text-foreground/40 mb-2">To: dispatch@customer.com</div>
+  </div>
+  <div className="flex-1">
+  <div className="text-[10px] text-foreground/60 leading-relaxed">
+  Your shipment TCKU396XXX has cleared customs and is scheduled for delivery tomorrow between 9-11 AM at Gate 4.
+  </div>
+  <div className="mt-2 flex items-center gap-1 text-[8px] text-primary">
+  <div className="w-1 h-1 rounded-full bg-primary" />
+  Sent automatically
+  </div>
+  </div>
+  </div>
+  </div>
   )
-}
-
-// ============================================================================
-// CENTRAL DEVICE - Desktop monitor style
-// ============================================================================
-function CentralDevice() {
-  const [bars, setBars] = useState<number[]>([])
-  
-  useEffect(() => {
-    setBars(Array(28).fill(0).map(() => 15 + Math.random() * 70))
-    const interval = setInterval(() => {
-      setBars(prev => prev.map(() => 15 + Math.random() * 70))
-    }, 100)
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="relative z-10">
-      {/* Monitor frame */}
-      <div className="relative">
-        <div className="device-frame rounded-[24px] p-4">
-          <div className="device-screen rounded-[16px] overflow-hidden w-[260px] h-[180px] flex flex-col items-center justify-center p-6">
-            {/* Status bar */}
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-[8px] text-primary font-medium">Connected</span>
-              </div>
-            </div>
-            
-            <DrayoLogo className="h-6 w-auto mb-2 text-foreground" />
-            <div className="text-[9px] text-foreground/40 mb-4">AI Operations Agent</div>
-            
-            {/* Waveform */}
-            <div className="flex items-center justify-center gap-[2px] h-14 w-full">
-              {bars.map((height, i) => (
-                <div 
-                  key={i}
-                  className="w-[3px] bg-gradient-to-t from-primary/40 to-primary rounded-full transition-all duration-75"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* Stand */}
-        <div className="mx-auto w-20 h-5 bg-gradient-to-b from-foreground/10 to-foreground/5 rounded-b-lg" />
-        <div className="mx-auto w-28 h-1.5 bg-foreground/10 rounded-full" />
-      </div>
-      
-      {/* Glow */}
-      <div className="absolute inset-0 -z-10 blur-[80px] opacity-25">
-        <div className="absolute inset-0 bg-primary rounded-full scale-150" />
-      </div>
-    </div>
-  )
-}
+  }
 
 // ============================================================================
 // CONNECTING LINES SVG - Lines from cards to center
@@ -548,7 +688,7 @@ function ConnectingLines() {
 }
 
 // ============================================================================
-// HERO SECTION - Fixed layout: text at top, visual below
+// HERO SECTION - Grid layout with multiple functionality panels
 // ============================================================================
 function HeroSection() {
   return (
@@ -556,7 +696,7 @@ function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Header content - centered */}
-        <div className="text-center max-w-3xl mx-auto mb-8">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">Meet Drayo</span>
@@ -572,47 +712,42 @@ function HeroSection() {
           </p>
         </div>
         
-        {/* Central visualization with floating cards */}
-        <div className="relative h-[600px] lg:h-[580px] max-w-[800px] mx-auto">
-          <ConnectingLines />
-          
-          {/* Floating cards positioned around center */}
-          <div className="absolute top-0 left-0 animate-float-1">
-            <DriverCard />
+        {/* Grid of functionality panels - rectangular arrangement */}
+        <div className="relative max-w-[1100px] mx-auto">
+          {/* Main grid layout */}
+          <div className="grid grid-cols-12 gap-3 lg:gap-4">
+            {/* Row 1 */}
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-1">
+              <DriverCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-2">
+              <WhatsAppCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-3">
+              <CalendarCard />
+            </div>
+            <div className="col-span-6 sm:col-span-6 lg:col-span-3 animate-float-4">
+              <ComplianceCard />
+            </div>
+            
+            {/* Row 2 */}
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-5">
+              <InvoiceCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-6">
+              <ShipmentCard />
+            </div>
+            <div className="col-span-12 sm:col-span-4 lg:col-span-6 animate-float-7">
+              <EmailCard />
+            </div>
           </div>
           
-          <div className="absolute top-0 right-0 animate-float-2">
-            <CalendarCard />
-          </div>
-          
-          <div className="absolute top-[30%] -left-4 lg:left-0 animate-float-3">
-            <InvoiceCard />
-          </div>
-          
-          <div className="absolute top-[32%] -right-4 lg:right-0 animate-float-4">
-            <WhatsAppCard />
-          </div>
-          
-          <div className="absolute bottom-[12%] left-0 animate-float-5">
-            <ShipmentCard />
-          </div>
-          
-          <div className="absolute bottom-[15%] right-0 animate-float-6">
-            <ComplianceCard />
-          </div>
-          
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-float-7">
-            <EmailCard />
-          </div>
-          
-          {/* Central device */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <CentralDevice />
-          </div>
+          {/* Subtle connecting gradient overlay */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent rounded-3xl -z-10" />
         </div>
         
         {/* Feature cards - horizontal row below */}
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
           {[
             { title: "Computer use agents", desc: "Vision-based AI operates your software" },
             { title: "Multimodal intelligence", desc: "Email, WhatsApp, voice unified" },
@@ -630,9 +765,124 @@ function HeroSection() {
 }
 
 // ============================================================================
-// OPERATIONS SECTION - Visual demo of capabilities
+// TMS AUTO-FILL VISUAL - Animated typing effect
 // ============================================================================
-function OperationsSection() {
+function TMSAutoFillVisual() {
+  const [fieldIndex, setFieldIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
+  
+  const fields = [
+    { label: "Reference", value: "DRY-2026-00847" },
+    { label: "Customer", value: "Rotterdam Logistics BV" },
+    { label: "Route", value: "Rotterdam → Felixstowe" },
+    { label: "Driver", value: "James Morrison (HGV1)" },
+  ]
+  
+  useEffect(() => {
+    if (!isTyping) return
+    
+    const currentField = fields[fieldIndex]
+    if (!currentField) {
+      // Reset after completing all fields
+      const resetTimer = setTimeout(() => {
+        setFieldIndex(0)
+        setCharIndex(0)
+      }, 2000)
+      return () => clearTimeout(resetTimer)
+    }
+    
+    if (charIndex < currentField.value.length) {
+      // Type next character
+      const typeTimer = setTimeout(() => {
+        setCharIndex(charIndex + 1)
+      }, 40 + Math.random() * 30) // Variable typing speed
+      return () => clearTimeout(typeTimer)
+    } else {
+      // Move to next field
+      const nextFieldTimer = setTimeout(() => {
+        setFieldIndex(fieldIndex + 1)
+        setCharIndex(0)
+      }, 400)
+      return () => clearTimeout(nextFieldTimer)
+    }
+  }, [fieldIndex, charIndex, isTyping, fields])
+  
+  return (
+    <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-red-500/60" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+          <div className="w-2 h-2 rounded-full bg-green-500/60" />
+        </div>
+        <div className="text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          Drayo Active
+        </div>
+      </div>
+      
+      {/* TMS Form Fields */}
+      <div className="space-y-4">
+        {fields.map((field, i) => {
+          const isCurrentField = i === fieldIndex
+          const isCompleted = i < fieldIndex
+          const displayValue = isCompleted 
+            ? field.value 
+            : isCurrentField 
+              ? field.value.slice(0, charIndex)
+              : ""
+          
+          return (
+            <div key={i} className="relative">
+              <span className="text-[9px] text-foreground/40 block mb-1.5 uppercase tracking-wider">{field.label}</span>
+              <div className={`bg-foreground/[0.03] rounded-lg px-3 py-2.5 text-[12px] border transition-all duration-300 ${
+                isCurrentField 
+                  ? 'border-primary/30 bg-primary/[0.03]' 
+                  : isCompleted
+                    ? 'border-foreground/[0.08]'
+                    : 'border-foreground/[0.04]'
+              }`}>
+                <span className={`font-mono ${isCompleted ? 'text-foreground/70' : 'text-primary'}`}>
+                  {displayValue}
+                </span>
+                {isCurrentField && (
+                  <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
+                )}
+                {!isCurrentField && !isCompleted && (
+                  <span className="text-foreground/20">—</span>
+                )}
+              </div>
+              {isCompleted && (
+                <div className="absolute right-3 top-1/2 translate-y-1 text-primary">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+      
+      {/* Progress indicator */}
+      <div className="absolute bottom-4 left-6 right-6">
+        <div className="h-1 bg-foreground/[0.04] rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${((fieldIndex + (charIndex / (fields[fieldIndex]?.value.length || 1))) / fields.length) * 100}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+  // ============================================================================
+  // OPERATIONS SECTION - Visual demo of capabilities
+  // ============================================================================
+  function OperationsSection() {
   const [activeOp, setActiveOp] = useState(0)
   
   const operations = [
@@ -661,28 +911,11 @@ function OperationsSection() {
         </div>
       )
     },
-    {
-      title: "TMS Auto-Fill",
-      desc: "Populates your transport management system automatically",
-      visual: (
-        <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
-          <div className="absolute top-4 right-4 text-[8px] text-accent bg-accent/10 px-2 py-1 rounded-full flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            Auto-filling
-          </div>
-          <div className="space-y-3 mt-8">
-            {["Reference", "Customer", "Route", "Driver"].map((label, i) => (
-              <div key={i}>
-                <span className="text-[9px] text-foreground/30 block mb-1">{label}</span>
-                <div className="bg-foreground/[0.03] rounded-lg px-3 py-2 text-[11px] text-foreground/70 border border-foreground/[0.04]">
-                  <span className="inline-block w-1 h-3 bg-primary animate-pulse" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    },
+  {
+  title: "TMS Auto-Fill",
+  desc: "Populates your transport management system automatically",
+  visual: <TMSAutoFillVisual />
+  },
     {
       title: "Schedule Organizing",
       desc: "Coordinates pickups, deliveries, and resource allocation",
@@ -871,18 +1104,24 @@ function FeaturesSection() {
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid sm:grid-cols-2 gap-4">
+        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5">
           {features.map((feature, i) => (
-            <div key={i} className="group p-6 rounded-2xl bg-card/20 border border-foreground/[0.04] hover:border-primary/20 transition-all backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
+            <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
+              
+              <div className="relative flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
                   {feature.icon}
                 </div>
-                <div>
-                  <h3 className="text-foreground font-medium mb-1">{feature.title}</h3>
-                  <p className="text-sm text-foreground/40 leading-relaxed">{feature.desc}</p>
+                <div className="flex-1">
+                  <h3 className="text-foreground font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-foreground/50 leading-relaxed">{feature.desc}</p>
                 </div>
               </div>
+              
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
         </div>
@@ -946,8 +1185,8 @@ function IntegrationsSection() {
             <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
             
-            {/* 3x3 Logo grid */}
-            <div className="grid grid-cols-3 gap-2 p-4">
+            {/* Logo grid - 2 rows */}
+            <div className="grid grid-cols-4 gap-3 p-4">
               {/* Row 1 */}
               <LogoCard>
                 <CargoWiseLogo />
@@ -958,19 +1197,14 @@ function IntegrationsSection() {
               <LogoCard>
                 <SAPLogo />
               </LogoCard>
-              
-              {/* Row 2 - Drayo centered */}
               <LogoCard>
                 <OracleLogo />
               </LogoCard>
-              <LogoCard highlighted>
-                <DrayoIcon className="h-8 w-auto" />
-              </LogoCard>
+              
+              {/* Row 2 */}
               <LogoCard>
                 <GmailLogo />
               </LogoCard>
-              
-              {/* Row 3 */}
               <LogoCard>
                 <OutlookLogo />
               </LogoCard>
@@ -1001,58 +1235,36 @@ function LogoCard({ children, highlighted = false }: { children: React.ReactNode
   )
 }
 
-// Actual brand logos as SVGs
+// Actual brand logos as SVGs - text-based for consistency
 function CargoWiseLogo() {
   return (
-    <svg viewBox="0 0 120 24" className="h-5 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      {/* CargoWise icon - horizontal bars */}
-      <g fill="currentColor" className="text-foreground">
-        <rect x="0" y="2" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="6" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="10" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="14" width="3.5" height="2.5" rx="0.3" />
-        <rect x="0" y="18" width="3.5" height="2.5" rx="0.3" />
-        <rect x="8" y="2" width="3.5" height="2.5" rx="0.3" />
-        <rect x="8" y="6" width="6" height="2.5" rx="0.3" />
-        <rect x="8" y="10" width="6" height="2.5" rx="0.3" />
-        <rect x="8" y="14" width="3.5" height="2.5" rx="0.3" />
-      </g>
-      <text x="20" y="16" fill="currentColor" className="text-foreground" style={{ fontSize: '11px', fontWeight: 500 }}>cargowise</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      CargoWise
+    </span>
   )
 }
 
 function WiseTechLogo() {
   return (
-    <svg viewBox="0 0 90 28" className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <g fill="currentColor" className="text-foreground">
-        {/* Vertical bars pattern */}
-        <rect x="0" y="0" width="2.5" height="10" rx="0.3" />
-        <rect x="4" y="3" width="2.5" height="14" rx="0.3" />
-        <rect x="8" y="0" width="2.5" height="10" rx="0.3" />
-        <rect x="0" y="14" width="2.5" height="6" rx="0.3" />
-        <rect x="4" y="20" width="2.5" height="4" rx="0.3" />
-        <rect x="8" y="14" width="2.5" height="6" rx="0.3" />
-      </g>
-      <text x="16" y="12" fill="currentColor" className="text-foreground" style={{ fontSize: '9px', fontWeight: 500 }}>wisetech</text>
-      <text x="16" y="22" fill="currentColor" className="text-foreground" style={{ fontSize: '9px', fontWeight: 500 }}>global</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight text-center leading-tight">
+      WiseTech<br/>Global
+    </span>
   )
 }
 
 function SAPLogo() {
   return (
-    <svg viewBox="0 0 50 24" className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <text x="0" y="18" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.02em' }}>SAP</text>
-    </svg>
+    <span className="text-lg font-bold text-foreground/50 hover:text-foreground/80 transition-opacity">
+      SAP
+    </span>
   )
 }
 
 function OracleLogo() {
   return (
-    <svg viewBox="0 0 70 16" className="h-4 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <text x="0" y="13" fill="currentColor" className="text-foreground" style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.02em' }}>ORACLE</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-wide">
+      ORACLE
+    </span>
   )
 }
 
@@ -1066,11 +1278,9 @@ function GmailLogo() {
 
 function OutlookLogo() {
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 opacity-60 hover:opacity-100 transition-opacity">
-      <path fill="currentColor" d="M24 7.387v10.478c0 .23-.08.424-.238.576-.158.152-.362.233-.612.233h-8.175v-6.726l1.238.961c.078.062.167.095.27.095a.47.47 0 0 0 .27-.095l6.987-5.424c.062-.046.112-.078.15-.095a.36.36 0 0 1 .11-.023v.02zM23.762 5.88a.319.319 0 0 1 .095.27.558.558 0 0 1-.095.294l-7.107 5.5a.913.913 0 0 1-.555.174.913.913 0 0 1-.555-.175L8.15 6.463V5.26c0-.227.076-.42.23-.575.152-.158.345-.237.58-.237h14.207c.104 0 .247.144.35.207a.345.345 0 0 1 .245.324z"/>
-      <path fill="currentColor" d="M7.15 7.387v12.004l-5.53 2.318A1.056 1.056 0 0 1 0 20.837V7.387a1.07 1.07 0 0 1 1.07-1.07h5.01c.59 0 1.07.48 1.07 1.07z"/>
-      <ellipse cx="3.6" cy="13" rx="2.4" ry="3.6" fill="currentColor"/>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity">
+      Outlook
+    </span>
   )
 }
 
@@ -1129,36 +1339,19 @@ function Footer() {
     <footer className="relative py-16 border-t border-foreground/[0.04]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="xl:pl-40">
-          <div className="grid md:grid-cols-4 gap-12 mb-16">
-            {/* Logo and tagline */}
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <DrayoIcon className="h-8 w-auto" />
-                <span className="text-foreground font-semibold text-lg">DRAYO</span>
-              </div>
-              <p className="text-foreground/40 text-sm max-w-xs">
-                The future of freight is operated by Drayo.
-              </p>
-            </div>
-            
-            {/* Product links */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Product</span>
-              </div>
-              <ul className="space-y-3">
-                {["Meet Drayo", "How It Works", "Capabilities", "Integrations"].map((item, i) => (
-                  <li key={i}>
-                    <a href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-foreground/50 hover:text-foreground transition-colors">
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Contact */}
+<div className="grid md:grid-cols-3 gap-12 mb-16">
+  {/* Logo and tagline */}
+  <div className="md:col-span-2">
+  <div className="flex items-center gap-2 mb-4">
+  <DrayoIcon className="h-8 w-auto" />
+  <span className="text-foreground font-semibold text-lg">DRAYO</span>
+  </div>
+  <p className="text-foreground/40 text-sm max-w-xs">
+  The future of freight is operated by Drayo.
+  </p>
+  </div>
+  
+  {/* Contact */}
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -1199,11 +1392,11 @@ function Footer() {
           {/* Bottom bar */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-foreground/[0.04]">
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Terms of Service</a>
+              <a href="/privacy" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Privacy Policy</a>
+              <a href="/terms" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Terms of Service</a>
             </div>
             <div className="text-xs text-foreground/30">
-              © 2024 Drayo AI, Inc. All rights reserved.
+              © 2026 Drayo AI Ltd. All rights reserved.
             </div>
           </div>
         </div>
@@ -1216,6 +1409,7 @@ function Footer() {
 // MAIN PAGE
 // ============================================================================
 export default function DrayoLanding() {
+  const [showSplash, setShowSplash] = useState(true)
   const [activeSection, setActiveSection] = useState("hero")
   
   useEffect(() => {
@@ -1239,6 +1433,9 @@ export default function DrayoLanding() {
 
   return (
     <>
+      {/* Logo Splash Animation */}
+      {showSplash && <LogoSplash onComplete={() => setShowSplash(false)} />}
+      
       {/* Calendly Script */}
       <Script 
         src="https://assets.calendly.com/assets/external/widget.js" 
@@ -1246,7 +1443,7 @@ export default function DrayoLanding() {
       />
       <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       
-      <main className="relative min-h-screen bg-background">
+      <main className={`relative min-h-screen bg-background transition-opacity duration-500 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
         <AnimatedBackground />
         <Navbar />
         <SectionNav activeSection={activeSection} />
