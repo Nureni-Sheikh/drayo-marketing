@@ -6,6 +6,30 @@ import Script from "next/script"
 // ============================================================================
 // LOGO SPLASH ANIMATION - Shows for 2.5 seconds on page load
 // ============================================================================
+// Deterministic particle data to avoid hydration mismatch
+const PARTICLE_DATA = [
+  { duration: 1.72, delay: 0.28, distance: 180 },
+  { duration: 1.85, delay: 0.35, distance: 220 },
+  { duration: 1.63, delay: 0.42, distance: 195 },
+  { duration: 1.91, delay: 0.25, distance: 250 },
+  { duration: 1.78, delay: 0.38, distance: 175 },
+  { duration: 1.55, delay: 0.31, distance: 230 },
+  { duration: 1.88, delay: 0.44, distance: 200 },
+  { duration: 1.67, delay: 0.22, distance: 265 },
+  { duration: 1.74, delay: 0.36, distance: 185 },
+  { duration: 1.82, delay: 0.29, distance: 240 },
+  { duration: 1.59, delay: 0.41, distance: 210 },
+  { duration: 1.95, delay: 0.33, distance: 170 },
+  { duration: 1.71, delay: 0.27, distance: 255 },
+  { duration: 1.64, delay: 0.45, distance: 190 },
+  { duration: 1.86, delay: 0.24, distance: 225 },
+  { duration: 1.79, delay: 0.39, distance: 205 },
+  { duration: 1.58, delay: 0.32, distance: 260 },
+  { duration: 1.93, delay: 0.26, distance: 180 },
+  { duration: 1.68, delay: 0.43, distance: 235 },
+  { duration: 1.76, delay: 0.30, distance: 215 },
+]
+
 function LogoSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter')
   
@@ -32,17 +56,17 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
     >
       {/* Animated particle burst background */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {PARTICLE_DATA.map((particle, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 rounded-full bg-primary/30"
             style={{
               left: '50%',
               top: '50%',
-              animation: `splash-particle ${1.5 + Math.random() * 0.5}s ease-out forwards`,
-              animationDelay: `${0.2 + Math.random() * 0.3}s`,
+              animation: `splash-particle ${particle.duration}s ease-out forwards`,
+              animationDelay: `${particle.delay}s`,
               '--angle': `${(360 / 20) * i}deg`,
-              '--distance': `${150 + Math.random() * 200}px`,
+              '--distance': `${particle.distance}px`,
             } as React.CSSProperties}
           />
         ))}
