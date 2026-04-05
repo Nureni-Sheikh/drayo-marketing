@@ -527,15 +527,16 @@ function WhatsAppCard() {
   </div>
   <div className="space-y-2">
   <div className="bg-foreground/5 rounded-lg p-2">
-  <div className="text-[9px] text-foreground/30 mb-1">Customer inquiry</div>
-  <div className="text-[10px] text-foreground/60">Container ETA?</div>
+  <div className="text-[9px] text-foreground/30 mb-1">Client</div>
+  <div className="text-[10px] text-foreground/60">{`"What's the ETA on TCKU3954821?"`}</div>
   </div>
   <div className="bg-primary/5 rounded-lg p-2 border-l-2 border-primary/30">
-  <div className="text-[10px] text-foreground/70">TCKU396XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</div>
+  <div className="text-[9px] text-primary/50 mb-1">Drayo</div>
+  <div className="text-[10px] text-foreground/70">{`"Your container arrives Felixstowe tomorrow 9-11 AM, Gate 4. Customs cleared."`}</div>
   </div>
   <div className="text-[8px] text-primary/50 flex items-center gap-1">
   <span className="w-1 h-1 rounded-full bg-primary/50" />
-  Auto-reply sent
+  Auto-replied
   </div>
   </div>
   </div>
@@ -703,12 +704,12 @@ function HeroSection() {
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6">
-            <span className="text-primary">Drayo</span>
-            <span className="text-foreground"> operates your freight systems</span>
+            <span className="text-foreground">Your freight ops </span>
+            <span className="text-primary">run themselves.</span>
           </h1>
           
           <p className="text-foreground/40 text-lg max-w-xl mx-auto">
-            Autonomous AI for logistics operations
+            Documents in. TMS updated. Confirmations sent. 60 seconds.
           </p>
         </div>
         
@@ -717,47 +718,33 @@ function HeroSection() {
           {/* Main grid layout */}
           <div className="grid grid-cols-12 gap-3 lg:gap-4">
             {/* Row 1 */}
-            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-1">
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3" style={{ animation: 'float-panel 4.2s ease-in-out infinite' }}>
               <DriverCard />
             </div>
-            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-2">
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3" style={{ animation: 'float-panel 3.7s ease-in-out 0.5s infinite' }}>
               <WhatsAppCard />
             </div>
-            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-3">
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3" style={{ animation: 'float-panel 5.1s ease-in-out 1.1s infinite' }}>
               <CalendarCard />
             </div>
-            <div className="col-span-6 sm:col-span-6 lg:col-span-3 animate-float-4">
+            <div className="col-span-6 sm:col-span-6 lg:col-span-3" style={{ animation: 'float-panel 3.9s ease-in-out 0.8s infinite' }}>
               <ComplianceCard />
             </div>
             
             {/* Row 2 */}
-            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-5">
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3" style={{ animation: 'float-panel 4.6s ease-in-out 1.4s infinite' }}>
               <InvoiceCard />
             </div>
-            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-6">
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3" style={{ animation: 'float-panel 4.0s ease-in-out 0.3s infinite' }}>
               <ShipmentCard />
             </div>
-            <div className="col-span-12 sm:col-span-4 lg:col-span-6 animate-float-7">
+            <div className="col-span-12 sm:col-span-4 lg:col-span-6" style={{ animation: 'float-panel 4.4s ease-in-out 0.6s infinite' }}>
               <EmailCard />
             </div>
           </div>
           
           {/* Subtle connecting gradient overlay */}
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent rounded-3xl -z-10" />
-        </div>
-        
-        {/* Feature cards - horizontal row below */}
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
-          {[
-            { title: "Computer use agents", desc: "Vision-based AI operates your software" },
-            { title: "Multimodal intelligence", desc: "Email, WhatsApp, voice unified" },
-            { title: "Autonomous completion", desc: "End-to-end task execution" },
-          ].map((feature, i) => (
-            <div key={i} className="p-4 rounded-xl bg-card/20 border border-foreground/[0.04] backdrop-blur-sm text-center">
-              <h3 className="text-foreground text-sm font-medium mb-1">{feature.title}</h3>
-              <p className="text-foreground/40 text-xs">{feature.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -887,61 +874,66 @@ function TMSAutoFillVisual() {
   
   const operations = [
     {
-      title: "Document Processing",
-      desc: "Instant extraction from BOLs, invoices, and customs forms",
+      title: "Document arrives",
+      desc: "Email, WhatsApp, or call. Any format.",
       visual: (
         <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] overflow-hidden backdrop-blur-sm">
-          <div className="absolute top-4 right-4 text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full">Processing</div>
-          <div className="space-y-3 font-mono text-xs mt-8">
-            {[
-              { label: "Container", value: "TCKU3954821", color: "primary" },
-              { label: "Shipper", value: "Rotterdam Logistics BV", color: "foreground" },
-              { label: "Weight", value: "18,450 KG", color: "foreground" },
-              { label: "Destination", value: "Felixstowe", color: "foreground" },
-            ].map((field, i) => (
-              <div key={i} className="flex gap-4 items-center">
-                <span className="text-foreground/30 w-24 text-[10px]">{field.label}</span>
-                <span className={`text-${field.color} text-[11px]`}>{field.value}</span>
+          <div className="absolute top-4 right-4 text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full">Received</div>
+          <div className="flex flex-col items-center justify-center h-full gap-4">
+            <div className="flex gap-4">
+              <div className="w-14 h-14 rounded-xl bg-foreground/5 flex items-center justify-center">
+                <svg className="w-7 h-7 text-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
-            ))}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground/5">
-            <div className="h-full w-3/4 bg-gradient-to-r from-primary to-accent animate-pulse" />
+              <div className="w-14 h-14 rounded-xl bg-[#25D366]/10 flex items-center justify-center">
+                <svg className="w-7 h-7 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+              </div>
+              <div className="w-14 h-14 rounded-xl bg-foreground/5 flex items-center justify-center">
+                <svg className="w-7 h-7 text-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+            </div>
+            <p className="text-[11px] text-foreground/40 text-center">Bill of Lading received via email</p>
           </div>
         </div>
       )
     },
   {
-  title: "TMS Auto-Fill",
-  desc: "Populates your transport management system automatically",
+  title: "Drayo reads it",
+  desc: "20 fields extracted. Zero human input.",
   visual: <TMSAutoFillVisual />
   },
     {
-      title: "Schedule Organizing",
-      desc: "Coordinates pickups, deliveries, and resource allocation",
+      title: "Systems updated",
+      desc: "TMS filled. Compliance checked. Automatically.",
       visual: (
         <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
-          <div className="space-y-2 mt-2">
+          <div className="space-y-3 mt-2">
             {[
-              { name: "Felixstowe Pickup", time: "08:00", status: "Confirmed", highlight: true },
-              { name: "London DC Delivery", time: "14:30", status: "Scheduled", highlight: false },
-              { name: "Manchester Return", time: "18:00", status: "Pending", highlight: false },
-            ].map((item, i) => (
-              <div key={i} className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
-                item.highlight ? 'bg-primary/5 border-primary/20' : 'border-foreground/[0.04]'
-              }`}>
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[10px] font-mono ${
-                    item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
-                  }`}>
-                    {item.time}
-                  </div>
-                  <span className="text-[11px] text-foreground/70">{item.name}</span>
-                </div>
-                <span className={`text-[9px] px-2 py-1 rounded-full ${
-                  item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
+              { label: "Bill of lading extracted", status: "done" },
+              { label: "HS code validated", status: "done" },
+              { label: "Sanctions screening passed", status: "done" },
+              { label: "TMS entry created", status: "done" },
+              { label: "Email drafted and sent", status: "active" },
+            ].map((step, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                  step.status === 'done' ? 'bg-primary/10' : 'bg-accent/10'
                 }`}>
-                  {item.status}
+                  {step.status === 'done' ? (
+                    <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  )}
+                </div>
+                <span className={`text-[11px] ${step.status === 'done' ? 'text-foreground/70' : 'text-foreground/50'}`}>
+                  {step.label}
                 </span>
               </div>
             ))}
@@ -950,38 +942,25 @@ function TMSAutoFillVisual() {
       )
     },
     {
-      title: "Customs Filing",
-      desc: "Automated declaration preparation and submission",
+      title: "Confirmations sent",
+      desc: "Client and carrier notified. Audit trail saved.",
       visual: (
         <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
           <div className="space-y-3 mt-2">
-            {[
-              { label: "Import Declaration", status: "done" },
-              { label: "Commodity Codes", status: "done" },
-              { label: "Duty Calculation", status: "done" },
-              { label: "Authority Submission", status: "active" },
-              { label: "Clearance", status: "pending" },
-            ].map((step, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                  step.status === 'done' ? 'bg-primary/10' :
-                  step.status === 'active' ? 'bg-accent/10' : 'bg-foreground/5'
-                }`}>
-                  {step.status === 'done' ? (
-                    <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : step.status === 'active' ? (
-                    <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  ) : (
-                    <div className="w-2 h-2 rounded-full bg-foreground/10" />
-                  )}
-                </div>
-                <span className={`text-[11px] ${step.status === 'pending' ? 'text-foreground/30' : 'text-foreground/70'}`}>
-                  {step.label}
-                </span>
-              </div>
-            ))}
+            <div className="p-3 rounded-xl bg-primary/5 border border-primary/10">
+              <div className="text-[9px] text-primary/60 mb-1">To: client@company.com</div>
+              <div className="text-[11px] text-foreground/70">Your shipment TCKU3954821 has been processed and is on schedule for delivery tomorrow.</div>
+            </div>
+            <div className="p-3 rounded-xl bg-foreground/5 border border-foreground/[0.06]">
+              <div className="text-[9px] text-foreground/40 mb-1">To: carrier@logistics.com</div>
+              <div className="text-[11px] text-foreground/60">Collection confirmed for 08:00 at Felixstowe Gate 4. Reference: DRY-2026-00847</div>
+            </div>
+            <div className="flex items-center gap-2 mt-4 pt-3 border-t border-foreground/[0.04]">
+              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-[10px] text-foreground/40">Audit trail saved to system</span>
+            </div>
           </div>
         </div>
       )
@@ -1003,8 +982,8 @@ function TMSAutoFillVisual() {
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">How It Works</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-            Autonomous workflow execution
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+            From document to done. In 60 seconds.
           </h2>
         </div>
         
@@ -1054,8 +1033,8 @@ function TMSAutoFillVisual() {
 function FeaturesSection() {
   const features = [
     { 
-      title: "Zero API Integration", 
-      desc: "Works with any software your team uses, no matter how legacy or custom",
+      title: "No API Required", 
+      desc: "Works with any TMS or customs platform your team already uses. No integration needed.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -1063,8 +1042,26 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Around the Clock", 
-      desc: "Continuous operations without breaks, holidays, or human error",
+      title: "Document Intelligence", 
+      desc: "Reads BLs, AWBs, CMRs, and commercial invoices in any format with 95%+ field accuracy.",
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      )
+    },
+    { 
+      title: "UK Compliance Built In", 
+      desc: "Validated against HMRC tariff codes, commodity databases, and UK sanctions lists automatically.",
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      )
+    },
+    { 
+      title: "Always On", 
+      desc: "Processes documents 24/7 without breaks, errors, or delays.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1072,17 +1069,8 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Global Compliance", 
-      desc: "Adapts to regulatory requirements across all jurisdictions",
-      icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )
-    },
-    { 
-      title: "Unified Channels", 
-      desc: "Email, WhatsApp, voice, and SMS in one intelligent system",
+      title: "Voice & WhatsApp", 
+      desc: "Drayo handles inbound calls and WhatsApp messages from clients and carriers. Automatically.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -1100,30 +1088,54 @@ function FeaturesSection() {
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-            Purpose-built for logistics
+            Built for how freight actually works.
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5">
-          {features.map((feature, i) => (
-            <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+        {/* 2x2 grid + centered 5th card */}
+        <div className="xl:pl-40">
+          <div className="grid sm:grid-cols-2 gap-5 mb-5">
+            {features.slice(0, 4).map((feature, i) => (
+              <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+                {/* Background decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
+                
+                <div className="relative flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
+                    {feature.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-foreground font-semibold mb-2">{feature.title}</h3>
+                    <p className="text-sm text-foreground/50 leading-relaxed">{feature.desc}</p>
+                  </div>
+                </div>
+                
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            ))}
+          </div>
+          
+          {/* Centered 5th card */}
+          <div className="max-w-lg mx-auto">
+            <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
               
               <div className="relative flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
-                  {feature.icon}
+                  {features[4].icon}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-foreground font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-sm text-foreground/50 leading-relaxed">{feature.desc}</p>
+                  <h3 className="text-foreground font-semibold mb-2">{features[4].title}</h3>
+                  <p className="text-sm text-foreground/50 leading-relaxed">{features[4].desc}</p>
                 </div>
               </div>
               
               {/* Bottom accent line */}
               <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1153,28 +1165,9 @@ function IntegrationsSection() {
               <span className="text-foreground">Works across your </span>
               <span className="text-primary">entire tech stack</span>
             </h2>
-            <p className="text-foreground/50 leading-relaxed mb-8">
-              Drayo connects to your freight systems the way your staff does — by seeing the screen and using it. Computer use agents navigate TMS platforms, email clients, and back office tools visually.
+            <p className="text-foreground/50 leading-relaxed">
+              Drayo sees your screen and uses it — no API, no setup, no waiting on vendors.
             </p>
-            
-            <div className="mb-8">
-              <div className="text-[10px] text-foreground/30 uppercase tracking-[0.25em] mb-4">Key Features</div>
-              <div className="space-y-3">
-                {[
-                  "Connects to any freight software — TMS, WMS, customs platforms",
-                  "Operates legacy systems other AI tools cannot access",
-                  "No custom development or vendor coordination needed",
-                  "Set up in under an hour",
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <svg className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-foreground/60">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
           
           {/* Right side - logo grid like Lance.ai */}
@@ -1308,14 +1301,14 @@ function SlackLogo() {
 // ============================================================================
 function CTASection() {
   return (
-    <section id="cta" className="relative py-24">
+    <section id="cta" className="relative py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="xl:pl-40 max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4 tracking-tight">
-            Ready to automate your freight operations?
+            Ready to cut document processing time by 80%?
           </h2>
-          <p className="text-foreground/40 mb-8">
-            See Drayo in action with a personalized demo.
+          <p className="text-foreground/40 mb-6">
+            Book a 20-minute demo. See Drayo process a live shipment document.
           </p>
           <CalendlyButton 
             className="inline-flex items-center gap-3 px-8 py-4 text-sm font-medium text-background bg-primary rounded-full hover:bg-primary/90 transition-colors"
