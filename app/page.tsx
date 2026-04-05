@@ -93,8 +93,8 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           }`}
         />
         
-        {/* Animated logo SVG - New design */}
-        <svg viewBox="-50 -35 180 70" className="h-20 w-auto" fill="none">
+        {/* Animated logo SVG - Icon only, no text */}
+        <svg viewBox="-42 -28 70 56" className="h-24 w-auto" fill="none">
           {/* Small left circle - animates first */}
           <circle 
             cx="-33" cy="0" r="5" 
@@ -136,7 +136,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           
           {/* Upper right connection line */}
           <line 
-            x1="8" y1="-9" x2="18" y2="-16" 
+            x1="8" y1="-9" x2="16" y2="-15" 
             stroke="currentColor" 
             strokeWidth="2.5" 
             strokeLinecap="round"
@@ -150,20 +150,20 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           
           {/* Upper right circle */}
           <circle 
-            cx="22" cy="-19" r="5" 
+            cx="20" cy="-18" r="5" 
             fill="currentColor" 
             className="text-primary"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '22px -19px',
+              transformOrigin: '20px -18px',
               transition: 'opacity 0.3s ease-out 0.6s, transform 0.3s ease-out 0.6s',
             }}
           />
           
           {/* Lower right connection line */}
           <line 
-            x1="8" y1="9" x2="18" y2="16" 
+            x1="8" y1="9" x2="16" y2="15" 
             stroke="currentColor" 
             strokeWidth="2.5" 
             strokeLinecap="round"
@@ -177,42 +177,17 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           
           {/* Lower right circle */}
           <circle 
-            cx="22" cy="19" r="5" 
+            cx="20" cy="18" r="5" 
             fill="currentColor" 
             className="text-primary"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '22px 19px',
+              transformOrigin: '20px 18px',
               transition: 'opacity 0.3s ease-out 0.7s, transform 0.3s ease-out 0.7s',
             }}
           />
-          
-          {/* DRAYO text - fades in last */}
-          <text 
-            x="42" y="8" 
-            fill="currentColor" 
-            className="text-foreground" 
-            style={{ 
-              fontSize: '22px', 
-              fontWeight: 600, 
-              fontFamily: 'var(--font-sans)',
-              opacity: phase === 'enter' ? 0 : 1,
-              transition: 'opacity 0.4s ease-out 0.8s',
-            }}
-          >
-            DRAYO
-          </text>
         </svg>
-        
-        {/* Subtitle */}
-        <div 
-          className={`mt-4 text-center text-xs text-foreground/40 tracking-[0.3em] uppercase transition-all duration-500 delay-300 ${
-            phase === 'hold' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-          }`}
-        >
-          AI Operations
-        </div>
       </div>
     </div>
   )
@@ -223,21 +198,21 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 160 40" className={className} fill="none">
+    <svg viewBox="0 0 170 50" className={className} fill="none">
       {/* Small left circle */}
-      <circle cx="7" cy="20" r="5" fill="currentColor" className="text-primary" />
+      <circle cx="7" cy="25" r="5" fill="currentColor" className="text-primary" />
       {/* Connection line to center */}
-      <line x1="12" y1="20" x2="27" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <line x1="12" y1="25" x2="27" y2="25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
       {/* Main center circle (hollow) */}
-      <circle cx="40" cy="20" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
+      <circle cx="40" cy="25" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
       {/* Upper right connection and circle */}
-      <line x1="48" y1="11" x2="58" y2="4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="62" cy="1" r="5" fill="currentColor" className="text-primary" />
+      <line x1="48" y1="16" x2="56" y2="10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="60" cy="7" r="5" fill="currentColor" className="text-primary" />
       {/* Lower right connection and circle */}
-      <line x1="48" y1="29" x2="58" y2="36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="62" cy="39" r="5" fill="currentColor" className="text-primary" />
+      <line x1="48" y1="34" x2="56" y2="40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="60" cy="43" r="5" fill="currentColor" className="text-primary" />
       {/* DRAYO text */}
-      <text x="78" y="26" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
+      <text x="76" y="31" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
         DRAYO
       </text>
     </svg>
@@ -249,7 +224,7 @@ function DrayoLogo({ className = "" }: { className?: string }) {
 // ============================================================================
 function DrayoIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="-50 -35 100 70" className={className} fill="none">
+    <svg viewBox="-40 -28 70 56" className={className} fill="none">
       {/* Small left circle */}
       <circle cx="-33" cy="0" r="5" fill="currentColor" className="text-primary" />
       {/* Connection line to center */}
@@ -257,11 +232,11 @@ function DrayoIcon({ className = "" }: { className?: string }) {
       {/* Main center circle (hollow) */}
       <circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
       {/* Upper right connection and circle */}
-      <line x1="8" y1="-9" x2="18" y2="-16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="22" cy="-19" r="5" fill="currentColor" className="text-primary" />
+      <line x1="8" y1="-9" x2="16" y2="-15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="20" cy="-18" r="5" fill="currentColor" className="text-primary" />
       {/* Lower right connection and circle */}
-      <line x1="8" y1="9" x2="18" y2="16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="22" cy="19" r="5" fill="currentColor" className="text-primary" />
+      <line x1="8" y1="9" x2="16" y2="15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="20" cy="18" r="5" fill="currentColor" className="text-primary" />
     </svg>
   )
 }
@@ -686,14 +661,12 @@ function CentralDevice() {
           <div className="device-screen rounded-[16px] overflow-hidden w-[260px] h-[180px] flex flex-col items-center justify-center p-6">
             {/* Status bar */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-[8px] text-primary font-medium">Connected</span>
-              </div>
-            </div>
-            
-            <DrayoLogo className="h-6 w-auto mb-2 text-foreground" />
-            <div className="text-[9px] text-foreground/40 mb-4">AI Operations Agent</div>
+<div className="flex items-center gap-1.5">
+  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+  </div>
+  </div>
+  
+  <DrayoLogo className="h-6 w-auto mb-4 text-foreground" />
             
             {/* Waveform */}
             <div className="flex items-center justify-center gap-[2px] h-14 w-full">
