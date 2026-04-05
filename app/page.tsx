@@ -4,6 +4,184 @@ import { useEffect, useRef, useState } from "react"
 import Script from "next/script"
 
 // ============================================================================
+// LOGO SPLASH ANIMATION - Shows for 2.5 seconds on page load
+// ============================================================================
+function LogoSplash({ onComplete }: { onComplete: () => void }) {
+  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter')
+  
+  useEffect(() => {
+    // Enter animation
+    const enterTimer = setTimeout(() => setPhase('hold'), 400)
+    // Hold for a moment
+    const holdTimer = setTimeout(() => setPhase('exit'), 2000)
+    // Complete and unmount
+    const exitTimer = setTimeout(onComplete, 2500)
+    
+    return () => {
+      clearTimeout(enterTimer)
+      clearTimeout(holdTimer)
+      clearTimeout(exitTimer)
+    }
+  }, [onComplete])
+
+  return (
+    <div 
+      className={`fixed inset-0 z-[100] bg-background flex items-center justify-center transition-opacity duration-500 ${
+        phase === 'exit' ? 'opacity-0' : 'opacity-100'
+      }`}
+    >
+      {/* Animated particle burst background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-primary/30"
+            style={{
+              left: '50%',
+              top: '50%',
+              animation: `splash-particle ${1.5 + Math.random() * 0.5}s ease-out forwards`,
+              animationDelay: `${0.2 + Math.random() * 0.3}s`,
+              '--angle': `${(360 / 20) * i}deg`,
+              '--distance': `${150 + Math.random() * 200}px`,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
+      
+      {/* Logo container */}
+      <div 
+        className={`relative transition-all duration-700 ease-out ${
+          phase === 'enter' ? 'scale-75 opacity-0' : 
+          phase === 'hold' ? 'scale-100 opacity-100' : 
+          'scale-110 opacity-0'
+        }`}
+      >
+        {/* Animated ring */}
+        <div 
+          className={`absolute inset-0 -m-8 rounded-full border-2 border-primary/20 transition-all duration-1000 ${
+            phase === 'hold' ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
+          }`}
+          style={{ animationDelay: '0.3s' }}
+        />
+        <div 
+          className={`absolute inset-0 -m-16 rounded-full border border-primary/10 transition-all duration-1000 delay-100 ${
+            phase === 'hold' ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
+          }`}
+        />
+        
+        {/* Animated logo SVG */}
+        <svg viewBox="0 0 140 32" className="h-16 w-auto" fill="none">
+          {/* Small dot - animates first */}
+          <circle 
+            cx="8" cy="16" r="4" 
+            fill="currentColor" 
+            className="text-primary"
+            style={{
+              animation: phase !== 'enter' ? 'logo-dot-pop 0.4s ease-out forwards' : 'none',
+              opacity: phase === 'enter' ? 0 : 1,
+            }}
+          />
+          
+          {/* Connection line - draws in */}
+          <line 
+            x1="12" y1="16" x2="20" y2="16" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 8,
+              strokeDashoffset: phase === 'enter' ? 8 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.2s',
+            }}
+          />
+          
+          {/* Main circle - scales in */}
+          <circle 
+            cx="24" cy="16" r="6" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            fill="none" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 38,
+              strokeDashoffset: phase === 'enter' ? 38 : 0,
+              transition: 'stroke-dashoffset 0.5s ease-out 0.3s',
+            }}
+          />
+          
+          {/* Small circles on the right */}
+          <circle 
+            cx="34" cy="12" r="2" 
+            fill="currentColor" 
+            className="text-primary/60"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transition: 'opacity 0.3s ease-out 0.6s',
+            }}
+          />
+          <circle 
+            cx="34" cy="20" r="2" 
+            fill="currentColor" 
+            className="text-primary/60"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transition: 'opacity 0.3s ease-out 0.7s',
+            }}
+          />
+          <line 
+            x1="30" y1="14" x2="32" y2="12" 
+            stroke="currentColor" 
+            strokeWidth="1.5" 
+            className="text-primary/40"
+            style={{
+              strokeDasharray: 4,
+              strokeDashoffset: phase === 'enter' ? 4 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.5s',
+            }}
+          />
+          <line 
+            x1="30" y1="18" x2="32" y2="20" 
+            stroke="currentColor" 
+            strokeWidth="1.5" 
+            className="text-primary/40"
+            style={{
+              strokeDasharray: 4,
+              strokeDashoffset: phase === 'enter' ? 4 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.55s',
+            }}
+          />
+          
+          {/* DRAYO text - fades in last */}
+          <text 
+            x="44" y="22" 
+            fill="currentColor" 
+            className="text-foreground" 
+            style={{ 
+              fontSize: '18px', 
+              fontWeight: 600, 
+              fontFamily: 'var(--font-sans)',
+              opacity: phase === 'enter' ? 0 : 1,
+              transition: 'opacity 0.4s ease-out 0.8s',
+            }}
+          >
+            DRAYO
+          </text>
+        </svg>
+        
+        {/* Subtitle */}
+        <div 
+          className={`mt-4 text-center text-xs text-foreground/40 tracking-[0.3em] uppercase transition-all duration-500 delay-300 ${
+            phase === 'hold' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+          }`}
+        >
+          AI Operations
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================================================
 // DRAYO LOGO - Connected nodes design with repositioned circles
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
@@ -1129,36 +1307,19 @@ function Footer() {
     <footer className="relative py-16 border-t border-foreground/[0.04]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="xl:pl-40">
-          <div className="grid md:grid-cols-4 gap-12 mb-16">
-            {/* Logo and tagline */}
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <DrayoIcon className="h-8 w-auto" />
-                <span className="text-foreground font-semibold text-lg">DRAYO</span>
-              </div>
-              <p className="text-foreground/40 text-sm max-w-xs">
-                The future of freight is operated by Drayo.
-              </p>
-            </div>
-            
-            {/* Product links */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Product</span>
-              </div>
-              <ul className="space-y-3">
-                {["Meet Drayo", "How It Works", "Capabilities", "Integrations"].map((item, i) => (
-                  <li key={i}>
-                    <a href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-foreground/50 hover:text-foreground transition-colors">
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Contact */}
+<div className="grid md:grid-cols-3 gap-12 mb-16">
+  {/* Logo and tagline */}
+  <div className="md:col-span-2">
+  <div className="flex items-center gap-2 mb-4">
+  <DrayoIcon className="h-8 w-auto" />
+  <span className="text-foreground font-semibold text-lg">DRAYO</span>
+  </div>
+  <p className="text-foreground/40 text-sm max-w-xs">
+  The future of freight is operated by Drayo.
+  </p>
+  </div>
+  
+  {/* Contact */}
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -1203,7 +1364,7 @@ function Footer() {
               <a href="#" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Terms of Service</a>
             </div>
             <div className="text-xs text-foreground/30">
-              © 2024 Drayo AI, Inc. All rights reserved.
+              © 2026 Drayo AI, Inc. All rights reserved.
             </div>
           </div>
         </div>
@@ -1216,6 +1377,7 @@ function Footer() {
 // MAIN PAGE
 // ============================================================================
 export default function DrayoLanding() {
+  const [showSplash, setShowSplash] = useState(true)
   const [activeSection, setActiveSection] = useState("hero")
   
   useEffect(() => {
@@ -1239,6 +1401,9 @@ export default function DrayoLanding() {
 
   return (
     <>
+      {/* Logo Splash Animation */}
+      {showSplash && <LogoSplash onComplete={() => setShowSplash(false)} />}
+      
       {/* Calendly Script */}
       <Script 
         src="https://assets.calendly.com/assets/external/widget.js" 
@@ -1246,7 +1411,7 @@ export default function DrayoLanding() {
       />
       <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       
-      <main className="relative min-h-screen bg-background">
+      <main className={`relative min-h-screen bg-background transition-opacity duration-500 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
         <AnimatedBackground />
         <Navbar />
         <SectionNav activeSection={activeSection} />

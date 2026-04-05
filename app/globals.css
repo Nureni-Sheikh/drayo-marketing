@@ -169,6 +169,27 @@
   animation: pulse-slow 3s ease-in-out infinite;
 }
 
+/* Logo splash animations */
+@keyframes splash-particle {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance));
+    opacity: 0;
+  }
+}
+
+@keyframes logo-dot-pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
