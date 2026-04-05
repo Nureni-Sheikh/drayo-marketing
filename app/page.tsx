@@ -1392,11 +1392,11 @@ function Footer() {
           {/* Bottom bar */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-foreground/[0.04]">
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Terms of Service</a>
+              <a href="/privacy" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Privacy Policy</a>
+              <a href="/terms" className="text-xs text-foreground/30 hover:text-foreground/50 transition-colors">Terms of Service</a>
             </div>
             <div className="text-xs text-foreground/30">
-              © 2026 Drayo AI, Inc. All rights reserved.
+              © 2026 Drayo AI Ltd. All rights reserved.
             </div>
           </div>
         </div>
