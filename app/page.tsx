@@ -37,9 +37,9 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
     // Enter animation
     const enterTimer = setTimeout(() => setPhase('hold'), 400)
     // Hold for a moment
-    const holdTimer = setTimeout(() => setPhase('exit'), 2000)
+    const holdTimer = setTimeout(() => setPhase('exit'), 2200)
     // Complete and unmount
-    const exitTimer = setTimeout(onComplete, 2500)
+    const exitTimer = setTimeout(onComplete, 2700)
     
     return () => {
       clearTimeout(enterTimer)
@@ -50,28 +50,10 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] bg-background flex items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-500 ${
         phase === 'exit' ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Animated particle burst background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {PARTICLE_DATA.map((particle, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/30"
-            style={{
-              left: '50%',
-              top: '50%',
-              animation: `splash-particle ${particle.duration}s ease-out forwards`,
-              animationDelay: `${particle.delay}s`,
-              '--angle': `${(360 / 20) * i}deg`,
-              '--distance': `${particle.distance}px`,
-            } as React.CSSProperties}
-          />
-        ))}
-      </div>
-      
       {/* Logo container */}
       <div 
         className={`relative transition-all duration-700 ease-out ${
@@ -80,39 +62,24 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           'scale-110 opacity-0'
         }`}
       >
-        {/* Animated ring */}
-        <div 
-          className={`absolute inset-0 -m-8 rounded-full border-2 border-primary/20 transition-all duration-1000 ${
-            phase === 'hold' ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
-          }`}
-          style={{ animationDelay: '0.3s' }}
-        />
-        <div 
-          className={`absolute inset-0 -m-16 rounded-full border border-primary/10 transition-all duration-1000 delay-100 ${
-            phase === 'hold' ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
-          }`}
-        />
-        
-        {/* Animated logo SVG - Icon only, no text */}
-        <svg viewBox="-42 -28 70 56" className="h-24 w-auto" fill="none">
-          {/* Small left circle - animates first */}
+        {/* Animated logo SVG with color transition */}
+        <svg viewBox="-42 -28 70 56" className="h-20 w-auto splash-logo-color" fill="none">
+          {/* Small left circle */}
           <circle 
             cx="-33" cy="0" r="5" 
-            fill="currentColor" 
-            className="text-primary"
+            fill="currentColor"
             style={{
               animation: phase !== 'enter' ? 'logo-dot-pop 0.4s ease-out forwards' : 'none',
               opacity: phase === 'enter' ? 0 : 1,
             }}
           />
           
-          {/* Connection line to center - draws in */}
+          {/* Connection line to center */}
           <line 
             x1="-28" y1="0" x2="-13" y2="0" 
             stroke="currentColor" 
             strokeWidth="2.5" 
             strokeLinecap="round"
-            className="text-primary"
             style={{
               strokeDasharray: 15,
               strokeDashoffset: phase === 'enter' ? 15 : 0,
@@ -120,13 +87,12 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
             }}
           />
           
-          {/* Main center circle (hollow) - draws in */}
+          {/* Main center circle (hollow) */}
           <circle 
             cx="0" cy="0" r="12" 
             stroke="currentColor" 
             strokeWidth="2.5" 
-            fill="none" 
-            className="text-primary"
+            fill="none"
             style={{
               strokeDasharray: 76,
               strokeDashoffset: phase === 'enter' ? 76 : 0,
@@ -140,7 +106,6 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
             stroke="currentColor" 
             strokeWidth="2.5" 
             strokeLinecap="round"
-            className="text-primary"
             style={{
               strokeDasharray: 14,
               strokeDashoffset: phase === 'enter' ? 14 : 0,
@@ -151,8 +116,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           {/* Upper right circle */}
           <circle 
             cx="20" cy="-18" r="5" 
-            fill="currentColor" 
-            className="text-primary"
+            fill="currentColor"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
@@ -167,7 +131,6 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
             stroke="currentColor" 
             strokeWidth="2.5" 
             strokeLinecap="round"
-            className="text-primary"
             style={{
               strokeDasharray: 14,
               strokeDashoffset: phase === 'enter' ? 14 : 0,
@@ -178,8 +141,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           {/* Lower right circle */}
           <circle 
             cx="20" cy="18" r="5" 
-            fill="currentColor" 
-            className="text-primary"
+            fill="currentColor"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
@@ -188,6 +150,18 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
             }}
           />
         </svg>
+      </div>
+      
+      {/* DRAYO text - appears after logo */}
+      <div 
+        className={`mt-6 transition-all duration-500 ${
+          phase === 'enter' ? 'opacity-0 translate-y-2' : 
+          phase === 'hold' ? 'opacity-100 translate-y-0' : 
+          'opacity-0 translate-y-2'
+        }`}
+        style={{ transitionDelay: phase === 'hold' ? '0.8s' : '0s' }}
+      >
+        <span className="text-lg font-semibold tracking-[0.25em] text-foreground/80">DRAYO</span>
       </div>
     </div>
   )
@@ -640,75 +614,156 @@ function EmailCard() {
 }
 
 // ============================================================================
-// CENTRAL DEVICE - Futuristic AI Core visualization
+// CENTRAL DEVICE - Floating Terminal Card with document processing animation
 // ============================================================================
 function CentralDevice() {
-  const [pulse, setPulse] = useState(false)
+  const [animationKey, setAnimationKey] = useState(0)
+  const [row1Text, setRow1Text] = useState('')
+  const [row2Status, setRow2Status] = useState<'typing' | 'extracting' | 'complete'>('typing')
+  const [row3Progress, setRow3Progress] = useState(0)
+  const [showRow2, setShowRow2] = useState(false)
+  const [showRow3, setShowRow3] = useState(false)
+  
+  const fullDocText = "Bill of Lading — TCKU3954821"
   
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPulse(p => !p)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
+    // Reset state for animation
+    setRow1Text('')
+    setRow2Status('typing')
+    setRow3Progress(0)
+    setShowRow2(false)
+    setShowRow3(false)
+    
+    // Type Row 1
+    let charIndex = 0
+    const typeInterval = setInterval(() => {
+      if (charIndex < fullDocText.length) {
+        setRow1Text(fullDocText.slice(0, charIndex + 1))
+        charIndex++
+      } else {
+        clearInterval(typeInterval)
+        // Show Row 2 after delay
+        setTimeout(() => {
+          setShowRow2(true)
+          setRow2Status('extracting')
+          // After extracting, show complete
+          setTimeout(() => {
+            setRow2Status('complete')
+            // Show Row 3
+            setTimeout(() => {
+              setShowRow3(true)
+              // Animate progress bar
+              let progress = 0
+              const progressInterval = setInterval(() => {
+                if (progress < 96) {
+                  progress += 4
+                  setRow3Progress(progress)
+                } else {
+                  clearInterval(progressInterval)
+                }
+              }, 30)
+            }, 400)
+          }, 1500)
+        }, 800)
+      }
+    }, 45)
+    
+    // Reset and loop after full animation
+    const loopTimeout = setTimeout(() => {
+      setAnimationKey(k => k + 1)
+    }, 8000)
+    
+    return () => {
+      clearInterval(typeInterval)
+      clearTimeout(loopTimeout)
+    }
+  }, [animationKey])
 
   return (
-    <div className="relative z-10">
-      {/* Outer glow rings */}
-      <div className="absolute inset-0 -m-8 flex items-center justify-center">
-        <div className="absolute w-[320px] h-[320px] rounded-full border border-primary/10 animate-spin-slow" style={{ animationDuration: '20s' }} />
-        <div className="absolute w-[280px] h-[280px] rounded-full border border-primary/5" />
-        <div className="absolute w-[360px] h-[360px] rounded-full border border-primary/5 animate-spin-slow" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
-      </div>
-      
-      {/* Main hexagonal container */}
-      <div className="relative">
-        <div className="relative w-[200px] h-[200px] flex items-center justify-center">
-          {/* Animated background layers */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-3xl rotate-45 scale-[0.7]" />
-          <div className="absolute inset-2 bg-gradient-to-tl from-primary/5 via-card/80 to-transparent rounded-3xl rotate-45 scale-[0.7] backdrop-blur-xl" />
+    <div className="relative z-10 animate-float" style={{ animation: 'float 4.4s ease-in-out infinite' }}>
+      {/* Terminal card */}
+      <div className="relative w-[320px] rounded-xl bg-[#0a1a14] border border-primary/20 shadow-[0_0_40px_rgba(0,212,160,0.15)] overflow-hidden">
+        
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-primary/10">
+          {/* macOS dots */}
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-red-500/70" />
+            <div className="w-2 h-2 rounded-full bg-yellow-500/70" />
+            <div className="w-2 h-2 rounded-full bg-green-500/70" />
+          </div>
           
-          {/* Inner core container */}
-          <div className="relative z-10 w-[160px] h-[160px] rounded-2xl bg-card/60 border border-primary/20 backdrop-blur-sm flex flex-col items-center justify-center overflow-hidden">
-            {/* Scan line effect */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent animate-scan-line" />
+          {/* DRAYO title */}
+          <span className="text-[11px] text-primary font-medium tracking-[0.1em] uppercase">DRAYO</span>
+          
+          {/* Connected status */}
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-[10px] text-primary">Connected</span>
+          </div>
+        </div>
+        
+        {/* Body - Document processing */}
+        <div className="p-4 space-y-4">
+          {/* Row 1: Document */}
+          <div>
+            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Document</div>
+            <div className="font-mono text-[12px] text-foreground/90 h-5 flex items-center">
+              {row1Text}
+              {row1Text.length < fullDocText.length && (
+                <span className="w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
+              )}
             </div>
-            
-            {/* Corner accents */}
-            <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-primary/40 rounded-tl" />
-            <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-primary/40 rounded-tr" />
-            <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-primary/40 rounded-bl" />
-            <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-primary/40 rounded-br" />
-            
-            {/* Drayo Icon - Centered and prominent */}
-            <div className={`transition-all duration-1000 ${pulse ? 'scale-110' : 'scale-100'}`}>
-              <DrayoIcon className="h-16 w-auto text-primary" />
+          </div>
+          
+          {/* Row 2: Status */}
+          <div className={`transition-all duration-300 ${showRow2 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Status</div>
+            <div className="font-mono text-[12px] h-5 flex items-center">
+              {row2Status === 'extracting' && (
+                <span className="text-foreground/70">
+                  Extracting fields<span className="animate-ellipsis">...</span>
+                </span>
+              )}
+              {row2Status === 'complete' && (
+                <span className="text-primary flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Complete
+                </span>
+              )}
             </div>
-            
-            {/* Status text */}
-            <div className="mt-3 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-[10px] text-primary font-medium tracking-wider uppercase">Active</span>
+          </div>
+          
+          {/* Row 3: Confidence */}
+          <div className={`transition-all duration-300 ${showRow3 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+            <div className="text-[9px] text-primary/50 uppercase tracking-wider mb-1.5">Confidence</div>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-[3px] bg-foreground/10 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary rounded-full transition-all duration-100"
+                  style={{ width: `${row3Progress}%` }}
+                />
+              </div>
+              <span className={`font-mono text-[11px] text-primary transition-opacity duration-300 ${row3Progress >= 96 ? 'opacity-100' : 'opacity-0'}`}>
+                96%
+              </span>
             </div>
           </div>
         </div>
         
-        {/* Orbiting dots */}
-        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '8s' }}>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-2 h-2 rounded-full bg-primary/60" />
-        </div>
-        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '12s', animationDirection: 'reverse' }}>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 w-1.5 h-1.5 rounded-full bg-accent/60" />
-        </div>
-        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '10s' }}>
-          <div className="absolute top-1/2 right-0 translate-x-2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary/40" />
+        {/* Bottom divider and summary */}
+        <div className="border-t border-primary/10 px-4 py-3">
+          <div className={`text-[9px] text-primary/40 text-center tracking-wider transition-opacity duration-500 ${row3Progress >= 96 ? 'opacity-100' : 'opacity-0'}`}>
+            20 fields extracted · Compliance passed · Email sent
+          </div>
         </div>
       </div>
       
-      {/* Core glow */}
-      <div className="absolute inset-0 -z-10 blur-[60px] opacity-30">
-        <div className="absolute inset-0 bg-primary rounded-full" />
+      {/* Glow effect */}
+      <div className="absolute inset-0 -z-10 blur-[50px] opacity-20">
+        <div className="absolute inset-0 bg-primary rounded-xl" />
       </div>
     </div>
   )
