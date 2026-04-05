@@ -169,12 +169,6 @@
   animation: pulse-slow 3s ease-in-out infinite;
 }
 
-/* Float panel animation for hero cards */
-@keyframes float-panel {
-  0%, 100% { transform: translateY(-6px); }
-  50% { transform: translateY(6px); }
-}
-
 /* Slow spin for orbiting elements */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
