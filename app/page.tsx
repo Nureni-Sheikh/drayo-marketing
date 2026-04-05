@@ -172,21 +172,21 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 170 50" className={className} fill="none">
+    <svg viewBox="0 0 180 50" className={className} fill="none">
       {/* Small left circle */}
-      <circle cx="7" cy="25" r="5" fill="currentColor" className="text-primary" />
+      <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
       {/* Connection line to center */}
-      <line x1="12" y1="25" x2="27" y2="25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
       {/* Main center circle (hollow) */}
-      <circle cx="40" cy="25" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
+      <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
       {/* Upper right connection and circle */}
-      <line x1="48" y1="16" x2="56" y2="10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="60" cy="7" r="5" fill="currentColor" className="text-primary" />
+      <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
       {/* Lower right connection and circle */}
-      <line x1="48" y1="34" x2="56" y2="40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="60" cy="43" r="5" fill="currentColor" className="text-primary" />
-      {/* DRAYO text */}
-      <text x="76" y="31" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
+      <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
+      {/* DRAYO text - bolder and larger */}
+      <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
         DRAYO
       </text>
     </svg>
@@ -446,109 +446,105 @@ function SectionNav({ activeSection }: { activeSection: string }) {
 
 function DriverCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[180px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Driver Verification</div>
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center text-primary text-sm font-semibold border border-primary/20">
-          JM
-        </div>
-        <div>
-          <div className="text-foreground text-xs font-medium">James Morrison</div>
-          <div className="text-foreground/30 text-[10px]">HGV Class 1</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-2 text-[10px]">
-        <span className="text-primary bg-primary/10 px-2 py-0.5 rounded-full">Verified</span>
-        <span className="text-foreground/40">CPC Valid</span>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Driver Verification</div>
+  <div className="flex items-center gap-3 mb-3">
+  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground/50 font-medium text-[11px]">JM</div>
+  <div>
+  <div className="text-foreground/80 font-medium text-[11px]">James Morrison</div>
+  <div className="text-primary/60 text-[9px]">HGV Class 1</div>
+  </div>
+  </div>
+  <div className="flex gap-1.5">
+  <span className="px-2 py-0.5 bg-primary/10 text-primary text-[8px] rounded">Verified</span>
+  <span className="px-2 py-0.5 bg-foreground/5 text-foreground/40 text-[8px] rounded">CPC Valid</span>
+  </div>
+  </div>
   )
-}
+  }
 
 function CalendarCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[200px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Delivery Schedule</div>
-      <div className="grid grid-cols-7 gap-1 text-center mb-2">
-        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-          <div key={i} className="text-[8px] text-foreground/20 py-0.5">{d}</div>
-        ))}
-      </div>
-      <div className="grid grid-cols-7 gap-1 text-center">
-        {[...Array(21)].map((_, i) => {
-          const day = i + 8
-          const booked = [12, 13, 18, 19].includes(day)
-          const today = day === 15
-          return (
-            <div 
-              key={i} 
-              className={`text-[9px] py-1 rounded-md transition-all ${
-                today ? 'bg-primary text-background font-medium' : 
-                booked ? 'bg-primary/15 text-primary' : 'text-foreground/20 hover:bg-foreground/5'
-              }`}
-            >
-              {day}
-            </div>
-          )
-        })}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Delivery Schedule</div>
+  <div className="grid grid-cols-7 gap-1 text-[8px] text-center">
+  {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+  <div key={i} className="text-foreground/20">{d}</div>
+  ))}
+  {Array(7).fill(0).map((_, i) => {
+  const day = 8 + i
+  const hasDelivery = [12, 13, 15, 18, 19].includes(day)
+  const isToday = day === 15
+  return (
+  <div 
+  key={i} 
+  className={`py-1 rounded ${
+  isToday ? "bg-primary text-background" : hasDelivery ? "bg-primary/20 text-primary" : "text-foreground/30"
+  }`}
+  >
+  {day}
+  </div>
   )
-}
+  })}
+  </div>
+  </div>
+  )
+  }
 
 function InvoiceCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[170px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Auto Invoice</div>
-      <div className="text-foreground/50 font-mono text-[10px] mb-3">INV-2024-0892</div>
-      <div className="space-y-2 text-[10px]">
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Haulage</span>
-          <span className="text-foreground/70">£485.00</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Port fees</span>
-          <span className="text-foreground/70">£125.00</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-foreground/30">Customs</span>
-          <span className="text-foreground/70">£95.00</span>
-        </div>
-        <div className="h-px bg-foreground/10 my-1" />
-        <div className="flex justify-between font-medium">
-          <span className="text-foreground/50">Total</span>
-          <span className="text-primary">£705.00</span>
-        </div>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Auto Invoice</div>
+  <div className="font-mono text-[10px] text-foreground/50 mb-3">INV-2024-0892</div>
+  <div className="space-y-1.5 mb-3">
+  {[
+  { label: "Haulage", amount: "£485.00" },
+  { label: "Port fees", amount: "£125.00" },
+  { label: "Customs", amount: "£96.00" },
+  ].map((line, i) => (
+  <div key={i} className="flex justify-between text-[9px]">
+  <span className="text-foreground/30">{line.label}</span>
+  <span className="text-foreground/60">{line.amount}</span>
+  </div>
+  ))}
+  </div>
+  <div className="pt-2 border-t border-foreground/5 flex justify-between text-[10px]">
+  <span className="text-foreground/40">Total</span>
+  <span className="text-primary font-medium">£705.00</span>
+  </div>
+  </div>
   )
-}
+  }
 
 function WhatsAppCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[190px]">
-      <div className="flex items-center gap-2 mb-3">
-        <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        <span className="text-[8px] text-foreground/30 uppercase tracking-[0.2em]">WhatsApp</span>
-      </div>
-      <div className="space-y-2">
-        <div className="bg-foreground/5 rounded-xl rounded-tl-sm px-3 py-2">
-          <span className="text-[10px] text-foreground/50">Container ETA?</span>
-        </div>
-        <div className="bg-primary/10 rounded-xl rounded-tr-sm px-3 py-2 border border-primary/10">
-          <span className="text-[10px] text-foreground/70">TCKU395XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</span>
-        </div>
-      </div>
-      <div className="mt-2 text-[8px] text-primary/60">Auto-reply sent</div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="flex items-center gap-2 mb-3">
+  <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span className="text-[8px] text-foreground/30 uppercase tracking-[0.2em]">WhatsApp</span>
+  </div>
+  <div className="space-y-2">
+  <div className="bg-foreground/5 rounded-lg p-2">
+  <div className="text-[9px] text-foreground/30 mb-1">Customer inquiry</div>
+  <div className="text-[10px] text-foreground/60">Container ETA?</div>
+  </div>
+  <div className="bg-primary/5 rounded-lg p-2 border-l-2 border-primary/30">
+  <div className="text-[10px] text-foreground/70">TCKU396XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</div>
+  </div>
+  <div className="text-[8px] text-primary/50 flex items-center gap-1">
+  <span className="w-1 h-1 rounded-full bg-primary/50" />
+  Auto-reply sent
+  </div>
+  </div>
+  </div>
   )
-}
+  }
 
 function ShipmentCard() {
   return (
-  <div className="floating-card rounded-2xl p-3 w-[165px]">
+  <div className="floating-card rounded-2xl p-3 h-full">
   <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Live Tracking</div>
   {/* Mini map visualization */}
   <div className="relative h-[80px] bg-foreground/[0.02] rounded-lg overflow-hidden mb-2">
@@ -599,72 +595,47 @@ function ShipmentCard() {
 
 function ComplianceCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[150px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Compliance</div>
-      <div className="space-y-2">
-        {[
-          { label: "HMRC", done: true },
-          { label: "T1 Transit", done: true },
-          { label: "Health Cert", done: true },
-        ].map((item, i) => (
-          <div key={i} className="flex items-center justify-between">
-            <span className="text-[10px] text-foreground/40">{item.label}</span>
-            <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center">
-              <svg className="w-2.5 h-2.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Compliance</div>
+  <div className="space-y-2">
+  {[
+  { name: "HMRC", checked: true },
+  { name: "T1 Transit", checked: true },
+  { name: "Health Cert", checked: true },
+  ].map((item, i) => (
+  <div key={i} className="flex items-center justify-between">
+  <span className="text-[10px] text-foreground/50">{item.name}</span>
+  <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+  </div>
+  ))}
+  </div>
+  </div>
   )
-}
+  }
 
 function EmailCard() {
   return (
-    <div className="floating-card rounded-2xl p-4 w-[180px]">
-      <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-3">Email Sent</div>
-      <div className="text-[9px] text-foreground/30 mb-2">To: dispatch@customer.com</div>
-      <div className="text-[10px] text-foreground/50 leading-relaxed line-clamp-3">
-        Your shipment TCKU395XXX has cleared customs and is scheduled for delivery tomorrow...
-      </div>
-      <div className="mt-3 flex items-center gap-1.5">
-        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-        <span className="text-[8px] text-primary/70">Sent automatically</span>
-      </div>
-    </div>
+  <div className="floating-card rounded-2xl p-4 h-full">
+  <div className="flex items-center gap-3">
+  <div className="flex-shrink-0">
+  <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Email Sent</div>
+  <div className="text-[9px] text-foreground/40 mb-2">To: dispatch@customer.com</div>
+  </div>
+  <div className="flex-1">
+  <div className="text-[10px] text-foreground/60 leading-relaxed">
+  Your shipment TCKU396XXX has cleared customs and is scheduled for delivery tomorrow between 9-11 AM at Gate 4.
+  </div>
+  <div className="mt-2 flex items-center gap-1 text-[8px] text-primary">
+  <div className="w-1 h-1 rounded-full bg-primary" />
+  Sent automatically
+  </div>
+  </div>
+  </div>
+  </div>
   )
-}
-
-// ============================================================================
-// CENTRAL DEVICE - Simple icon that blends with other cards
-// ============================================================================
-function CentralDevice() {
-  return (
-    <div className="relative z-10" style={{ animation: 'float 5s ease-in-out infinite' }}>
-      {/* Simple floating card matching other panels */}
-      <div className="floating-card rounded-2xl p-6 w-[140px] h-[140px] flex flex-col items-center justify-center">
-        {/* Drayo Icon */}
-        <DrayoIcon className="h-12 w-auto text-primary mb-3" />
-        
-        {/* Simple label */}
-        <span className="text-[10px] text-foreground/40 uppercase tracking-wider">Drayo</span>
-        
-        {/* Status indicator */}
-        <div className="mt-2 flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <span className="text-[8px] text-primary/60">Active</span>
-        </div>
-      </div>
-      
-      {/* Subtle glow */}
-      <div className="absolute inset-0 -z-10 blur-[40px] opacity-15">
-        <div className="absolute inset-0 bg-primary rounded-full" />
-      </div>
-    </div>
-  )
-}
+  }
 
 // ============================================================================
 // CONNECTING LINES SVG - Lines from cards to center
@@ -717,7 +688,7 @@ function ConnectingLines() {
 }
 
 // ============================================================================
-// HERO SECTION - Fixed layout: text at top, visual below
+// HERO SECTION - Grid layout with multiple functionality panels
 // ============================================================================
 function HeroSection() {
   return (
@@ -725,65 +696,58 @@ function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Header content - centered */}
-        <div className="text-center max-w-3xl mx-auto mb-8">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">Meet Drayo</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6">
-            <span className="text-foreground">Automate </span>
-            <span className="text-primary">compliance</span>
-            <span className="text-foreground"> and </span>
-            <span className="text-primary">documentation</span>
+            <span className="text-primary">Drayo</span>
+            <span className="text-foreground"> operates your freight systems</span>
           </h1>
           
           <p className="text-foreground/40 text-lg max-w-xl mx-auto">
-            AI agents that handle freight operations end-to-end
+            Autonomous AI for logistics operations
           </p>
         </div>
         
-        {/* Central visualization with floating cards */}
-        <div className="relative h-[600px] lg:h-[580px] max-w-[800px] mx-auto">
-          <ConnectingLines />
-          
-          {/* Floating cards positioned around center */}
-          <div className="absolute top-0 left-0 animate-float-1">
-            <DriverCard />
+        {/* Grid of functionality panels - rectangular arrangement */}
+        <div className="relative max-w-[1100px] mx-auto">
+          {/* Main grid layout */}
+          <div className="grid grid-cols-12 gap-3 lg:gap-4">
+            {/* Row 1 */}
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-1">
+              <DriverCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-2">
+              <WhatsAppCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-3">
+              <CalendarCard />
+            </div>
+            <div className="col-span-6 sm:col-span-6 lg:col-span-3 animate-float-4">
+              <ComplianceCard />
+            </div>
+            
+            {/* Row 2 */}
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-5">
+              <InvoiceCard />
+            </div>
+            <div className="col-span-6 sm:col-span-4 lg:col-span-3 animate-float-6">
+              <ShipmentCard />
+            </div>
+            <div className="col-span-12 sm:col-span-4 lg:col-span-6 animate-float-7">
+              <EmailCard />
+            </div>
           </div>
           
-          <div className="absolute top-0 right-0 animate-float-2">
-            <CalendarCard />
-          </div>
-          
-          <div className="absolute top-[30%] -left-4 lg:left-0 animate-float-3">
-            <InvoiceCard />
-          </div>
-          
-          <div className="absolute top-[32%] -right-4 lg:right-0 animate-float-4">
-            <WhatsAppCard />
-          </div>
-          
-          <div className="absolute bottom-[12%] left-0 animate-float-5">
-            <ShipmentCard />
-          </div>
-          
-          <div className="absolute bottom-[15%] right-0 animate-float-6">
-            <ComplianceCard />
-          </div>
-          
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-float-7">
-            <EmailCard />
-          </div>
-          
-          {/* Central device */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <CentralDevice />
-          </div>
+          {/* Subtle connecting gradient overlay */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent rounded-3xl -z-10" />
         </div>
         
         {/* Feature cards - horizontal row below */}
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
           {[
             { title: "Computer use agents", desc: "Vision-based AI operates your software" },
             { title: "Multimodal intelligence", desc: "Email, WhatsApp, voice unified" },
@@ -1140,18 +1104,24 @@ function FeaturesSection() {
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid sm:grid-cols-2 gap-4">
+        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5">
           {features.map((feature, i) => (
-            <div key={i} className="group p-6 rounded-2xl bg-card/20 border border-foreground/[0.04] hover:border-primary/20 transition-all backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
+            <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
+              
+              <div className="relative flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
                   {feature.icon}
                 </div>
-                <div>
-                  <h3 className="text-foreground font-medium mb-1">{feature.title}</h3>
-                  <p className="text-sm text-foreground/40 leading-relaxed">{feature.desc}</p>
+                <div className="flex-1">
+                  <h3 className="text-foreground font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-foreground/50 leading-relaxed">{feature.desc}</p>
                 </div>
               </div>
+              
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
         </div>
