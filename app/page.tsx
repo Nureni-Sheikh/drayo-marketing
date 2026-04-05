@@ -63,7 +63,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
         }`}
       >
         {/* Animated logo SVG with color transition */}
-        <svg viewBox="-42 -28 70 56" className="h-20 w-auto splash-logo-color" fill="none">
+        <svg viewBox="-42 -28 70 56" className="h-32 w-auto splash-logo-color" fill="none">
           {/* Small left circle */}
           <circle 
             cx="-33" cy="0" r="5" 
