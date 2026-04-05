@@ -640,54 +640,75 @@ function EmailCard() {
 }
 
 // ============================================================================
-// CENTRAL DEVICE - Desktop monitor style
+// CENTRAL DEVICE - Futuristic AI Core visualization
 // ============================================================================
 function CentralDevice() {
-  const [bars, setBars] = useState<number[]>([])
+  const [pulse, setPulse] = useState(false)
   
   useEffect(() => {
-    setBars(Array(28).fill(0).map(() => 15 + Math.random() * 70))
     const interval = setInterval(() => {
-      setBars(prev => prev.map(() => 15 + Math.random() * 70))
-    }, 100)
+      setPulse(p => !p)
+    }, 2000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <div className="relative z-10">
-      {/* Monitor frame */}
+      {/* Outer glow rings */}
+      <div className="absolute inset-0 -m-8 flex items-center justify-center">
+        <div className="absolute w-[320px] h-[320px] rounded-full border border-primary/10 animate-spin-slow" style={{ animationDuration: '20s' }} />
+        <div className="absolute w-[280px] h-[280px] rounded-full border border-primary/5" />
+        <div className="absolute w-[360px] h-[360px] rounded-full border border-primary/5 animate-spin-slow" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
+      </div>
+      
+      {/* Main hexagonal container */}
       <div className="relative">
-        <div className="device-frame rounded-[24px] p-4">
-          <div className="device-screen rounded-[16px] overflow-hidden w-[260px] h-[180px] flex flex-col items-center justify-center p-6">
-            {/* Status bar */}
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-<div className="flex items-center gap-1.5">
-  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-  </div>
-  </div>
-  
-  <DrayoLogo className="h-6 w-auto mb-4 text-foreground" />
+        <div className="relative w-[200px] h-[200px] flex items-center justify-center">
+          {/* Animated background layers */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-3xl rotate-45 scale-[0.7]" />
+          <div className="absolute inset-2 bg-gradient-to-tl from-primary/5 via-card/80 to-transparent rounded-3xl rotate-45 scale-[0.7] backdrop-blur-xl" />
+          
+          {/* Inner core container */}
+          <div className="relative z-10 w-[160px] h-[160px] rounded-2xl bg-card/60 border border-primary/20 backdrop-blur-sm flex flex-col items-center justify-center overflow-hidden">
+            {/* Scan line effect */}
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent animate-scan-line" />
+            </div>
             
-            {/* Waveform */}
-            <div className="flex items-center justify-center gap-[2px] h-14 w-full">
-              {bars.map((height, i) => (
-                <div 
-                  key={i}
-                  className="w-[3px] bg-gradient-to-t from-primary/40 to-primary rounded-full transition-all duration-75"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
+            {/* Corner accents */}
+            <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-primary/40 rounded-tl" />
+            <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-primary/40 rounded-tr" />
+            <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-primary/40 rounded-bl" />
+            <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-primary/40 rounded-br" />
+            
+            {/* Drayo Icon - Centered and prominent */}
+            <div className={`transition-all duration-1000 ${pulse ? 'scale-110' : 'scale-100'}`}>
+              <DrayoIcon className="h-16 w-auto text-primary" />
+            </div>
+            
+            {/* Status text */}
+            <div className="mt-3 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="text-[10px] text-primary font-medium tracking-wider uppercase">Active</span>
             </div>
           </div>
         </div>
-        {/* Stand */}
-        <div className="mx-auto w-20 h-5 bg-gradient-to-b from-foreground/10 to-foreground/5 rounded-b-lg" />
-        <div className="mx-auto w-28 h-1.5 bg-foreground/10 rounded-full" />
+        
+        {/* Orbiting dots */}
+        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '8s' }}>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-2 h-2 rounded-full bg-primary/60" />
+        </div>
+        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '12s', animationDirection: 'reverse' }}>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 w-1.5 h-1.5 rounded-full bg-accent/60" />
+        </div>
+        <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '10s' }}>
+          <div className="absolute top-1/2 right-0 translate-x-2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary/40" />
+        </div>
       </div>
       
-      {/* Glow */}
-      <div className="absolute inset-0 -z-10 blur-[80px] opacity-25">
-        <div className="absolute inset-0 bg-primary rounded-full scale-150" />
+      {/* Core glow */}
+      <div className="absolute inset-0 -z-10 blur-[60px] opacity-30">
+        <div className="absolute inset-0 bg-primary rounded-full" />
       </div>
     </div>
   )
