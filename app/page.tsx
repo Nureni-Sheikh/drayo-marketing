@@ -887,8 +887,8 @@ function TMSAutoFillVisual() {
   
   const operations = [
     {
-      title: "Document Processing",
-      desc: "Instant extraction from BOLs, invoices, and customs forms",
+      title: "Document arrives",
+      desc: "Email, WhatsApp or any format.",
       visual: (
         <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] overflow-hidden backdrop-blur-sm">
           <div className="absolute top-4 right-4 text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full">Processing</div>
@@ -912,8 +912,8 @@ function TMSAutoFillVisual() {
       )
     },
   {
-  title: "TMS Auto-Fill",
-  desc: "Populates your transport management system automatically",
+  title: "Document read",
+  desc: "Fields extracted.",
   visual: <TMSAutoFillVisual />
   },
     {
