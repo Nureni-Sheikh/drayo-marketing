@@ -93,11 +93,11 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           }`}
         />
         
-        {/* Animated logo SVG */}
-        <svg viewBox="0 0 140 32" className="h-16 w-auto" fill="none">
-          {/* Small dot - animates first */}
+        {/* Animated logo SVG - New design */}
+        <svg viewBox="-50 -35 180 70" className="h-20 w-auto" fill="none">
+          {/* Small left circle - animates first */}
           <circle 
-            cx="8" cy="16" r="4" 
+            cx="-33" cy="0" r="5" 
             fill="currentColor" 
             className="text-primary"
             style={{
@@ -106,82 +106,95 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
             }}
           />
           
-          {/* Connection line - draws in */}
+          {/* Connection line to center - draws in */}
           <line 
-            x1="12" y1="16" x2="20" y2="16" 
+            x1="-28" y1="0" x2="-13" y2="0" 
             stroke="currentColor" 
-            strokeWidth="2" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
             className="text-primary"
             style={{
-              strokeDasharray: 8,
-              strokeDashoffset: phase === 'enter' ? 8 : 0,
+              strokeDasharray: 15,
+              strokeDashoffset: phase === 'enter' ? 15 : 0,
               transition: 'stroke-dashoffset 0.3s ease-out 0.2s',
             }}
           />
           
-          {/* Main circle - scales in */}
+          {/* Main center circle (hollow) - draws in */}
           <circle 
-            cx="24" cy="16" r="6" 
+            cx="0" cy="0" r="12" 
             stroke="currentColor" 
-            strokeWidth="2" 
+            strokeWidth="2.5" 
             fill="none" 
             className="text-primary"
             style={{
-              strokeDasharray: 38,
-              strokeDashoffset: phase === 'enter' ? 38 : 0,
+              strokeDasharray: 76,
+              strokeDashoffset: phase === 'enter' ? 76 : 0,
               transition: 'stroke-dashoffset 0.5s ease-out 0.3s',
             }}
           />
           
-          {/* Small circles on the right */}
-          <circle 
-            cx="34" cy="12" r="2" 
-            fill="currentColor" 
-            className="text-primary/60"
-            style={{
-              opacity: phase === 'enter' ? 0 : 1,
-              transition: 'opacity 0.3s ease-out 0.6s',
-            }}
-          />
-          <circle 
-            cx="34" cy="20" r="2" 
-            fill="currentColor" 
-            className="text-primary/60"
-            style={{
-              opacity: phase === 'enter' ? 0 : 1,
-              transition: 'opacity 0.3s ease-out 0.7s',
-            }}
-          />
+          {/* Upper right connection line */}
           <line 
-            x1="30" y1="14" x2="32" y2="12" 
+            x1="8" y1="-9" x2="18" y2="-16" 
             stroke="currentColor" 
-            strokeWidth="1.5" 
-            className="text-primary/40"
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+            className="text-primary"
             style={{
-              strokeDasharray: 4,
-              strokeDashoffset: phase === 'enter' ? 4 : 0,
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
               transition: 'stroke-dashoffset 0.3s ease-out 0.5s',
             }}
           />
-          <line 
-            x1="30" y1="18" x2="32" y2="20" 
-            stroke="currentColor" 
-            strokeWidth="1.5" 
-            className="text-primary/40"
+          
+          {/* Upper right circle */}
+          <circle 
+            cx="22" cy="-19" r="5" 
+            fill="currentColor" 
+            className="text-primary"
             style={{
-              strokeDasharray: 4,
-              strokeDashoffset: phase === 'enter' ? 4 : 0,
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '22px -19px',
+              transition: 'opacity 0.3s ease-out 0.6s, transform 0.3s ease-out 0.6s',
+            }}
+          />
+          
+          {/* Lower right connection line */}
+          <line 
+            x1="8" y1="9" x2="18" y2="16" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+            className="text-primary"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
               transition: 'stroke-dashoffset 0.3s ease-out 0.55s',
+            }}
+          />
+          
+          {/* Lower right circle */}
+          <circle 
+            cx="22" cy="19" r="5" 
+            fill="currentColor" 
+            className="text-primary"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '22px 19px',
+              transition: 'opacity 0.3s ease-out 0.7s, transform 0.3s ease-out 0.7s',
             }}
           />
           
           {/* DRAYO text - fades in last */}
           <text 
-            x="44" y="22" 
+            x="42" y="8" 
             fill="currentColor" 
             className="text-foreground" 
             style={{ 
-              fontSize: '18px', 
+              fontSize: '22px', 
               fontWeight: 600, 
               fontFamily: 'var(--font-sans)',
               opacity: phase === 'enter' ? 0 : 1,
@@ -206,22 +219,25 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 }
 
 // ============================================================================
-// DRAYO LOGO - Connected nodes design with repositioned circles
+// DRAYO LOGO - New connected nodes design from user SVG
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 140 32" className={className} fill="none">
-      {/* Node network - circle connected to two smaller circles */}
-      <circle cx="8" cy="16" r="4" fill="currentColor" className="text-primary" />
-      <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="2" className="text-primary" />
-      <circle cx="24" cy="16" r="6" stroke="currentColor" strokeWidth="2" fill="none" className="text-primary" />
-      {/* Small circles repositioned to the right of main circle */}
-      <circle cx="34" cy="12" r="2" fill="currentColor" className="text-primary/60" />
-      <circle cx="34" cy="20" r="2" fill="currentColor" className="text-primary/60" />
-      <line x1="30" y1="14" x2="32" y2="12" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
-      <line x1="30" y1="18" x2="32" y2="20" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
+    <svg viewBox="0 0 160 40" className={className} fill="none">
+      {/* Small left circle */}
+      <circle cx="7" cy="20" r="5" fill="currentColor" className="text-primary" />
+      {/* Connection line to center */}
+      <line x1="12" y1="20" x2="27" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      {/* Main center circle (hollow) */}
+      <circle cx="40" cy="20" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
+      {/* Upper right connection and circle */}
+      <line x1="48" y1="11" x2="58" y2="4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="62" cy="1" r="5" fill="currentColor" className="text-primary" />
+      {/* Lower right connection and circle */}
+      <line x1="48" y1="29" x2="58" y2="36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="62" cy="39" r="5" fill="currentColor" className="text-primary" />
       {/* DRAYO text */}
-      <text x="44" y="22" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
+      <text x="78" y="26" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>
         DRAYO
       </text>
     </svg>
@@ -229,18 +245,23 @@ function DrayoLogo({ className = "" }: { className?: string }) {
 }
 
 // ============================================================================
-// DRAYO ICON ONLY - For footer
+// DRAYO ICON ONLY - For footer and other uses
 // ============================================================================
 function DrayoIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 32" className={className} fill="none">
-      <circle cx="8" cy="16" r="4" fill="currentColor" className="text-primary" />
-      <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="2" className="text-primary" />
-      <circle cx="24" cy="16" r="6" stroke="currentColor" strokeWidth="2" fill="none" className="text-primary" />
-      <circle cx="34" cy="12" r="2" fill="currentColor" className="text-primary/60" />
-      <circle cx="34" cy="20" r="2" fill="currentColor" className="text-primary/60" />
-      <line x1="30" y1="14" x2="32" y2="12" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
-      <line x1="30" y1="18" x2="32" y2="20" stroke="currentColor" strokeWidth="1.5" className="text-primary/40" />
+    <svg viewBox="-50 -35 100 70" className={className} fill="none">
+      {/* Small left circle */}
+      <circle cx="-33" cy="0" r="5" fill="currentColor" className="text-primary" />
+      {/* Connection line to center */}
+      <line x1="-28" y1="0" x2="-13" y2="0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      {/* Main center circle (hollow) */}
+      <circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary" />
+      {/* Upper right connection and circle */}
+      <line x1="8" y1="-9" x2="18" y2="-16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="22" cy="-19" r="5" fill="currentColor" className="text-primary" />
+      {/* Lower right connection and circle */}
+      <line x1="8" y1="9" x2="18" y2="16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-primary" />
+      <circle cx="22" cy="19" r="5" fill="currentColor" className="text-primary" />
     </svg>
   )
 }
@@ -832,9 +853,124 @@ function HeroSection() {
 }
 
 // ============================================================================
-// OPERATIONS SECTION - Visual demo of capabilities
+// TMS AUTO-FILL VISUAL - Animated typing effect
 // ============================================================================
-function OperationsSection() {
+function TMSAutoFillVisual() {
+  const [fieldIndex, setFieldIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
+  
+  const fields = [
+    { label: "Reference", value: "DRY-2026-00847" },
+    { label: "Customer", value: "Rotterdam Logistics BV" },
+    { label: "Route", value: "Rotterdam → Felixstowe" },
+    { label: "Driver", value: "James Morrison (HGV1)" },
+  ]
+  
+  useEffect(() => {
+    if (!isTyping) return
+    
+    const currentField = fields[fieldIndex]
+    if (!currentField) {
+      // Reset after completing all fields
+      const resetTimer = setTimeout(() => {
+        setFieldIndex(0)
+        setCharIndex(0)
+      }, 2000)
+      return () => clearTimeout(resetTimer)
+    }
+    
+    if (charIndex < currentField.value.length) {
+      // Type next character
+      const typeTimer = setTimeout(() => {
+        setCharIndex(charIndex + 1)
+      }, 40 + Math.random() * 30) // Variable typing speed
+      return () => clearTimeout(typeTimer)
+    } else {
+      // Move to next field
+      const nextFieldTimer = setTimeout(() => {
+        setFieldIndex(fieldIndex + 1)
+        setCharIndex(0)
+      }, 400)
+      return () => clearTimeout(nextFieldTimer)
+    }
+  }, [fieldIndex, charIndex, isTyping, fields])
+  
+  return (
+    <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-red-500/60" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+          <div className="w-2 h-2 rounded-full bg-green-500/60" />
+        </div>
+        <div className="text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          Drayo Active
+        </div>
+      </div>
+      
+      {/* TMS Form Fields */}
+      <div className="space-y-4">
+        {fields.map((field, i) => {
+          const isCurrentField = i === fieldIndex
+          const isCompleted = i < fieldIndex
+          const displayValue = isCompleted 
+            ? field.value 
+            : isCurrentField 
+              ? field.value.slice(0, charIndex)
+              : ""
+          
+          return (
+            <div key={i} className="relative">
+              <span className="text-[9px] text-foreground/40 block mb-1.5 uppercase tracking-wider">{field.label}</span>
+              <div className={`bg-foreground/[0.03] rounded-lg px-3 py-2.5 text-[12px] border transition-all duration-300 ${
+                isCurrentField 
+                  ? 'border-primary/30 bg-primary/[0.03]' 
+                  : isCompleted
+                    ? 'border-foreground/[0.08]'
+                    : 'border-foreground/[0.04]'
+              }`}>
+                <span className={`font-mono ${isCompleted ? 'text-foreground/70' : 'text-primary'}`}>
+                  {displayValue}
+                </span>
+                {isCurrentField && (
+                  <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
+                )}
+                {!isCurrentField && !isCompleted && (
+                  <span className="text-foreground/20">—</span>
+                )}
+              </div>
+              {isCompleted && (
+                <div className="absolute right-3 top-1/2 translate-y-1 text-primary">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+      
+      {/* Progress indicator */}
+      <div className="absolute bottom-4 left-6 right-6">
+        <div className="h-1 bg-foreground/[0.04] rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${((fieldIndex + (charIndex / (fields[fieldIndex]?.value.length || 1))) / fields.length) * 100}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+  // ============================================================================
+  // OPERATIONS SECTION - Visual demo of capabilities
+  // ============================================================================
+  function OperationsSection() {
   const [activeOp, setActiveOp] = useState(0)
   
   const operations = [
@@ -863,28 +999,11 @@ function OperationsSection() {
         </div>
       )
     },
-    {
-      title: "TMS Auto-Fill",
-      desc: "Populates your transport management system automatically",
-      visual: (
-        <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
-          <div className="absolute top-4 right-4 text-[8px] text-accent bg-accent/10 px-2 py-1 rounded-full flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            Auto-filling
-          </div>
-          <div className="space-y-3 mt-8">
-            {["Reference", "Customer", "Route", "Driver"].map((label, i) => (
-              <div key={i}>
-                <span className="text-[9px] text-foreground/30 block mb-1">{label}</span>
-                <div className="bg-foreground/[0.03] rounded-lg px-3 py-2 text-[11px] text-foreground/70 border border-foreground/[0.04]">
-                  <span className="inline-block w-1 h-3 bg-primary animate-pulse" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    },
+  {
+  title: "TMS Auto-Fill",
+  desc: "Populates your transport management system automatically",
+  visual: <TMSAutoFillVisual />
+  },
     {
       title: "Schedule Organizing",
       desc: "Coordinates pickups, deliveries, and resource allocation",
@@ -1148,8 +1267,8 @@ function IntegrationsSection() {
             <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
             
-            {/* 3x3 Logo grid */}
-            <div className="grid grid-cols-3 gap-2 p-4">
+            {/* Logo grid - 2 rows */}
+            <div className="grid grid-cols-4 gap-3 p-4">
               {/* Row 1 */}
               <LogoCard>
                 <CargoWiseLogo />
@@ -1160,19 +1279,14 @@ function IntegrationsSection() {
               <LogoCard>
                 <SAPLogo />
               </LogoCard>
-              
-              {/* Row 2 - Drayo centered */}
               <LogoCard>
                 <OracleLogo />
               </LogoCard>
-              <LogoCard highlighted>
-                <DrayoIcon className="h-8 w-auto" />
-              </LogoCard>
+              
+              {/* Row 2 */}
               <LogoCard>
                 <GmailLogo />
               </LogoCard>
-              
-              {/* Row 3 */}
               <LogoCard>
                 <OutlookLogo />
               </LogoCard>
@@ -1203,58 +1317,36 @@ function LogoCard({ children, highlighted = false }: { children: React.ReactNode
   )
 }
 
-// Actual brand logos as SVGs
+// Actual brand logos as SVGs - text-based for consistency
 function CargoWiseLogo() {
   return (
-    <svg viewBox="0 0 120 24" className="h-5 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      {/* CargoWise icon - horizontal bars */}
-      <g fill="currentColor" className="text-foreground">
-        <rect x="0" y="2" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="6" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="10" width="6" height="2.5" rx="0.3" />
-        <rect x="0" y="14" width="3.5" height="2.5" rx="0.3" />
-        <rect x="0" y="18" width="3.5" height="2.5" rx="0.3" />
-        <rect x="8" y="2" width="3.5" height="2.5" rx="0.3" />
-        <rect x="8" y="6" width="6" height="2.5" rx="0.3" />
-        <rect x="8" y="10" width="6" height="2.5" rx="0.3" />
-        <rect x="8" y="14" width="3.5" height="2.5" rx="0.3" />
-      </g>
-      <text x="20" y="16" fill="currentColor" className="text-foreground" style={{ fontSize: '11px', fontWeight: 500 }}>cargowise</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      CargoWise
+    </span>
   )
 }
 
 function WiseTechLogo() {
   return (
-    <svg viewBox="0 0 90 28" className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <g fill="currentColor" className="text-foreground">
-        {/* Vertical bars pattern */}
-        <rect x="0" y="0" width="2.5" height="10" rx="0.3" />
-        <rect x="4" y="3" width="2.5" height="14" rx="0.3" />
-        <rect x="8" y="0" width="2.5" height="10" rx="0.3" />
-        <rect x="0" y="14" width="2.5" height="6" rx="0.3" />
-        <rect x="4" y="20" width="2.5" height="4" rx="0.3" />
-        <rect x="8" y="14" width="2.5" height="6" rx="0.3" />
-      </g>
-      <text x="16" y="12" fill="currentColor" className="text-foreground" style={{ fontSize: '9px', fontWeight: 500 }}>wisetech</text>
-      <text x="16" y="22" fill="currentColor" className="text-foreground" style={{ fontSize: '9px', fontWeight: 500 }}>global</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight text-center leading-tight">
+      WiseTech<br/>Global
+    </span>
   )
 }
 
 function SAPLogo() {
   return (
-    <svg viewBox="0 0 50 24" className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <text x="0" y="18" fill="currentColor" className="text-foreground" style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.02em' }}>SAP</text>
-    </svg>
+    <span className="text-lg font-bold text-foreground/50 hover:text-foreground/80 transition-opacity">
+      SAP
+    </span>
   )
 }
 
 function OracleLogo() {
   return (
-    <svg viewBox="0 0 70 16" className="h-4 w-auto opacity-60 hover:opacity-100 transition-opacity">
-      <text x="0" y="13" fill="currentColor" className="text-foreground" style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.02em' }}>ORACLE</text>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-wide">
+      ORACLE
+    </span>
   )
 }
 
@@ -1268,11 +1360,9 @@ function GmailLogo() {
 
 function OutlookLogo() {
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6 opacity-60 hover:opacity-100 transition-opacity">
-      <path fill="currentColor" d="M24 7.387v10.478c0 .23-.08.424-.238.576-.158.152-.362.233-.612.233h-8.175v-6.726l1.238.961c.078.062.167.095.27.095a.47.47 0 0 0 .27-.095l6.987-5.424c.062-.046.112-.078.15-.095a.36.36 0 0 1 .11-.023v.02zM23.762 5.88a.319.319 0 0 1 .095.27.558.558 0 0 1-.095.294l-7.107 5.5a.913.913 0 0 1-.555.174.913.913 0 0 1-.555-.175L8.15 6.463V5.26c0-.227.076-.42.23-.575.152-.158.345-.237.58-.237h14.207c.104 0 .247.144.35.207a.345.345 0 0 1 .245.324z"/>
-      <path fill="currentColor" d="M7.15 7.387v12.004l-5.53 2.318A1.056 1.056 0 0 1 0 20.837V7.387a1.07 1.07 0 0 1 1.07-1.07h5.01c.59 0 1.07.48 1.07 1.07z"/>
-      <ellipse cx="3.6" cy="13" rx="2.4" ry="3.6" fill="currentColor"/>
-    </svg>
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity">
+      Outlook
+    </span>
   )
 }
 
