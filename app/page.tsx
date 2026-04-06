@@ -50,118 +50,192 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-700 ${
         phase === 'exit' ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Logo container */}
-      <div 
-        className={`relative transition-all duration-700 ease-out flex justify-center ${
-          phase === 'enter' ? 'scale-75 opacity-0' : 
-          phase === 'hold' ? 'scale-100 opacity-100' : 
-          'scale-110 opacity-0'
-        }`}
-      >
-        {/* Animated logo SVG with color transition - viewBox centered: from -38 to +25 = 63 width, centered at -6.5 */}
-        <svg viewBox="-38 -28 63 56" className="h-32 w-auto splash-logo-color" fill="none">
-          {/* Small left circle */}
-          <circle 
-            cx="-33" cy="0" r="5" 
-            fill="currentColor"
+      {/* Background glow effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full transition-all duration-1000 ${
+            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
+          }`}
+          style={{
+            background: 'radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.05) 40%, transparent 70%)',
+            filter: 'blur(40px)',
+          }}
+        />
+        <div 
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full transition-all duration-1000 delay-200 ${
+            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
+          }`}
+          style={{
+            background: 'radial-gradient(circle, rgba(94, 234, 212, 0.2) 0%, transparent 60%)',
+            filter: 'blur(30px)',
+          }}
+        />
+      </div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-1 h-1 rounded-full bg-primary transition-opacity duration-500 ${
+              phase === 'hold' ? 'opacity-60' : 'opacity-0'
+            }`}
             style={{
-              animation: phase !== 'enter' ? 'logo-dot-pop 0.4s ease-out forwards' : 'none',
+              left: `${20 + Math.random() * 60}%`,
+              top: `${20 + Math.random() * 60}%`,
+              animation: phase === 'hold' ? `splash-float-${(i % 3) + 1} ${3 + Math.random() * 2}s ease-in-out infinite` : 'none',
+              animationDelay: `${i * 0.1}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Logo container with staggered animations */}
+      <div className="relative flex justify-center">
+        <svg viewBox="0 0 180 50" className="h-28 sm:h-36 md:h-44 w-auto" fill="none">
+          {/* Glow filter */}
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          {/* Small left circle - pops in first */}
+          <circle 
+            cx="8" cy="25" r="6" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
               opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '8px 25px',
+              transition: 'opacity 0.4s ease-out 0.1s, transform 0.4s ease-out 0.1s',
             }}
           />
           
-          {/* Connection line to center */}
+          {/* Connection line to center - draws in */}
           <line 
-            x1="-28" y1="0" x2="-13" y2="0" 
+            x1="14" y1="25" x2="28" y2="25" 
             stroke="currentColor" 
-            strokeWidth="2.5" 
-            strokeLinecap="round"
-            style={{
-              strokeDasharray: 15,
-              strokeDashoffset: phase === 'enter' ? 15 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.2s',
-            }}
-          />
-          
-          {/* Main center circle (hollow) */}
-          <circle 
-            cx="0" cy="0" r="12" 
-            stroke="currentColor" 
-            strokeWidth="2.5" 
-            fill="none"
-            style={{
-              strokeDasharray: 76,
-              strokeDashoffset: phase === 'enter' ? 76 : 0,
-              transition: 'stroke-dashoffset 0.5s ease-out 0.3s',
-            }}
-          />
-          
-          {/* Upper right connection line */}
-          <line 
-            x1="8" y1="-9" x2="16" y2="-15" 
-            stroke="currentColor" 
-            strokeWidth="2.5" 
-            strokeLinecap="round"
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
             style={{
               strokeDasharray: 14,
               strokeDashoffset: phase === 'enter' ? 14 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.5s',
+              transition: 'stroke-dashoffset 0.3s ease-out 0.3s',
+            }}
+          />
+          
+          {/* Main center circle (hollow) - draws in */}
+          <circle 
+            cx="42" cy="25" r="13" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
+              strokeDasharray: 82,
+              strokeDashoffset: phase === 'enter' ? 82 : 0,
+              transition: 'stroke-dashoffset 0.6s ease-out 0.4s',
+            }}
+          />
+          
+          {/* Upper right connection */}
+          <line 
+            x1="51" y1="15" x2="60" y2="8" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.7s',
             }}
           />
           
           {/* Upper right circle */}
           <circle 
-            cx="20" cy="-18" r="5" 
-            fill="currentColor"
+            cx="64" cy="5" r="5" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '20px -18px',
-              transition: 'opacity 0.3s ease-out 0.6s, transform 0.3s ease-out 0.6s',
+              transformOrigin: '64px 5px',
+              transition: 'opacity 0.3s ease-out 0.85s, transform 0.3s ease-out 0.85s',
             }}
           />
           
-          {/* Lower right connection line */}
+          {/* Lower right connection */}
           <line 
-            x1="8" y1="9" x2="16" y2="15" 
+            x1="51" y1="35" x2="60" y2="42" 
             stroke="currentColor" 
-            strokeWidth="2.5" 
-            strokeLinecap="round"
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
             style={{
               strokeDasharray: 14,
               strokeDashoffset: phase === 'enter' ? 14 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.55s',
+              transition: 'stroke-dashoffset 0.3s ease-out 0.75s',
             }}
           />
           
           {/* Lower right circle */}
           <circle 
-            cx="20" cy="18" r="5" 
-            fill="currentColor"
+            cx="64" cy="45" r="5" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
             style={{
               opacity: phase === 'enter' ? 0 : 1,
               transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '20px 18px',
-              transition: 'opacity 0.3s ease-out 0.7s, transform 0.3s ease-out 0.7s',
+              transformOrigin: '64px 45px',
+              transition: 'opacity 0.3s ease-out 0.9s, transform 0.3s ease-out 0.9s',
             }}
           />
+          
+          {/* DRAYO text - fades in last */}
+          <text 
+            x="80" y="33" 
+            fill="currentColor" 
+            className="text-foreground" 
+            style={{ 
+              fontSize: '22px', 
+              fontWeight: 700, 
+              fontFamily: 'var(--font-sans)', 
+              letterSpacing: '0.02em',
+              opacity: phase === 'enter' ? 0 : 1,
+              transition: 'opacity 0.5s ease-out 1s',
+            }}
+          >
+            DRAYO
+          </text>
         </svg>
       </div>
-      
-      {/* DRAYO text - appears after logo */}
+
+      {/* Tagline - appears after logo */}
       <div 
-        className={`mt-8 transition-all duration-500 ${
-          phase === 'enter' ? 'opacity-0 translate-y-2' : 
+        className={`mt-6 transition-all duration-500 ${
+          phase === 'enter' ? 'opacity-0 translate-y-4' : 
           phase === 'hold' ? 'opacity-100 translate-y-0' : 
-          'opacity-0 translate-y-2'
+          'opacity-0 -translate-y-4'
         }`}
-        style={{ transitionDelay: phase === 'hold' ? '0.8s' : '0s' }}
+        style={{ transitionDelay: phase === 'hold' ? '1.2s' : '0s' }}
       >
-        <span className="text-2xl font-bold tracking-[0.35em] text-primary drop-shadow-[0_0_15px_rgba(196,181,253,0.5)]">DRAYO</span>
+        <span className="text-sm text-foreground/50 tracking-widest uppercase">Autonomous Freight Operations</span>
       </div>
     </div>
   )
@@ -1401,24 +1475,19 @@ function SlackLogo() {
 // ============================================================================
 function CTASection() {
   return (
-    <section id="cta" className="relative py-14">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="xl:pl-40 max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4 tracking-tight">
-            Ready to cut document processing time by 80%?
-          </h2>
-          <p className="text-foreground/40 mb-6">
-            Book a 20-minute demo. See Drayo process a live shipment document.
-          </p>
-          <CalendlyButton 
-            className="inline-flex items-center gap-3 px-8 py-4 text-sm font-medium text-background bg-primary rounded-full hover:bg-primary/90 transition-colors"
-          >
-            Request a Demo
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </CalendlyButton>
-        </div>
+    <section id="cta" className="relative py-24">
+      <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-6 tracking-tight">
+          Autonomous freight operations start here
+        </h2>
+        <p className="text-foreground/50 mb-10 max-w-2xl mx-auto leading-relaxed">
+          {`See how Drayo's AI agents operate your freight systems autonomously. Documents. TMS. Compliance. Communications. One AI workforce. Book a demo with our team today.`}
+        </p>
+        <CalendlyButton 
+          className="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-foreground bg-transparent border border-foreground/20 rounded-full hover:bg-primary hover:text-background hover:border-primary transition-all duration-300"
+        >
+          Request a Demo
+        </CalendlyButton>
       </div>
     </section>
   )
@@ -1462,6 +1531,19 @@ function Footer() {
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
                     LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://x.com/drayo_ai" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    X
                   </a>
                 </li>
                 <li>
