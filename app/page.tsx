@@ -372,6 +372,7 @@ function CalendlyButton({ children, className }: { children: React.ReactNode, cl
 // ============================================================================
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -379,32 +380,99 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/60 backdrop-blur-2xl border-b border-white/[0.04] py-4" : "py-6"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        <a href="/" className="flex items-center">
-          <DrayoLogo className="h-10 w-auto" />
-        </a>
-        
-        <div className="flex items-center gap-3">
-          <a 
-            href="/login" 
-            className="px-5 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors hidden sm:block"
-          >
-            Login
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "bg-background/60 backdrop-blur-2xl border-b border-white/[0.04] py-4" : "py-6"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+          <a href="/" className="flex items-center">
+            <DrayoLogo className="h-10 w-auto" />
           </a>
-          <CalendlyButton 
-            className="group relative px-6 py-2.5 text-sm font-medium overflow-hidden rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+          
+          {/* Desktop nav */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a 
+              href="/login" 
+              className="px-5 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
+              Login
+            </a>
+            <CalendlyButton 
+              className="group relative px-6 py-2.5 text-sm font-medium overflow-hidden rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+            >
+              <span className="relative z-10 text-primary">Request Demo</span>
+            </CalendlyButton>
+          </div>
+
+          {/* Mobile hamburger button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
+            aria-label="Open menu"
           >
-            <span className="relative z-10 text-primary">Request Demo</span>
-          </CalendlyButton>
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile menu overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] sm:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Menu panel */}
+          <div className="absolute top-0 right-0 w-full max-w-xs h-full bg-background border-l border-foreground/[0.06] p-6">
+            {/* Close button */}
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-6 right-6 p-2 text-foreground/70 hover:text-foreground transition-colors"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Menu content */}
+            <div className="mt-16 space-y-4">
+              <a 
+                href="/login" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full px-5 py-3 text-center text-sm font-medium text-foreground/70 hover:text-foreground transition-colors border border-foreground/10 rounded-full"
+              >
+                Login
+              </a>
+              <CalendlyButton 
+                className="block w-full px-6 py-3 text-sm font-medium text-center rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+              >
+                <span className="text-primary">Request Demo</span>
+              </CalendlyButton>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
@@ -452,7 +520,7 @@ function DriverCard() {
   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground/50 font-medium text-[11px]">JM</div>
   <div>
   <div className="text-foreground/80 font-medium text-[11px]">James Morrison</div>
-  <div className="text-primary/60 text-[9px]">HGV Class 1</div>
+  <div className="text-primary/60 text-[9px]">CDL Class A</div>
   </div>
   </div>
   <div className="flex gap-1.5">
@@ -499,8 +567,8 @@ function InvoiceCard() {
   <div className="space-y-1.5 mb-3">
   {[
   { label: "Haulage", amount: "£485.00" },
-  { label: "Port fees", amount: "£125.00" },
-  { label: "Customs", amount: "£96.00" },
+  { label: "Port fees", amount: "$125.00" },
+  { label: "Customs", amount: "€95.00" },
   ].map((line, i) => (
   <div key={i} className="flex justify-between text-[9px]">
   <span className="text-foreground/30">{line.label}</span>
@@ -531,7 +599,7 @@ function WhatsAppCard() {
   <div className="text-[10px] text-foreground/60">Container ETA?</div>
   </div>
   <div className="bg-primary/5 rounded-lg p-2 border-l-2 border-primary/30">
-  <div className="text-[10px] text-foreground/70">TCKU396XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</div>
+  <div className="text-[10px] text-foreground/70">TCKU3954821 arrives tomorrow 9-11 AM, destination port Gate 4.</div>
   </div>
   <div className="text-[8px] text-primary/50 flex items-center gap-1">
   <span className="w-1 h-1 rounded-full bg-primary/50" />
@@ -580,12 +648,12 @@ function ShipmentCard() {
   {/* Route info */}
   <div className="flex items-center justify-between">
   <div>
-  <div className="text-[9px] text-primary font-medium">Rotterdam</div>
+  <div className="text-[9px] text-primary font-medium">Port of Rotterdam</div>
   <div className="text-[8px] text-foreground/30">Origin</div>
   </div>
   <div className="flex-1 mx-2 h-px bg-gradient-to-r from-primary/40 to-foreground/10" />
   <div className="text-right">
-  <div className="text-[9px] text-foreground/50">Felixstowe</div>
+  <div className="text-[9px] text-foreground/50">Port of Los Angeles</div>
   <div className="text-[8px] text-foreground/30">ETA 9 AM</div>
   </div>
   </div>
@@ -600,6 +668,8 @@ function ComplianceCard() {
   <div className="space-y-2">
   {[
   { name: "HMRC", checked: true },
+  { name: "FDA Prior Notice", checked: true },
+  { name: "EUR.1 Certificate", checked: true },
   { name: "T1 Transit", checked: true },
   { name: "Health Cert", checked: true },
   ].map((item, i) => (
@@ -621,11 +691,11 @@ function EmailCard() {
   <div className="flex items-center gap-3">
   <div className="flex-shrink-0">
   <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Email Sent</div>
-  <div className="text-[9px] text-foreground/40 mb-2">To: dispatch@customer.com</div>
+  <div className="text-[9px] text-foreground/40 mb-2">To: ops@globalfreight.com</div>
   </div>
   <div className="flex-1">
   <div className="text-[10px] text-foreground/60 leading-relaxed">
-  Your shipment TCKU396XXX has cleared customs and is scheduled for delivery tomorrow between 9-11 AM at Gate 4.
+  Your shipment TCKU3954821 has cleared customs and is scheduled for delivery between 9-11 AM at Gate 4.
   </div>
   <div className="mt-2 flex items-center gap-1 text-[8px] text-primary">
   <div className="w-1 h-1 rounded-full bg-primary" />
@@ -744,20 +814,6 @@ function HeroSection() {
           
           {/* Subtle connecting gradient overlay */}
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent rounded-3xl -z-10" />
-        </div>
-        
-        {/* Feature cards - horizontal row below */}
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
-          {[
-            { title: "Computer use agents", desc: "Vision-based AI operates your software" },
-            { title: "Multimodal intelligence", desc: "Email, WhatsApp, voice unified" },
-            { title: "Autonomous completion", desc: "End-to-end task execution" },
-          ].map((feature, i) => (
-            <div key={i} className="p-4 rounded-xl bg-card/20 border border-foreground/[0.04] backdrop-blur-sm text-center">
-              <h3 className="text-foreground text-sm font-medium mb-1">{feature.title}</h3>
-              <p className="text-foreground/40 text-xs">{feature.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -1054,8 +1110,8 @@ function TMSAutoFillVisual() {
 function FeaturesSection() {
   const features = [
     { 
-      title: "Zero API Integration", 
-      desc: "Works with any software your team uses, no matter how legacy or custom",
+      title: "No API Required", 
+      desc: "Works with any TMS, WMS, or customs platform your team already uses. No integration needed.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -1063,17 +1119,17 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Around the Clock", 
-      desc: "Continuous operations without breaks, holidays, or human error",
+      title: "Document Intelligence", 
+      desc: "Reads BLs, AWBs, CMRs, and commercial invoices in any format. 95%+ field accuracy.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       )
     },
     { 
       title: "Global Compliance", 
-      desc: "Adapts to regulatory requirements across all jurisdictions",
+      desc: "Validated against customs authorities, international sanctions lists, and commodity code databases worldwide.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1081,8 +1137,17 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Unified Channels", 
-      desc: "Email, WhatsApp, voice, and SMS in one intelligent system",
+      title: "Always On", 
+      desc: "Processes documents 24/7 without breaks, holidays, or human error.",
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    },
+    { 
+      title: "Voice & WhatsApp", 
+      desc: "Handles inbound calls and WhatsApp messages from clients and carriers. Automatically.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -1100,12 +1165,13 @@ function FeaturesSection() {
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-            Purpose-built for logistics
+            Built for how freight actually works.
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5">
-          {features.map((feature, i) => (
+        {/* 2x2 grid for first 4 cards */}
+        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5 mb-5">
+          {features.slice(0, 4).map((feature, i) => (
             <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
@@ -1124,6 +1190,27 @@ function FeaturesSection() {
               <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
+        </div>
+        
+        {/* 5th card spanning full width */}
+        <div className="xl:pl-40">
+          <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
+            
+            <div className="relative flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
+                {features[4].icon}
+              </div>
+              <div className="flex-1">
+                <h3 className="text-foreground font-semibold mb-2">{features[4].title}</h3>
+                <p className="text-sm text-foreground/50 leading-relaxed">{features[4].desc}</p>
+              </div>
+            </div>
+            
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
         </div>
       </div>
     </section>
@@ -1153,28 +1240,9 @@ function IntegrationsSection() {
               <span className="text-foreground">Works across your </span>
               <span className="text-primary">entire tech stack</span>
             </h2>
-            <p className="text-foreground/50 leading-relaxed mb-8">
-              Drayo connects to your freight systems the way your staff does — by seeing the screen and using it. Computer use agents navigate TMS platforms, email clients, and back office tools visually.
+            <p className="text-foreground/50 leading-relaxed">
+              Drayo connects to your freight systems the way your staff do — by seeing the screen and using it. No API. No setup. No waiting on vendors.
             </p>
-            
-            <div className="mb-8">
-              <div className="text-[10px] text-foreground/30 uppercase tracking-[0.25em] mb-4">Key Features</div>
-              <div className="space-y-3">
-                {[
-                  "Connects to any freight software — TMS, WMS, customs platforms",
-                  "Operates legacy systems other AI tools cannot access",
-                  "No custom development or vendor coordination needed",
-                  "Set up in under an hour",
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <svg className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-foreground/60">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
           
           {/* Right side - logo grid like Lance.ai */}
@@ -1185,7 +1253,7 @@ function IntegrationsSection() {
             <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
             
-            {/* Logo grid - 2 rows */}
+            {/* Logo grid - 3 rows */}
             <div className="grid grid-cols-4 gap-3 p-4">
               {/* Row 1 */}
               <LogoCard>
@@ -1202,6 +1270,20 @@ function IntegrationsSection() {
               </LogoCard>
               
               {/* Row 2 */}
+              <LogoCard>
+                <FlexportLogo />
+              </LogoCard>
+              <LogoCard>
+                <Project44Logo />
+              </LogoCard>
+              <LogoCard>
+                <TransplaceLogo />
+              </LogoCard>
+              <LogoCard>
+                <E2openLogo />
+              </LogoCard>
+              
+              {/* Row 3 */}
               <LogoCard>
                 <GmailLogo />
               </LogoCard>
@@ -1268,6 +1350,38 @@ function OracleLogo() {
   )
 }
 
+function FlexportLogo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      Flexport
+    </span>
+  )
+}
+
+function Project44Logo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      project44
+    </span>
+  )
+}
+
+function TransplaceLogo() {
+  return (
+    <span className="text-xs font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      Transplace
+    </span>
+  )
+}
+
+function E2openLogo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      E2open
+    </span>
+  )
+}
+
 function GmailLogo() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6 opacity-60 hover:opacity-100 transition-opacity">
@@ -1308,14 +1422,14 @@ function SlackLogo() {
 // ============================================================================
 function CTASection() {
   return (
-    <section id="cta" className="relative py-24">
+    <section id="cta" className="relative py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="xl:pl-40 max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4 tracking-tight">
-            Ready to automate your freight operations?
+            Ready to cut document processing time by 80%?
           </h2>
-          <p className="text-foreground/40 mb-8">
-            See Drayo in action with a personalized demo.
+          <p className="text-foreground/40 mb-6">
+            Book a 20-minute demo. See Drayo process a live shipment document.
           </p>
           <CalendlyButton 
             className="inline-flex items-center gap-3 px-8 py-4 text-sm font-medium text-background bg-primary rounded-full hover:bg-primary/90 transition-colors"
@@ -1347,7 +1461,7 @@ function Footer() {
   <span className="text-foreground font-semibold text-lg">DRAYO</span>
   </div>
   <p className="text-foreground/40 text-sm max-w-xs">
-  The future of freight is operated by Drayo.
+  AI operations for freight forwarders worldwide.
   </p>
   </div>
   
@@ -1358,33 +1472,30 @@ function Footer() {
                 <span className="text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Contact Us</span>
               </div>
               <ul className="space-y-3">
-                {[
-                  { name: "LinkedIn", icon: (
+                <li>
+                  <a 
+                    href="https://linkedin.com/company/drayo-ai" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+                  >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
-                  )},
-                  { name: "X", icon: (
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  )},
-                  { name: "Email", icon: (
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="mailto:info@drayo.ai" 
+                    className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+                  >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                  )},
-                ].map((item, i) => (
-                  <li key={i}>
-                    <a 
-                      href={item.name === "Email" ? "mailto:info@drayo.ai" : "#"} 
-                      className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
-                    >
-                      {item.icon}
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
+                    Email
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
