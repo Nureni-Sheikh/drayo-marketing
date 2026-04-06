@@ -262,6 +262,20 @@
   100% { transform: translateX(1200%); }
 }
 
+/* Splash screen floating particles */
+@keyframes splash-float-1 {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+}
+@keyframes splash-float-2 {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+  50% { transform: translateY(-15px) translateX(-8px); opacity: 0.8; }
+}
+@keyframes splash-float-3 {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.5; }
+  50% { transform: translateY(-25px) translateX(5px); opacity: 0.9; }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;

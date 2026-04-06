@@ -50,36 +50,192 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-700 ${
         phase === 'exit' ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Logo container - using same DrayoLogo as navbar but much bigger */}
-      <div 
-        className={`relative transition-all duration-700 ease-out flex justify-center ${
-          phase === 'enter' ? 'scale-75 opacity-0' : 
-          phase === 'hold' ? 'scale-100 opacity-100' : 
-          'scale-110 opacity-0'
-        }`}
-      >
-        <svg viewBox="0 0 180 50" className="h-24 sm:h-32 md:h-40 w-auto" fill="none">
-          {/* Small left circle */}
-          <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
-          {/* Connection line to center */}
-          <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-          {/* Main center circle (hollow) */}
-          <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
-          {/* Upper right connection and circle */}
-          <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-          <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
-          {/* Lower right connection and circle */}
-          <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-          <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
-          {/* DRAYO text */}
-          <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
+      {/* Background glow effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full transition-all duration-1000 ${
+            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
+          }`}
+          style={{
+            background: 'radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.05) 40%, transparent 70%)',
+            filter: 'blur(40px)',
+          }}
+        />
+        <div 
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full transition-all duration-1000 delay-200 ${
+            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
+          }`}
+          style={{
+            background: 'radial-gradient(circle, rgba(94, 234, 212, 0.2) 0%, transparent 60%)',
+            filter: 'blur(30px)',
+          }}
+        />
+      </div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-1 h-1 rounded-full bg-primary transition-opacity duration-500 ${
+              phase === 'hold' ? 'opacity-60' : 'opacity-0'
+            }`}
+            style={{
+              left: `${20 + Math.random() * 60}%`,
+              top: `${20 + Math.random() * 60}%`,
+              animation: phase === 'hold' ? `splash-float-${(i % 3) + 1} ${3 + Math.random() * 2}s ease-in-out infinite` : 'none',
+              animationDelay: `${i * 0.1}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Logo container with staggered animations */}
+      <div className="relative flex justify-center">
+        <svg viewBox="0 0 180 50" className="h-28 sm:h-36 md:h-44 w-auto" fill="none">
+          {/* Glow filter */}
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          {/* Small left circle - pops in first */}
+          <circle 
+            cx="8" cy="25" r="6" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '8px 25px',
+              transition: 'opacity 0.4s ease-out 0.1s, transform 0.4s ease-out 0.1s',
+            }}
+          />
+          
+          {/* Connection line to center - draws in */}
+          <line 
+            x1="14" y1="25" x2="28" y2="25" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.3s',
+            }}
+          />
+          
+          {/* Main center circle (hollow) - draws in */}
+          <circle 
+            cx="42" cy="25" r="13" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
+              strokeDasharray: 82,
+              strokeDashoffset: phase === 'enter' ? 82 : 0,
+              transition: 'stroke-dashoffset 0.6s ease-out 0.4s',
+            }}
+          />
+          
+          {/* Upper right connection */}
+          <line 
+            x1="51" y1="15" x2="60" y2="8" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.7s',
+            }}
+          />
+          
+          {/* Upper right circle */}
+          <circle 
+            cx="64" cy="5" r="5" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '64px 5px',
+              transition: 'opacity 0.3s ease-out 0.85s, transform 0.3s ease-out 0.85s',
+            }}
+          />
+          
+          {/* Lower right connection */}
+          <line 
+            x1="51" y1="35" x2="60" y2="42" 
+            stroke="currentColor" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            className="text-primary"
+            style={{
+              strokeDasharray: 14,
+              strokeDashoffset: phase === 'enter' ? 14 : 0,
+              transition: 'stroke-dashoffset 0.3s ease-out 0.75s',
+            }}
+          />
+          
+          {/* Lower right circle */}
+          <circle 
+            cx="64" cy="45" r="5" 
+            fill="currentColor" 
+            className="text-primary"
+            filter="url(#glow)"
+            style={{
+              opacity: phase === 'enter' ? 0 : 1,
+              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
+              transformOrigin: '64px 45px',
+              transition: 'opacity 0.3s ease-out 0.9s, transform 0.3s ease-out 0.9s',
+            }}
+          />
+          
+          {/* DRAYO text - fades in last */}
+          <text 
+            x="80" y="33" 
+            fill="currentColor" 
+            className="text-foreground" 
+            style={{ 
+              fontSize: '22px', 
+              fontWeight: 700, 
+              fontFamily: 'var(--font-sans)', 
+              letterSpacing: '0.02em',
+              opacity: phase === 'enter' ? 0 : 1,
+              transition: 'opacity 0.5s ease-out 1s',
+            }}
+          >
             DRAYO
           </text>
         </svg>
+      </div>
+
+      {/* Tagline - appears after logo */}
+      <div 
+        className={`mt-6 transition-all duration-500 ${
+          phase === 'enter' ? 'opacity-0 translate-y-4' : 
+          phase === 'hold' ? 'opacity-100 translate-y-0' : 
+          'opacity-0 -translate-y-4'
+        }`}
+        style={{ transitionDelay: phase === 'hold' ? '1.2s' : '0s' }}
+      >
+        <span className="text-sm text-foreground/50 tracking-widest uppercase">Autonomous Freight Operations</span>
       </div>
     </div>
   )
