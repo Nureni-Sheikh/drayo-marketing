@@ -820,89 +820,284 @@ function HeroSection() {
   )
 }
 
+// ============================================================================
+// TMS AUTO-FILL VISUAL - Animated typing effect
+// ============================================================================
+function TMSAutoFillVisual() {
+  const [fieldIndex, setFieldIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
+  
+  const fields = [
+    { label: "Reference", value: "DRY-2026-00847" },
+    { label: "Customer", value: "Rotterdam Logistics BV" },
+    { label: "Route", value: "Rotterdam → Felixstowe" },
+    { label: "Driver", value: "James Morrison (HGV1)" },
+  ]
+  
+  useEffect(() => {
+    if (!isTyping) return
+    
+    const currentField = fields[fieldIndex]
+    if (!currentField) {
+      // Reset after completing all fields
+      const resetTimer = setTimeout(() => {
+        setFieldIndex(0)
+        setCharIndex(0)
+      }, 2000)
+      return () => clearTimeout(resetTimer)
+    }
+    
+    if (charIndex < currentField.value.length) {
+      // Type next character
+      const typeTimer = setTimeout(() => {
+        setCharIndex(charIndex + 1)
+      }, 40 + Math.random() * 30) // Variable typing speed
+      return () => clearTimeout(typeTimer)
+    } else {
+      // Move to next field
+      const nextFieldTimer = setTimeout(() => {
+        setFieldIndex(fieldIndex + 1)
+        setCharIndex(0)
+      }, 400)
+      return () => clearTimeout(nextFieldTimer)
+    }
+  }, [fieldIndex, charIndex, isTyping, fields])
+  
+  return (
+    <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-red-500/60" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+          <div className="w-2 h-2 rounded-full bg-green-500/60" />
+        </div>
+        <div className="text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          Drayo Active
+        </div>
+      </div>
+      
+      {/* TMS Form Fields */}
+      <div className="space-y-4">
+        {fields.map((field, i) => {
+          const isCurrentField = i === fieldIndex
+          const isCompleted = i < fieldIndex
+          const displayValue = isCompleted 
+            ? field.value 
+            : isCurrentField 
+              ? field.value.slice(0, charIndex)
+              : ""
+          
+          return (
+            <div key={i} className="relative">
+              <span className="text-[9px] text-foreground/40 block mb-1.5 uppercase tracking-wider">{field.label}</span>
+              <div className={`bg-foreground/[0.03] rounded-lg px-3 py-2.5 text-[12px] border transition-all duration-300 ${
+                isCurrentField 
+                  ? 'border-primary/30 bg-primary/[0.03]' 
+                  : isCompleted
+                    ? 'border-foreground/[0.08]'
+                    : 'border-foreground/[0.04]'
+              }`}>
+                <span className={`font-mono ${isCompleted ? 'text-foreground/70' : 'text-primary'}`}>
+                  {displayValue}
+                </span>
+                {isCurrentField && (
+                  <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
+                )}
+                {!isCurrentField && !isCompleted && (
+                  <span className="text-foreground/20">—</span>
+                )}
+              </div>
+              {isCompleted && (
+                <div className="absolute right-3 top-1/2 translate-y-1 text-primary">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+      
+      {/* Progress indicator */}
+      <div className="absolute bottom-4 left-6 right-6">
+        <div className="h-1 bg-foreground/[0.04] rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${((fieldIndex + (charIndex / (fields[fieldIndex]?.value.length || 1))) / fields.length) * 100}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
   // ============================================================================
-  // OPERATIONS SECTION - Horizontal timeline
+  // OPERATIONS SECTION - Visual demo of capabilities
   // ============================================================================
   function OperationsSection() {
-  const steps = [
-    { num: "01", title: "Document arrives", desc: "Email, WhatsApp, or call. Any format, any origin." },
-    { num: "02", title: "Drayo reads it", desc: "20 fields extracted per document. Zero human input." },
-    { num: "03", title: "Systems updated", desc: "TMS filled. Compliance checked. Automatically." },
-    { num: "04", title: "Confirmations sent", desc: "Client and carrier notified. Audit trail saved." },
+  const [activeOp, setActiveOp] = useState(0)
+  
+  const operations = [
+    {
+      title: "Document arrives",
+      desc: "Email, WhatsApp or any format.",
+      visual: (
+        <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] overflow-hidden backdrop-blur-sm">
+          <div className="absolute top-4 right-4 text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full">Processing</div>
+          <div className="space-y-3 font-mono text-xs mt-8">
+            {[
+              { label: "Container", value: "TCKU3954821", color: "primary" },
+              { label: "Shipper", value: "Rotterdam Logistics BV", color: "foreground" },
+              { label: "Weight", value: "18,450 KG", color: "foreground" },
+              { label: "Destination", value: "Felixstowe", color: "foreground" },
+            ].map((field, i) => (
+              <div key={i} className="flex gap-4 items-center">
+                <span className="text-foreground/30 w-24 text-[10px]">{field.label}</span>
+                <span className={`text-${field.color} text-[11px]`}>{field.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground/5">
+            <div className="h-full w-3/4 bg-gradient-to-r from-primary to-accent animate-pulse" />
+          </div>
+        </div>
+      )
+    },
+  {
+  title: "Document read",
+  desc: "Fields extracted.",
+  visual: <TMSAutoFillVisual />
+  },
+    {
+      title: "Schedule Organizing",
+      desc: "Coordinates pickups, deliveries, and resource allocation",
+      visual: (
+        <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
+          <div className="space-y-2 mt-2">
+            {[
+              { name: "Felixstowe Pickup", time: "08:00", status: "Confirmed", highlight: true },
+              { name: "London DC Delivery", time: "14:30", status: "Scheduled", highlight: false },
+              { name: "Manchester Return", time: "18:00", status: "Pending", highlight: false },
+            ].map((item, i) => (
+              <div key={i} className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
+                item.highlight ? 'bg-primary/5 border-primary/20' : 'border-foreground/[0.04]'
+              }`}>
+                <div className="flex items-center gap-3">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[10px] font-mono ${
+                    item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
+                  }`}>
+                    {item.time}
+                  </div>
+                  <span className="text-[11px] text-foreground/70">{item.name}</span>
+                </div>
+                <span className={`text-[9px] px-2 py-1 rounded-full ${
+                  item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
+                }`}>
+                  {item.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Customs Filing",
+      desc: "Automated declaration preparation and submission",
+      visual: (
+        <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
+          <div className="space-y-3 mt-2">
+            {[
+              { label: "Import Declaration", status: "done" },
+              { label: "Commodity Codes", status: "done" },
+              { label: "Duty Calculation", status: "done" },
+              { label: "Authority Submission", status: "active" },
+              { label: "Clearance", status: "pending" },
+            ].map((step, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                  step.status === 'done' ? 'bg-primary/10' :
+                  step.status === 'active' ? 'bg-accent/10' : 'bg-foreground/5'
+                }`}>
+                  {step.status === 'done' ? (
+                    <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : step.status === 'active' ? (
+                    <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  ) : (
+                    <div className="w-2 h-2 rounded-full bg-foreground/10" />
+                  )}
+                </div>
+                <span className={`text-[11px] ${step.status === 'pending' ? 'text-foreground/30' : 'text-foreground/70'}`}>
+                  {step.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
   ]
 
-  const stats = [
-    { value: "< 60s", label: "Processing time" },
-    { value: "95%+", label: "Extraction accuracy" },
-    { value: "80%", label: "Less manual data entry" },
-  ]
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveOp(prev => (prev + 1) % operations.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [operations.length])
 
   return (
     <section id="operations" className="relative py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="xl:pl-40 mb-16">
+        <div className="xl:pl-40 mb-12">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">How It Works</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-            From document to done. In 60 seconds.
+          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
+            Autonomous workflow execution
           </h2>
         </div>
         
-        {/* Horizontal Timeline */}
-        <div className="xl:pl-40 relative">
-          {/* Animated connecting line */}
-          <div className="absolute top-8 left-0 right-0 h-px hidden lg:block">
-            <div className="relative w-full h-full">
-              <div className="absolute inset-0 border-t-2 border-dashed border-primary/30" />
-              <div 
-                className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-primary to-transparent"
-                style={{
-                  animation: 'shimmer-line 3s linear infinite',
-                }}
-              />
-            </div>
-          </div>
-          
-          {/* Steps */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-            {steps.map((step, i) => (
-              <div key={i} className="relative">
-                <div className="text-primary text-3xl lg:text-4xl font-extrabold mb-4" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-                  {step.num}
+        <div className="xl:pl-40 grid lg:grid-cols-2 gap-8 items-start">
+          {/* Tabs */}
+          <div className="space-y-2">
+            {operations.map((op, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveOp(i)}
+                className={`w-full text-left p-5 rounded-xl border transition-all ${
+                  activeOp === i 
+                    ? 'bg-card/50 border-primary/20' 
+                    : 'border-transparent hover:bg-card/20'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-medium ${
+                    activeOp === i ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/30'
+                  }`}>
+                    {i + 1}
+                  </div>
+                  <div>
+                    <span className={`block text-sm font-medium ${activeOp === i ? 'text-foreground' : 'text-foreground/50'}`}>
+                      {op.title}
+                    </span>
+                    <span className={`block text-xs mt-0.5 ${activeOp === i ? 'text-foreground/50' : 'text-foreground/30'}`}>
+                      {op.desc}
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-foreground font-bold text-base mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-foreground/50 text-[13px] leading-relaxed">
-                  {step.desc}
-                </p>
-              </div>
+              </button>
             ))}
           </div>
           
-          {/* Stats row */}
-          <div className="mt-20 pt-10 border-t border-foreground/[0.06]">
-            <div className="grid grid-cols-3 gap-4 lg:gap-8">
-              {stats.map((stat, i) => (
-                <div key={i} className="text-center relative">
-                  {i > 0 && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-12 bg-foreground/10 hidden sm:block" />
-                  )}
-                  <div 
-                    className="text-primary font-extrabold mb-1"
-                    style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)' }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-foreground/50 text-xs mt-1">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Visual */}
+          <div>{operations[activeOp].visual}</div>
         </div>
       </div>
     </section>
