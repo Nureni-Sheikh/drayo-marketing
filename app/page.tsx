@@ -62,8 +62,8 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           'scale-110 opacity-0'
         }`}
       >
-        {/* Animated logo SVG with color transition */}
-        <svg viewBox="-42 -28 84 56" className="h-32 w-auto splash-logo-color" fill="none">
+        {/* Animated logo SVG with color transition - viewBox centered: from -38 to +25 = 63 width, centered at -6.5 */}
+        <svg viewBox="-38 -28 63 56" className="h-32 w-auto splash-logo-color" fill="none">
           {/* Small left circle */}
           <circle 
             cx="-33" cy="0" r="5" 
@@ -154,7 +154,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
       
       {/* DRAYO text - appears after logo */}
       <div 
-        className={`mt-6 transition-all duration-500 text-center w-full ${
+        className={`mt-6 transition-all duration-500 ${
           phase === 'enter' ? 'opacity-0 translate-y-2' : 
           phase === 'hold' ? 'opacity-100 translate-y-0' : 
           'opacity-0 translate-y-2'
@@ -419,43 +419,28 @@ function Navbar() {
             </CalendlyButton>
           </div>
 
-          {/* Mobile hamburger button */}
+          {/* Mobile hamburger/close button */}
           <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="flex sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
-            aria-label="Open menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile menu overlay */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] sm:hidden">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          
-          {/* Menu panel */}
-          <div className="absolute top-0 right-0 w-full max-w-xs h-full bg-background border-l border-foreground/[0.06] p-6">
-            {/* Close button */}
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-6 right-6 p-2 text-foreground/70 hover:text-foreground transition-colors"
-              aria-label="Close menu"
-            >
+            {mobileMenuOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
-            
-            {/* Menu content */}
-            <div className="mt-16 space-y-4">
+            ) : (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+        
+        {/* Mobile menu dropdown - full width under header */}
+        {mobileMenuOpen && (
+          <div className="sm:hidden border-t border-foreground/[0.06] bg-background/95 backdrop-blur-xl">
+            <div className="px-6 py-4 space-y-3">
               <a 
                 href="/login" 
                 onClick={() => setMobileMenuOpen(false)}
@@ -470,8 +455,8 @@ function Navbar() {
               </CalendlyButton>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </header>
     </>
   )
 }
