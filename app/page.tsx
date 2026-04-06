@@ -1328,7 +1328,7 @@ function CTASection() {
           {`See how Drayo's AI agents operate your freight systems autonomously. Documents. TMS. Compliance. Communications. One AI workforce. Book a demo with our team today.`}
         </p>
         <CalendlyButton 
-          className="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-foreground bg-transparent border border-foreground/20 rounded-full hover:bg-foreground/5 transition-colors"
+          className="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-foreground bg-transparent border border-foreground/20 rounded-full hover:bg-primary hover:text-background hover:border-primary transition-all duration-300"
         >
           Request a Demo
         </CalendlyButton>
