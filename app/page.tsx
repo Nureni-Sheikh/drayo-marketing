@@ -56,14 +56,14 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
     >
       {/* Logo container */}
       <div 
-        className={`relative transition-all duration-700 ease-out ${
+        className={`relative transition-all duration-700 ease-out flex justify-center ${
           phase === 'enter' ? 'scale-75 opacity-0' : 
           phase === 'hold' ? 'scale-100 opacity-100' : 
           'scale-110 opacity-0'
         }`}
       >
         {/* Animated logo SVG with color transition */}
-        <svg viewBox="-42 -28 70 56" className="h-32 w-auto splash-logo-color" fill="none">
+        <svg viewBox="-42 -28 84 56" className="h-32 w-auto splash-logo-color" fill="none">
           {/* Small left circle */}
           <circle 
             cx="-33" cy="0" r="5" 
@@ -154,7 +154,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
       
       {/* DRAYO text - appears after logo */}
       <div 
-        className={`mt-6 transition-all duration-500 ${
+        className={`mt-6 transition-all duration-500 text-center w-full ${
           phase === 'enter' ? 'opacity-0 translate-y-2' : 
           phase === 'hold' ? 'opacity-100 translate-y-0' : 
           'opacity-0 translate-y-2'
@@ -422,7 +422,7 @@ function Navbar() {
           {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
+            className="flex sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
             aria-label="Open menu"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
