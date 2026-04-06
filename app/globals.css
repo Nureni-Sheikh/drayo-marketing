@@ -256,6 +256,12 @@
   animation: blink 0.8s step-end infinite;
 }
 
+/* Shimmer animation for timeline */
+@keyframes shimmer-line {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(1200%); }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;

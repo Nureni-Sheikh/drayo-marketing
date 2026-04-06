@@ -452,7 +452,7 @@ function DriverCard() {
   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-foreground/50 font-medium text-[11px]">JM</div>
   <div>
   <div className="text-foreground/80 font-medium text-[11px]">James Morrison</div>
-  <div className="text-primary/60 text-[9px]">HGV Class 1</div>
+  <div className="text-primary/60 text-[9px]">CDL Class A</div>
   </div>
   </div>
   <div className="flex gap-1.5">
@@ -499,8 +499,8 @@ function InvoiceCard() {
   <div className="space-y-1.5 mb-3">
   {[
   { label: "Haulage", amount: "£485.00" },
-  { label: "Port fees", amount: "£125.00" },
-  { label: "Customs", amount: "£96.00" },
+  { label: "Port fees", amount: "$125.00" },
+  { label: "Customs", amount: "€95.00" },
   ].map((line, i) => (
   <div key={i} className="flex justify-between text-[9px]">
   <span className="text-foreground/30">{line.label}</span>
@@ -531,7 +531,7 @@ function WhatsAppCard() {
   <div className="text-[10px] text-foreground/60">Container ETA?</div>
   </div>
   <div className="bg-primary/5 rounded-lg p-2 border-l-2 border-primary/30">
-  <div className="text-[10px] text-foreground/70">TCKU396XXX arrives tomorrow 9-11 AM, Felixstowe Gate 4.</div>
+  <div className="text-[10px] text-foreground/70">TCKU3954821 arrives tomorrow 9-11 AM, destination port Gate 4.</div>
   </div>
   <div className="text-[8px] text-primary/50 flex items-center gap-1">
   <span className="w-1 h-1 rounded-full bg-primary/50" />
@@ -580,12 +580,12 @@ function ShipmentCard() {
   {/* Route info */}
   <div className="flex items-center justify-between">
   <div>
-  <div className="text-[9px] text-primary font-medium">Rotterdam</div>
+  <div className="text-[9px] text-primary font-medium">Port of Rotterdam</div>
   <div className="text-[8px] text-foreground/30">Origin</div>
   </div>
   <div className="flex-1 mx-2 h-px bg-gradient-to-r from-primary/40 to-foreground/10" />
   <div className="text-right">
-  <div className="text-[9px] text-foreground/50">Felixstowe</div>
+  <div className="text-[9px] text-foreground/50">Port of Los Angeles</div>
   <div className="text-[8px] text-foreground/30">ETA 9 AM</div>
   </div>
   </div>
@@ -600,6 +600,8 @@ function ComplianceCard() {
   <div className="space-y-2">
   {[
   { name: "HMRC", checked: true },
+  { name: "FDA Prior Notice", checked: true },
+  { name: "EUR.1 Certificate", checked: true },
   { name: "T1 Transit", checked: true },
   { name: "Health Cert", checked: true },
   ].map((item, i) => (
@@ -621,11 +623,11 @@ function EmailCard() {
   <div className="flex items-center gap-3">
   <div className="flex-shrink-0">
   <div className="text-[8px] text-foreground/30 uppercase tracking-[0.2em] mb-2">Email Sent</div>
-  <div className="text-[9px] text-foreground/40 mb-2">To: dispatch@customer.com</div>
+  <div className="text-[9px] text-foreground/40 mb-2">To: ops@globalfreight.com</div>
   </div>
   <div className="flex-1">
   <div className="text-[10px] text-foreground/60 leading-relaxed">
-  Your shipment TCKU396XXX has cleared customs and is scheduled for delivery tomorrow between 9-11 AM at Gate 4.
+  Your shipment TCKU3954821 has cleared customs and is scheduled for delivery between 9-11 AM at Gate 4.
   </div>
   <div className="mt-2 flex items-center gap-1 text-[8px] text-primary">
   <div className="w-1 h-1 rounded-full bg-primary" />
@@ -745,303 +747,94 @@ function HeroSection() {
           {/* Subtle connecting gradient overlay */}
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent rounded-3xl -z-10" />
         </div>
-        
-        {/* Feature cards - horizontal row below */}
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
-          {[
-            { title: "Computer use agents", desc: "Vision-based AI operates your software" },
-            { title: "Multimodal intelligence", desc: "Email, WhatsApp, voice unified" },
-            { title: "Autonomous completion", desc: "End-to-end task execution" },
-          ].map((feature, i) => (
-            <div key={i} className="p-4 rounded-xl bg-card/20 border border-foreground/[0.04] backdrop-blur-sm text-center">
-              <h3 className="text-foreground text-sm font-medium mb-1">{feature.title}</h3>
-              <p className="text-foreground/40 text-xs">{feature.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
 }
 
-// ============================================================================
-// TMS AUTO-FILL VISUAL - Animated typing effect
-// ============================================================================
-function TMSAutoFillVisual() {
-  const [fieldIndex, setFieldIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [isTyping, setIsTyping] = useState(true)
-  
-  const fields = [
-    { label: "Reference", value: "DRY-2026-00847" },
-    { label: "Customer", value: "Rotterdam Logistics BV" },
-    { label: "Route", value: "Rotterdam → Felixstowe" },
-    { label: "Driver", value: "James Morrison (HGV1)" },
-  ]
-  
-  useEffect(() => {
-    if (!isTyping) return
-    
-    const currentField = fields[fieldIndex]
-    if (!currentField) {
-      // Reset after completing all fields
-      const resetTimer = setTimeout(() => {
-        setFieldIndex(0)
-        setCharIndex(0)
-      }, 2000)
-      return () => clearTimeout(resetTimer)
-    }
-    
-    if (charIndex < currentField.value.length) {
-      // Type next character
-      const typeTimer = setTimeout(() => {
-        setCharIndex(charIndex + 1)
-      }, 40 + Math.random() * 30) // Variable typing speed
-      return () => clearTimeout(typeTimer)
-    } else {
-      // Move to next field
-      const nextFieldTimer = setTimeout(() => {
-        setFieldIndex(fieldIndex + 1)
-        setCharIndex(0)
-      }, 400)
-      return () => clearTimeout(nextFieldTimer)
-    }
-  }, [fieldIndex, charIndex, isTyping, fields])
-  
-  return (
-    <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-500/60" />
-          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
-          <div className="w-2 h-2 rounded-full bg-green-500/60" />
-        </div>
-        <div className="text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Drayo Active
-        </div>
-      </div>
-      
-      {/* TMS Form Fields */}
-      <div className="space-y-4">
-        {fields.map((field, i) => {
-          const isCurrentField = i === fieldIndex
-          const isCompleted = i < fieldIndex
-          const displayValue = isCompleted 
-            ? field.value 
-            : isCurrentField 
-              ? field.value.slice(0, charIndex)
-              : ""
-          
-          return (
-            <div key={i} className="relative">
-              <span className="text-[9px] text-foreground/40 block mb-1.5 uppercase tracking-wider">{field.label}</span>
-              <div className={`bg-foreground/[0.03] rounded-lg px-3 py-2.5 text-[12px] border transition-all duration-300 ${
-                isCurrentField 
-                  ? 'border-primary/30 bg-primary/[0.03]' 
-                  : isCompleted
-                    ? 'border-foreground/[0.08]'
-                    : 'border-foreground/[0.04]'
-              }`}>
-                <span className={`font-mono ${isCompleted ? 'text-foreground/70' : 'text-primary'}`}>
-                  {displayValue}
-                </span>
-                {isCurrentField && (
-                  <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-blink" />
-                )}
-                {!isCurrentField && !isCompleted && (
-                  <span className="text-foreground/20">—</span>
-                )}
-              </div>
-              {isCompleted && (
-                <div className="absolute right-3 top-1/2 translate-y-1 text-primary">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-              )}
-            </div>
-          )
-        })}
-      </div>
-      
-      {/* Progress indicator */}
-      <div className="absolute bottom-4 left-6 right-6">
-        <div className="h-1 bg-foreground/[0.04] rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300 ease-out rounded-full"
-            style={{ width: `${((fieldIndex + (charIndex / (fields[fieldIndex]?.value.length || 1))) / fields.length) * 100}%` }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
   // ============================================================================
-  // OPERATIONS SECTION - Visual demo of capabilities
+  // OPERATIONS SECTION - Horizontal timeline
   // ============================================================================
   function OperationsSection() {
-  const [activeOp, setActiveOp] = useState(0)
-  
-  const operations = [
-    {
-      title: "Document arrives",
-      desc: "Email, WhatsApp or any format.",
-      visual: (
-        <div className="relative bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] overflow-hidden backdrop-blur-sm">
-          <div className="absolute top-4 right-4 text-[8px] text-primary bg-primary/10 px-2 py-1 rounded-full">Processing</div>
-          <div className="space-y-3 font-mono text-xs mt-8">
-            {[
-              { label: "Container", value: "TCKU3954821", color: "primary" },
-              { label: "Shipper", value: "Rotterdam Logistics BV", color: "foreground" },
-              { label: "Weight", value: "18,450 KG", color: "foreground" },
-              { label: "Destination", value: "Felixstowe", color: "foreground" },
-            ].map((field, i) => (
-              <div key={i} className="flex gap-4 items-center">
-                <span className="text-foreground/30 w-24 text-[10px]">{field.label}</span>
-                <span className={`text-${field.color} text-[11px]`}>{field.value}</span>
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground/5">
-            <div className="h-full w-3/4 bg-gradient-to-r from-primary to-accent animate-pulse" />
-          </div>
-        </div>
-      )
-    },
-  {
-  title: "Document read",
-  desc: "Fields extracted.",
-  visual: <TMSAutoFillVisual />
-  },
-    {
-      title: "Schedule Organizing",
-      desc: "Coordinates pickups, deliveries, and resource allocation",
-      visual: (
-        <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
-          <div className="space-y-2 mt-2">
-            {[
-              { name: "Felixstowe Pickup", time: "08:00", status: "Confirmed", highlight: true },
-              { name: "London DC Delivery", time: "14:30", status: "Scheduled", highlight: false },
-              { name: "Manchester Return", time: "18:00", status: "Pending", highlight: false },
-            ].map((item, i) => (
-              <div key={i} className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
-                item.highlight ? 'bg-primary/5 border-primary/20' : 'border-foreground/[0.04]'
-              }`}>
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[10px] font-mono ${
-                    item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
-                  }`}>
-                    {item.time}
-                  </div>
-                  <span className="text-[11px] text-foreground/70">{item.name}</span>
-                </div>
-                <span className={`text-[9px] px-2 py-1 rounded-full ${
-                  item.highlight ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/40'
-                }`}>
-                  {item.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Customs Filing",
-      desc: "Automated declaration preparation and submission",
-      visual: (
-        <div className="bg-card/30 rounded-2xl p-6 border border-foreground/[0.04] h-[300px] backdrop-blur-sm">
-          <div className="space-y-3 mt-2">
-            {[
-              { label: "Import Declaration", status: "done" },
-              { label: "Commodity Codes", status: "done" },
-              { label: "Duty Calculation", status: "done" },
-              { label: "Authority Submission", status: "active" },
-              { label: "Clearance", status: "pending" },
-            ].map((step, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                  step.status === 'done' ? 'bg-primary/10' :
-                  step.status === 'active' ? 'bg-accent/10' : 'bg-foreground/5'
-                }`}>
-                  {step.status === 'done' ? (
-                    <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : step.status === 'active' ? (
-                    <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  ) : (
-                    <div className="w-2 h-2 rounded-full bg-foreground/10" />
-                  )}
-                </div>
-                <span className={`text-[11px] ${step.status === 'pending' ? 'text-foreground/30' : 'text-foreground/70'}`}>
-                  {step.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    },
+  const steps = [
+    { num: "01", title: "Document arrives", desc: "Email, WhatsApp, or call. Any format, any origin." },
+    { num: "02", title: "Drayo reads it", desc: "20 fields extracted per document. Zero human input." },
+    { num: "03", title: "Systems updated", desc: "TMS filled. Compliance checked. Automatically." },
+    { num: "04", title: "Confirmations sent", desc: "Client and carrier notified. Audit trail saved." },
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveOp(prev => (prev + 1) % operations.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [operations.length])
+  const stats = [
+    { value: "< 60s", label: "Processing time" },
+    { value: "95%+", label: "Extraction accuracy" },
+    { value: "80%", label: "Less manual data entry" },
+  ]
 
   return (
     <section id="operations" className="relative py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="xl:pl-40 mb-12">
+        <div className="xl:pl-40 mb-16">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">How It Works</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-            Autonomous workflow execution
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+            From document to done. In 60 seconds.
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid lg:grid-cols-2 gap-8 items-start">
-          {/* Tabs */}
-          <div className="space-y-2">
-            {operations.map((op, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveOp(i)}
-                className={`w-full text-left p-5 rounded-xl border transition-all ${
-                  activeOp === i 
-                    ? 'bg-card/50 border-primary/20' 
-                    : 'border-transparent hover:bg-card/20'
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-medium ${
-                    activeOp === i ? 'bg-primary/10 text-primary' : 'bg-foreground/5 text-foreground/30'
-                  }`}>
-                    {i + 1}
-                  </div>
-                  <div>
-                    <span className={`block text-sm font-medium ${activeOp === i ? 'text-foreground' : 'text-foreground/50'}`}>
-                      {op.title}
-                    </span>
-                    <span className={`block text-xs mt-0.5 ${activeOp === i ? 'text-foreground/50' : 'text-foreground/30'}`}>
-                      {op.desc}
-                    </span>
-                  </div>
+        {/* Horizontal Timeline */}
+        <div className="xl:pl-40 relative">
+          {/* Animated connecting line */}
+          <div className="absolute top-8 left-0 right-0 h-px hidden lg:block">
+            <div className="relative w-full h-full">
+              <div className="absolute inset-0 border-t-2 border-dashed border-primary/30" />
+              <div 
+                className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-primary to-transparent"
+                style={{
+                  animation: 'shimmer-line 3s linear infinite',
+                }}
+              />
+            </div>
+          </div>
+          
+          {/* Steps */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+            {steps.map((step, i) => (
+              <div key={i} className="relative">
+                <div className="text-primary text-3xl lg:text-4xl font-extrabold mb-4" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
+                  {step.num}
                 </div>
-              </button>
+                <h3 className="text-foreground font-bold text-base mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-foreground/50 text-[13px] leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
             ))}
           </div>
           
-          {/* Visual */}
-          <div>{operations[activeOp].visual}</div>
+          {/* Stats row */}
+          <div className="mt-20 pt-10 border-t border-foreground/[0.06]">
+            <div className="grid grid-cols-3 gap-4 lg:gap-8">
+              {stats.map((stat, i) => (
+                <div key={i} className="text-center relative">
+                  {i > 0 && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-12 bg-foreground/10 hidden sm:block" />
+                  )}
+                  <div 
+                    className="text-primary font-extrabold mb-1"
+                    style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)' }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-foreground/50 text-xs mt-1">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1054,8 +847,8 @@ function TMSAutoFillVisual() {
 function FeaturesSection() {
   const features = [
     { 
-      title: "Zero API Integration", 
-      desc: "Works with any software your team uses, no matter how legacy or custom",
+      title: "No API Required", 
+      desc: "Works with any TMS, WMS, or customs platform your team already uses. No integration needed.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -1063,17 +856,17 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Around the Clock", 
-      desc: "Continuous operations without breaks, holidays, or human error",
+      title: "Document Intelligence", 
+      desc: "Reads BLs, AWBs, CMRs, and commercial invoices in any format. 95%+ field accuracy.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       )
     },
     { 
       title: "Global Compliance", 
-      desc: "Adapts to regulatory requirements across all jurisdictions",
+      desc: "Validated against customs authorities, international sanctions lists, and commodity code databases worldwide.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1081,8 +874,17 @@ function FeaturesSection() {
       )
     },
     { 
-      title: "Unified Channels", 
-      desc: "Email, WhatsApp, voice, and SMS in one intelligent system",
+      title: "Always On", 
+      desc: "Processes documents 24/7 without breaks, holidays, or human error.",
+      icon: (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    },
+    { 
+      title: "Voice & WhatsApp", 
+      desc: "Handles inbound calls and WhatsApp messages from clients and carriers. Automatically.",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -1100,12 +902,13 @@ function FeaturesSection() {
             <span className="text-[10px] text-foreground/40 uppercase tracking-[0.25em]">Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-            Purpose-built for logistics
+            Built for how freight actually works.
           </h2>
         </div>
         
-        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5">
-          {features.map((feature, i) => (
+        {/* 2x2 grid for first 4 cards */}
+        <div className="xl:pl-40 grid sm:grid-cols-2 gap-5 mb-5">
+          {features.slice(0, 4).map((feature, i) => (
             <div key={i} className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
@@ -1124,6 +927,27 @@ function FeaturesSection() {
               <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
+        </div>
+        
+        {/* 5th card spanning full width */}
+        <div className="xl:pl-40">
+          <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-card/40 to-card/20 border border-foreground/[0.06] hover:border-primary/30 transition-all backdrop-blur-sm overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/[0.06] transition-colors" />
+            
+            <div className="relative flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-primary/10 transition-colors">
+                {features[4].icon}
+              </div>
+              <div className="flex-1">
+                <h3 className="text-foreground font-semibold mb-2">{features[4].title}</h3>
+                <p className="text-sm text-foreground/50 leading-relaxed">{features[4].desc}</p>
+              </div>
+            </div>
+            
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
         </div>
       </div>
     </section>
@@ -1153,28 +977,9 @@ function IntegrationsSection() {
               <span className="text-foreground">Works across your </span>
               <span className="text-primary">entire tech stack</span>
             </h2>
-            <p className="text-foreground/50 leading-relaxed mb-8">
-              Drayo connects to your freight systems the way your staff does — by seeing the screen and using it. Computer use agents navigate TMS platforms, email clients, and back office tools visually.
+            <p className="text-foreground/50 leading-relaxed">
+              Drayo connects to your freight systems the way your staff do — by seeing the screen and using it. No API. No setup. No waiting on vendors.
             </p>
-            
-            <div className="mb-8">
-              <div className="text-[10px] text-foreground/30 uppercase tracking-[0.25em] mb-4">Key Features</div>
-              <div className="space-y-3">
-                {[
-                  "Connects to any freight software — TMS, WMS, customs platforms",
-                  "Operates legacy systems other AI tools cannot access",
-                  "No custom development or vendor coordination needed",
-                  "Set up in under an hour",
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <svg className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-foreground/60">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
           
           {/* Right side - logo grid like Lance.ai */}
@@ -1185,7 +990,7 @@ function IntegrationsSection() {
             <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
             
-            {/* Logo grid - 2 rows */}
+            {/* Logo grid - 3 rows */}
             <div className="grid grid-cols-4 gap-3 p-4">
               {/* Row 1 */}
               <LogoCard>
@@ -1202,6 +1007,20 @@ function IntegrationsSection() {
               </LogoCard>
               
               {/* Row 2 */}
+              <LogoCard>
+                <FlexportLogo />
+              </LogoCard>
+              <LogoCard>
+                <Project44Logo />
+              </LogoCard>
+              <LogoCard>
+                <TransplaceLogo />
+              </LogoCard>
+              <LogoCard>
+                <E2openLogo />
+              </LogoCard>
+              
+              {/* Row 3 */}
               <LogoCard>
                 <GmailLogo />
               </LogoCard>
@@ -1268,6 +1087,38 @@ function OracleLogo() {
   )
 }
 
+function FlexportLogo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      Flexport
+    </span>
+  )
+}
+
+function Project44Logo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      project44
+    </span>
+  )
+}
+
+function TransplaceLogo() {
+  return (
+    <span className="text-xs font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      Transplace
+    </span>
+  )
+}
+
+function E2openLogo() {
+  return (
+    <span className="text-sm font-semibold text-foreground/50 hover:text-foreground/80 transition-opacity tracking-tight">
+      E2open
+    </span>
+  )
+}
+
 function GmailLogo() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6 opacity-60 hover:opacity-100 transition-opacity">
@@ -1308,14 +1159,14 @@ function SlackLogo() {
 // ============================================================================
 function CTASection() {
   return (
-    <section id="cta" className="relative py-24">
+    <section id="cta" className="relative py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="xl:pl-40 max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4 tracking-tight">
-            Ready to automate your freight operations?
+            Ready to cut document processing time by 80%?
           </h2>
-          <p className="text-foreground/40 mb-8">
-            See Drayo in action with a personalized demo.
+          <p className="text-foreground/40 mb-6">
+            Book a 20-minute demo. See Drayo process a live shipment document.
           </p>
           <CalendlyButton 
             className="inline-flex items-center gap-3 px-8 py-4 text-sm font-medium text-background bg-primary rounded-full hover:bg-primary/90 transition-colors"
@@ -1347,7 +1198,7 @@ function Footer() {
   <span className="text-foreground font-semibold text-lg">DRAYO</span>
   </div>
   <p className="text-foreground/40 text-sm max-w-xs">
-  The future of freight is operated by Drayo.
+  AI operations for freight forwarders worldwide.
   </p>
   </div>
   
@@ -1358,33 +1209,30 @@ function Footer() {
                 <span className="text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Contact Us</span>
               </div>
               <ul className="space-y-3">
-                {[
-                  { name: "LinkedIn", icon: (
+                <li>
+                  <a 
+                    href="https://linkedin.com/company/drayo-ai" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+                  >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
-                  )},
-                  { name: "X", icon: (
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  )},
-                  { name: "Email", icon: (
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="mailto:info@drayo.ai" 
+                    className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+                  >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                  )},
-                ].map((item, i) => (
-                  <li key={i}>
-                    <a 
-                      href={item.name === "Email" ? "mailto:info@drayo.ai" : "#"} 
-                      className="flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
-                    >
-                      {item.icon}
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
+                    Email
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
