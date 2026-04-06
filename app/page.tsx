@@ -372,6 +372,7 @@ function CalendlyButton({ children, className }: { children: React.ReactNode, cl
 // ============================================================================
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -379,32 +380,99 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/60 backdrop-blur-2xl border-b border-white/[0.04] py-4" : "py-6"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        <a href="/" className="flex items-center">
-          <DrayoLogo className="h-10 w-auto" />
-        </a>
-        
-        <div className="flex items-center gap-3">
-          <a 
-            href="/login" 
-            className="px-5 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors hidden sm:block"
-          >
-            Login
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "bg-background/60 backdrop-blur-2xl border-b border-white/[0.04] py-4" : "py-6"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+          <a href="/" className="flex items-center">
+            <DrayoLogo className="h-10 w-auto" />
           </a>
-          <CalendlyButton 
-            className="group relative px-6 py-2.5 text-sm font-medium overflow-hidden rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+          
+          {/* Desktop nav */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a 
+              href="/login" 
+              className="px-5 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
+              Login
+            </a>
+            <CalendlyButton 
+              className="group relative px-6 py-2.5 text-sm font-medium overflow-hidden rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+            >
+              <span className="relative z-10 text-primary">Request Demo</span>
+            </CalendlyButton>
+          </div>
+
+          {/* Mobile hamburger button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="sm:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
+            aria-label="Open menu"
           >
-            <span className="relative z-10 text-primary">Request Demo</span>
-          </CalendlyButton>
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile menu overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] sm:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Menu panel */}
+          <div className="absolute top-0 right-0 w-full max-w-xs h-full bg-background border-l border-foreground/[0.06] p-6">
+            {/* Close button */}
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-6 right-6 p-2 text-foreground/70 hover:text-foreground transition-colors"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Menu content */}
+            <div className="mt-16 space-y-4">
+              <a 
+                href="/login" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full px-5 py-3 text-center text-sm font-medium text-foreground/70 hover:text-foreground transition-colors border border-foreground/10 rounded-full"
+              >
+                Login
+              </a>
+              <CalendlyButton 
+                className="block w-full px-6 py-3 text-sm font-medium text-center rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all"
+              >
+                <span className="text-primary">Request Demo</span>
+              </CalendlyButton>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
