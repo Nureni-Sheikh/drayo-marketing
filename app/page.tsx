@@ -154,14 +154,14 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
       
       {/* DRAYO text - appears after logo */}
       <div 
-        className={`mt-6 transition-all duration-500 ${
+        className={`mt-8 transition-all duration-500 ${
           phase === 'enter' ? 'opacity-0 translate-y-2' : 
           phase === 'hold' ? 'opacity-100 translate-y-0' : 
           'opacity-0 translate-y-2'
         }`}
         style={{ transitionDelay: phase === 'hold' ? '0.8s' : '0s' }}
       >
-        <span className="text-lg font-semibold tracking-[0.25em] text-foreground/80">DRAYO</span>
+        <span className="text-2xl font-bold tracking-[0.35em] text-primary drop-shadow-[0_0_15px_rgba(196,181,253,0.5)]">DRAYO</span>
       </div>
     </div>
   )
@@ -380,17 +380,7 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [mobileMenuOpen])
+  
 
   return (
     <>
@@ -438,8 +428,12 @@ function Navbar() {
         </div>
         
         {/* Mobile menu dropdown - full width under header */}
-        {mobileMenuOpen && (
-          <div className="sm:hidden border-t border-foreground/[0.06] bg-background/95 backdrop-blur-xl">
+        <div 
+          className={`sm:hidden overflow-hidden transition-all duration-300 ease-out ${
+            mobileMenuOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="border-t border-foreground/[0.06] bg-background/95 backdrop-blur-xl">
             <div className="px-6 py-4 space-y-3">
               <a 
                 href="/login" 
@@ -455,7 +449,7 @@ function Navbar() {
               </CalendlyButton>
             </div>
           </div>
-        )}
+        </div>
       </header>
     </>
   )
