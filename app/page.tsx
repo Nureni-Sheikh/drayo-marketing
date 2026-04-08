@@ -6,30 +6,6 @@ import Script from "next/script"
 // ============================================================================
 // LOGO SPLASH ANIMATION - Shows for 2.5 seconds on page load
 // ============================================================================
-// Deterministic particle data to avoid hydration mismatch
-const PARTICLE_DATA = [
-  { duration: 1.72, delay: 0.28, distance: 180 },
-  { duration: 1.85, delay: 0.35, distance: 220 },
-  { duration: 1.63, delay: 0.42, distance: 195 },
-  { duration: 1.91, delay: 0.25, distance: 250 },
-  { duration: 1.78, delay: 0.38, distance: 175 },
-  { duration: 1.55, delay: 0.31, distance: 230 },
-  { duration: 1.88, delay: 0.44, distance: 200 },
-  { duration: 1.67, delay: 0.22, distance: 265 },
-  { duration: 1.74, delay: 0.36, distance: 185 },
-  { duration: 1.82, delay: 0.29, distance: 240 },
-  { duration: 1.59, delay: 0.41, distance: 210 },
-  { duration: 1.95, delay: 0.33, distance: 170 },
-  { duration: 1.71, delay: 0.27, distance: 255 },
-  { duration: 1.64, delay: 0.45, distance: 190 },
-  { duration: 1.86, delay: 0.24, distance: 225 },
-  { duration: 1.79, delay: 0.39, distance: 205 },
-  { duration: 1.58, delay: 0.32, distance: 260 },
-  { duration: 1.93, delay: 0.26, distance: 180 },
-  { duration: 1.68, delay: 0.43, distance: 235 },
-  { duration: 1.76, delay: 0.30, distance: 215 },
-]
-
 function LogoSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter')
   
@@ -50,192 +26,36 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div 
-      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center transition-opacity duration-500 ${
         phase === 'exit' ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Background glow effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div 
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full transition-all duration-1000 ${
-            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
-          }`}
-          style={{
-            background: 'radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.05) 40%, transparent 70%)',
-            filter: 'blur(40px)',
-          }}
-        />
-        <div 
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full transition-all duration-1000 delay-200 ${
-            phase === 'enter' ? 'opacity-0 scale-50' : phase === 'hold' ? 'opacity-100 scale-100' : 'opacity-0 scale-150'
-          }`}
-          style={{
-            background: 'radial-gradient(circle, rgba(94, 234, 212, 0.2) 0%, transparent 60%)',
-            filter: 'blur(30px)',
-          }}
-        />
-      </div>
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute w-1 h-1 rounded-full bg-primary transition-opacity duration-500 ${
-              phase === 'hold' ? 'opacity-60' : 'opacity-0'
-            }`}
-            style={{
-              left: `${20 + Math.random() * 60}%`,
-              top: `${20 + Math.random() * 60}%`,
-              animation: phase === 'hold' ? `splash-float-${(i % 3) + 1} ${3 + Math.random() * 2}s ease-in-out infinite` : 'none',
-              animationDelay: `${i * 0.1}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Logo container with staggered animations */}
-      <div className="relative flex justify-center">
-        <svg viewBox="0 0 180 50" className="h-28 sm:h-36 md:h-44 w-auto" fill="none">
-          {/* Glow filter */}
-          <defs>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          
-          {/* Small left circle - pops in first */}
-          <circle 
-            cx="8" cy="25" r="6" 
-            fill="currentColor" 
-            className="text-primary"
-            filter="url(#glow)"
-            style={{
-              opacity: phase === 'enter' ? 0 : 1,
-              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '8px 25px',
-              transition: 'opacity 0.4s ease-out 0.1s, transform 0.4s ease-out 0.1s',
-            }}
-          />
-          
-          {/* Connection line to center - draws in */}
-          <line 
-            x1="14" y1="25" x2="28" y2="25" 
-            stroke="currentColor" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
-            className="text-primary"
-            style={{
-              strokeDasharray: 14,
-              strokeDashoffset: phase === 'enter' ? 14 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.3s',
-            }}
-          />
-          
-          {/* Main center circle (hollow) - draws in */}
-          <circle 
-            cx="42" cy="25" r="13" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="3.5" 
-            className="text-primary"
-            filter="url(#glow)"
-            style={{
-              strokeDasharray: 82,
-              strokeDashoffset: phase === 'enter' ? 82 : 0,
-              transition: 'stroke-dashoffset 0.6s ease-out 0.4s',
-            }}
-          />
-          
-          {/* Upper right connection */}
-          <line 
-            x1="51" y1="15" x2="60" y2="8" 
-            stroke="currentColor" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
-            className="text-primary"
-            style={{
-              strokeDasharray: 14,
-              strokeDashoffset: phase === 'enter' ? 14 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.7s',
-            }}
-          />
-          
-          {/* Upper right circle */}
-          <circle 
-            cx="64" cy="5" r="5" 
-            fill="currentColor" 
-            className="text-primary"
-            filter="url(#glow)"
-            style={{
-              opacity: phase === 'enter' ? 0 : 1,
-              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '64px 5px',
-              transition: 'opacity 0.3s ease-out 0.85s, transform 0.3s ease-out 0.85s',
-            }}
-          />
-          
-          {/* Lower right connection */}
-          <line 
-            x1="51" y1="35" x2="60" y2="42" 
-            stroke="currentColor" 
-            strokeWidth="3.5" 
-            strokeLinecap="round" 
-            className="text-primary"
-            style={{
-              strokeDasharray: 14,
-              strokeDashoffset: phase === 'enter' ? 14 : 0,
-              transition: 'stroke-dashoffset 0.3s ease-out 0.75s',
-            }}
-          />
-          
-          {/* Lower right circle */}
-          <circle 
-            cx="64" cy="45" r="5" 
-            fill="currentColor" 
-            className="text-primary"
-            filter="url(#glow)"
-            style={{
-              opacity: phase === 'enter' ? 0 : 1,
-              transform: phase === 'enter' ? 'scale(0)' : 'scale(1)',
-              transformOrigin: '64px 45px',
-              transition: 'opacity 0.3s ease-out 0.9s, transform 0.3s ease-out 0.9s',
-            }}
-          />
-          
-          {/* DRAYO text - fades in last */}
-          <text 
-            x="80" y="33" 
-            fill="currentColor" 
-            className="text-foreground" 
-            style={{ 
-              fontSize: '22px', 
-              fontWeight: 700, 
-              fontFamily: 'var(--font-sans)', 
-              letterSpacing: '0.02em',
-              opacity: phase === 'enter' ? 0 : 1,
-              transition: 'opacity 0.5s ease-out 1s',
-            }}
-          >
+      {/* Logo - clean and simple */}
+      <div 
+        className={`transition-all duration-700 ease-out ${
+          phase === 'enter' ? 'opacity-0 scale-95' : 
+          phase === 'hold' ? 'opacity-100 scale-100' : 
+          'opacity-0 scale-105'
+        }`}
+      >
+        <svg viewBox="0 0 180 50" className="h-12 sm:h-14 w-auto" fill="none">
+          {/* Small left circle */}
+          <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
+          {/* Connection line to center */}
+          <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+          {/* Main center circle (hollow) */}
+          <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
+          {/* Upper right connection and circle */}
+          <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+          <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
+          {/* Lower right connection and circle */}
+          <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
+          <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
+          {/* DRAYO text */}
+          <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
             DRAYO
           </text>
         </svg>
-      </div>
-
-      {/* Tagline - appears after logo */}
-      <div 
-        className={`mt-6 transition-all duration-500 ${
-          phase === 'enter' ? 'opacity-0 translate-y-4' : 
-          phase === 'hold' ? 'opacity-100 translate-y-0' : 
-          'opacity-0 -translate-y-4'
-        }`}
-        style={{ transitionDelay: phase === 'hold' ? '1.2s' : '0s' }}
-      >
-        <span className="text-sm text-foreground/50 tracking-widest uppercase">Autonomous Freight Operations</span>
       </div>
     </div>
   )
