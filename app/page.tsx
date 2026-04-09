@@ -250,7 +250,7 @@ function CalendlyButton({ children, className }: { children: React.ReactNode, cl
     // @ts-ignore
     if (typeof window !== 'undefined' && window.Calendly) {
       // @ts-ignore
-      window.Calendly.initPopupWidget({ url: 'https://calendly.com/drayo-demo' })
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/nureni-drayo/30min' })
     }
   }
 
