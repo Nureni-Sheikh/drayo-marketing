@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Script from "next/script"
-import Image from "next/image"
+
 
 // ============================================================================
 // LOGO SPLASH ANIMATION - Shows for 2.5 seconds on page load
@@ -39,13 +39,7 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
           'opacity-0 scale-105'
         }`}
       >
-        <Image 
-          src="/drayo-logo.png" 
-          alt="Drayo" 
-          width={48} 
-          height={48} 
-          className="h-12 w-12 sm:h-14 sm:w-14 rounded-lg"
-        />
+        <DrayoLogoIcon size={56} />
         <span className="text-foreground font-bold text-2xl sm:text-3xl tracking-tight">DRAYO</span>
       </div>
     </div>
@@ -53,18 +47,29 @@ function LogoSplash({ onComplete }: { onComplete: () => void }) {
 }
 
 // ============================================================================
-// DRAYO LOGO - Logo image with text
+// DRAYO LOGO ICON - SVG version with white background for dark theme
+// ============================================================================
+function DrayoLogoIcon({ size = 40 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* White rounded rectangle background */}
+      <rect x="2" y="2" width="96" height="96" rx="16" fill="white"/>
+      {/* Geometric pattern - the stylized freight/logistics design */}
+      <path 
+        d="M20 70 L20 50 L30 50 L30 40 L40 40 L40 30 L50 30 L50 40 L60 40 L60 30 L70 30 L70 40 L80 40 L80 70 L70 70 L70 50 L60 50 L60 60 L50 60 L50 50 L40 50 L40 60 L30 60 L30 70 Z" 
+        fill="#0a0a0a"
+      />
+    </svg>
+  )
+}
+
+// ============================================================================
+// DRAYO LOGO - Logo icon with text
 // ============================================================================
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <Image 
-        src="/drayo-logo.png" 
-        alt="Drayo" 
-        width={40} 
-        height={40} 
-        className="h-10 w-10 rounded-lg"
-      />
+      <DrayoLogoIcon size={40} />
       <span className="text-foreground font-bold text-xl tracking-tight">DRAYO</span>
     </div>
   )
@@ -75,13 +80,9 @@ function DrayoLogo({ className = "" }: { className?: string }) {
 // ============================================================================
 function DrayoIcon({ className = "" }: { className?: string }) {
   return (
-    <Image 
-      src="/drayo-logo.png" 
-      alt="Drayo" 
-      width={32} 
-      height={32} 
-      className={`rounded-lg ${className}`}
-    />
+    <div className={className}>
+      <DrayoLogoIcon size={32} />
+    </div>
   )
 }
 

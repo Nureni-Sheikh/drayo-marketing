@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   description: 'Drayo processes shipping documents, fills your TMS, validates compliance, and sends confirmations. Autonomously. 60 seconds.',
   generator: 'Drayo AI',
   icons: {
-    icon: '/drayo-logo.png',
-    apple: '/drayo-logo.png',
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 }
 
