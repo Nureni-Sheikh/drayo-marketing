@@ -2,28 +2,21 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 // Drayo Logo - matches home page
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 180 50" className={className} fill="none">
-      {/* Small left circle */}
-      <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
-      {/* Connection line to center */}
-      <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      {/* Main center circle (hollow) */}
-      <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
-      {/* Upper right connection and circle */}
-      <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
-      {/* Lower right connection and circle */}
-      <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
-      {/* DRAYO text - bolder and larger */}
-      <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
-        DRAYO
-      </text>
-    </svg>
+    <div className={`flex items-center gap-2 ${className}`}>
+      <Image 
+        src="/drayo-logo.png" 
+        alt="Drayo" 
+        width={40} 
+        height={40} 
+        className="h-10 w-10 rounded-lg"
+      />
+      <span className="text-foreground font-bold text-xl tracking-tight">DRAYO</span>
+    </div>
   )
 }
 
@@ -125,7 +118,7 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <DrayoLogo className="h-10 w-auto mb-2" />
+          <DrayoLogo />
           <p className="text-sm text-foreground/40 mt-1">AI-Powered Freight Operations</p>
         </div>
         
