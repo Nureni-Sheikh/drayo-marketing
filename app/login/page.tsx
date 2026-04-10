@@ -3,27 +3,28 @@
 import { useState } from "react"
 import Link from "next/link"
 
+// Drayo Logo Icon - SVG with white background for dark theme
+function DrayoLogoIcon({ size = 40 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* White rounded rectangle background */}
+      <rect x="2" y="2" width="96" height="96" rx="16" fill="white"/>
+      {/* Geometric pattern */}
+      <path 
+        d="M20 70 L20 50 L30 50 L30 40 L40 40 L40 30 L50 30 L50 40 L60 40 L60 30 L70 30 L70 40 L80 40 L80 70 L70 70 L70 50 L60 50 L60 60 L50 60 L50 50 L40 50 L40 60 L30 60 L30 70 Z" 
+        fill="#0a0a0a"
+      />
+    </svg>
+  )
+}
+
 // Drayo Logo - matches home page
 function DrayoLogo({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 180 50" className={className} fill="none">
-      {/* Small left circle */}
-      <circle cx="8" cy="25" r="6" fill="currentColor" className="text-primary" />
-      {/* Connection line to center */}
-      <line x1="14" y1="25" x2="28" y2="25" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      {/* Main center circle (hollow) */}
-      <circle cx="42" cy="25" r="13" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-primary" />
-      {/* Upper right connection and circle */}
-      <line x1="51" y1="15" x2="60" y2="8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="64" cy="5" r="5" fill="currentColor" className="text-primary" />
-      {/* Lower right connection and circle */}
-      <line x1="51" y1="35" x2="60" y2="42" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="text-primary" />
-      <circle cx="64" cy="45" r="5" fill="currentColor" className="text-primary" />
-      {/* DRAYO text - bolder and larger */}
-      <text x="80" y="33" fill="currentColor" className="text-foreground" style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>
-        DRAYO
-      </text>
-    </svg>
+    <div className={`flex items-center gap-2 ${className}`}>
+      <DrayoLogoIcon size={40} />
+      <span className="text-foreground font-bold text-xl tracking-tight">DRAYO</span>
+    </div>
   )
 }
 
@@ -125,7 +126,7 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <DrayoLogo className="h-10 w-auto mb-2" />
+          <DrayoLogo />
           <p className="text-sm text-foreground/40 mt-1">AI-Powered Freight Operations</p>
         </div>
         
