@@ -83,7 +83,7 @@ function Navbar() {
               Product
             </a>
             <CalendlyButton 
-              className="px-5 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+              className="px-5 py-2 text-sm font-medium text-white bg-[#0A5F52] rounded-[6px] hover:bg-[#085346] transition-colors"
             >
               Request Demo
             </CalendlyButton>
@@ -118,7 +118,7 @@ function Navbar() {
                 Product
               </a>
               <CalendlyButton 
-                className="w-full px-5 py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+                className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#0A5F52] rounded-[6px] hover:bg-[#085346] transition-colors"
               >
                 Request Demo
               </CalendlyButton>
@@ -138,23 +138,23 @@ function HeroSection() {
     <section className="pt-32 pb-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+          <h1 className="text-5xl sm:text-6xl lg:text-[72px] font-extrabold tracking-[-0.02em] leading-[1.1] mb-6 text-[#0D0D0D]">
             Drayo operates your{" "}
-            <span className="text-primary">freight back office</span>
+            <span className="text-[#0A5F52]">freight back office</span>
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl">
+          <p className="text-lg text-[#4B5563] leading-relaxed mb-10 max-w-[520px] font-normal">
             Autonomous AI for logistics operations — document processing, compliance screening, 
             TMS integration and client communications. All automated.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <CalendlyButton 
-              className="px-8 py-3.5 text-base font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+              className="px-8 py-3.5 text-base font-medium text-white bg-[#0A5F52] rounded-[6px] hover:bg-[#085346] transition-colors"
             >
               Request Demo
             </CalendlyButton>
             <a 
               href="#how-it-works"
-              className="px-8 py-3.5 text-base font-medium text-foreground border border-border rounded-lg hover:bg-muted transition-colors text-center"
+              className="px-8 py-3.5 text-base font-medium text-[#0D0D0D] bg-white border border-[#0D0D0D] rounded-[6px] hover:bg-gray-50 transition-colors text-center"
             >
               See how it works
             </a>
@@ -162,29 +162,29 @@ function HeroSection() {
         </div>
 
         {/* Dashboard mockup */}
-        <div className="mt-16 bg-white rounded-xl border border-border shadow-lg overflow-hidden">
-          <div className="border-b border-border px-4 py-3 flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-400" />
-            <div className="w-3 h-3 rounded-full bg-yellow-400" />
-            <div className="w-3 h-3 rounded-full bg-green-400" />
-            <span className="ml-4 text-xs text-muted-foreground">Drayo Dashboard</span>
+        <div className="mt-16 bg-white rounded-[6px] border border-[#E5E7EB] shadow-sm overflow-hidden">
+          <div className="border-b border-[#E5E7EB] px-4 py-3 flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
+            <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
+            <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
+            <span className="ml-4 text-xs text-[#4B5563]">Drayo Dashboard</span>
           </div>
-          <div className="p-6 bg-secondary/30">
+          <div className="p-6 bg-[#F9FAFB]">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white rounded-lg border border-border p-4">
-                <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Documents Today</div>
-                <div className="text-3xl font-bold text-foreground">47</div>
-                <div className="text-sm text-primary mt-1">100% processed</div>
+              <div className="bg-white rounded-[6px] border border-[#E5E7EB] p-4">
+                <div className="text-xs text-[#4B5563] uppercase tracking-wide mb-2">Documents Today</div>
+                <div className="text-3xl font-bold text-[#0D0D0D]">47</div>
+                <div className="text-sm text-[#0A5F52] mt-1">100% processed</div>
               </div>
-              <div className="bg-white rounded-lg border border-border p-4">
-                <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Avg Processing Time</div>
-                <div className="text-3xl font-bold text-foreground">42s</div>
-                <div className="text-sm text-muted-foreground mt-1">Per document</div>
+              <div className="bg-white rounded-[6px] border border-[#E5E7EB] p-4">
+                <div className="text-xs text-[#4B5563] uppercase tracking-wide mb-2">Avg Processing Time</div>
+                <div className="text-3xl font-bold text-[#0D0D0D]">42s</div>
+                <div className="text-sm text-[#4B5563] mt-1">Per document</div>
               </div>
-              <div className="bg-white rounded-lg border border-border p-4">
-                <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Compliance Checks</div>
-                <div className="text-3xl font-bold text-foreground">156</div>
-                <div className="text-sm text-green-600 mt-1">All passed</div>
+              <div className="bg-white rounded-[6px] border border-[#E5E7EB] p-4">
+                <div className="text-xs text-[#4B5563] uppercase tracking-wide mb-2">Compliance Checks</div>
+                <div className="text-3xl font-bold text-[#0D0D0D]">156</div>
+                <div className="text-sm text-[#0A5F52] mt-1">All passed</div>
               </div>
             </div>
           </div>
@@ -254,22 +254,22 @@ function ProblemSection() {
   ]
 
   return (
-    <section className="py-24 px-6 lg:px-8 bg-secondary/30">
+    <section className="py-24 px-6 lg:px-8 bg-[#F9FAFB]">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0D0D0D] mb-4 text-center tracking-[-0.02em]">
           Freight forwarding still runs on manual labour
         </h2>
-        <p className="text-lg text-muted-foreground text-center mb-16 max-w-2xl mx-auto">
+        <p className="text-lg text-[#4B5563] text-center mb-16 max-w-2xl mx-auto">
           Every document, every field, every check — done by hand. Until now.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {problems.map((problem, i) => (
-            <div key={i} className="bg-white rounded-xl border border-border p-6 shadow-sm">
-              <div className="text-muted-foreground mb-4">{problem.icon}</div>
-              <div className="text-3xl font-bold text-foreground mb-1">{problem.stat}</div>
-              <div className="text-lg font-medium text-foreground mb-2">{problem.title}</div>
-              <p className="text-sm text-muted-foreground">{problem.description}</p>
+            <div key={i} className="bg-white rounded-[6px] border border-[#E5E7EB] p-6">
+              <div className="text-[#4B5563] mb-4">{problem.icon}</div>
+              <div className="text-3xl font-bold text-[#0D0D0D] mb-1">{problem.stat}</div>
+              <div className="text-lg font-medium text-[#0D0D0D] mb-2">{problem.title}</div>
+              <p className="text-sm text-[#4B5563]">{problem.description}</p>
             </div>
           ))}
         </div>
@@ -295,17 +295,17 @@ function HowItWorksSection() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0D0D0D] mb-12 tracking-[-0.02em]">
               How it works
             </h2>
             
             <div className="space-y-8">
               {steps.map((step, i) => (
                 <div key={i} className="flex gap-6">
-                  <div className="text-3xl font-bold text-primary">{step.num}</div>
+                  <div className="text-3xl font-bold text-[#0A5F52]">{step.num}</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">{step.title}</h3>
-                    <p className="text-muted-foreground">{step.desc}</p>
+                    <h3 className="text-lg font-semibold text-[#0D0D0D] mb-1">{step.title}</h3>
+                    <p className="text-[#4B5563]">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -313,18 +313,18 @@ function HowItWorksSection() {
           </div>
 
           {/* Dashboard screenshot mockup */}
-          <div className="bg-white rounded-xl border border-border shadow-lg overflow-hidden sticky top-24">
-            <div className="border-b border-border px-4 py-3 flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-400" />
-              <div className="w-3 h-3 rounded-full bg-yellow-400" />
-              <div className="w-3 h-3 rounded-full bg-green-400" />
+          <div className="bg-white rounded-[6px] border border-[#E5E7EB] shadow-sm overflow-hidden sticky top-24">
+            <div className="border-b border-[#E5E7EB] px-4 py-3 flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
+              <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
+              <div className="w-3 h-3 rounded-full bg-[#D1D5DB]" />
             </div>
-            <div className="p-6 bg-secondary/20">
+            <div className="p-6 bg-[#F9FAFB]">
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-border">
+                <div className="flex items-center justify-between p-3 bg-white rounded-[6px] border border-[#E5E7EB]">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="w-10 h-10 bg-[#0A5F52]/10 rounded-[6px] flex items-center justify-center">
+                      <svg className="w-5 h-5 text-[#0A5F52]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
@@ -333,13 +333,13 @@ function HowItWorksSection() {
                       <div className="text-xs text-muted-foreground">20 fields extracted</div>
                     </div>
                   </div>
-                  <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">Processed</span>
+                  <span className="text-xs text-[#0A5F52] bg-[#0A5F52]/10 px-2 py-1 rounded-[4px]">Processed</span>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-border">
+                <div className="flex items-center justify-between p-3 bg-white rounded-[6px] border border-[#E5E7EB]">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="w-10 h-10 bg-[#0A5F52]/10 rounded-[6px] flex items-center justify-center">
+                      <svg className="w-5 h-5 text-[#0A5F52]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
@@ -348,13 +348,13 @@ function HowItWorksSection() {
                       <div className="text-xs text-muted-foreground">15 fields extracted</div>
                     </div>
                   </div>
-                  <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">Processed</span>
+                  <span className="text-xs text-[#0A5F52] bg-[#0A5F52]/10 px-2 py-1 rounded-[4px]">Processed</span>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-primary/30">
+                <div className="flex items-center justify-between p-3 bg-white rounded-[6px] border border-[#0A5F52]/30">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center animate-pulse">
-                      <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="w-10 h-10 bg-[#0A5F52]/10 rounded-[6px] flex items-center justify-center animate-pulse">
+                      <svg className="w-5 h-5 text-[#0A5F52]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                     </div>
@@ -363,7 +363,7 @@ function HowItWorksSection() {
                       <div className="text-xs text-muted-foreground">Processing...</div>
                     </div>
                   </div>
-                  <span className="text-xs text-primary bg-primary/10 px-2 py-1 rounded">In Progress</span>
+                  <span className="text-xs text-[#0A5F52] bg-[#0A5F52]/10 px-2 py-1 rounded-[4px]">In Progress</span>
                 </div>
               </div>
             </div>
@@ -398,21 +398,21 @@ function ModulesSection() {
   ]
 
   return (
-    <section id="product" className="py-24 px-6 lg:px-8 bg-secondary/30">
+    <section id="product" className="py-24 px-6 lg:px-8 bg-[#F9FAFB]">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0D0D0D] mb-4 text-center tracking-[-0.02em]">
           Four modules. One AI workforce.
         </h2>
-        <p className="text-lg text-muted-foreground text-center mb-16 max-w-2xl mx-auto">
+        <p className="text-lg text-[#4B5563] text-center mb-16 max-w-2xl mx-auto">
           Each module works autonomously, but together they transform your operations.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {modules.map((module, i) => (
-            <div key={i} className="bg-white rounded-xl border border-border p-6 shadow-sm">
-              <div className="h-1 w-12 bg-primary rounded-full mb-6" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">{module.title}</h3>
-              <p className="text-muted-foreground">{module.description}</p>
+            <div key={i} className="bg-white rounded-[6px] border border-[#E5E7EB] p-6">
+              <div className="h-1 w-12 bg-[#0A5F52] mb-6" />
+              <h3 className="text-xl font-semibold text-[#0D0D0D] mb-2">{module.title}</h3>
+              <p className="text-[#4B5563]">{module.description}</p>
             </div>
           ))}
         </div>
@@ -426,13 +426,13 @@ function ModulesSection() {
 // ============================================================================
 function TestimonialSection() {
   return (
-    <section className="py-24 px-6 lg:px-8 bg-muted">
+    <section className="py-24 px-6 lg:px-8 bg-[#F9FAFB]">
       <div className="max-w-4xl mx-auto text-center">
-        <p className="text-2xl sm:text-3xl font-medium text-foreground leading-relaxed mb-8">
+        <p className="text-2xl sm:text-3xl font-medium text-[#0D0D0D] leading-relaxed mb-8">
           {`"Drayo has transformed how we handle documentation. What used to take our team hours now happens in minutes, with better accuracy than we ever achieved manually."`}
         </p>
-        <div className="text-muted-foreground">
-          <span className="font-medium text-foreground">Operations Director</span>
+        <div className="text-[#4B5563]">
+          <span className="font-medium text-[#0D0D0D]">Operations Director</span>
           <span className="mx-2">·</span>
           <span>UK Freight Forwarder</span>
         </div>
@@ -446,16 +446,16 @@ function TestimonialSection() {
 // ============================================================================
 function CTASection() {
   return (
-    <section className="py-24 px-6 lg:px-8 bg-primary">
+    <section className="py-24 px-6 lg:px-8 bg-[#0A5F52]">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
           Ready to automate your freight operations?
         </h2>
         <p className="text-lg text-white/80 mb-10">
           {`Request a demo and we'll show you Drayo working on your own documents.`}
         </p>
         <CalendlyButton 
-          className="px-8 py-4 text-base font-medium text-primary bg-white rounded-lg hover:bg-white/90 transition-colors"
+          className="px-8 py-4 text-base font-medium text-[#0A5F52] bg-white rounded-[6px] hover:bg-gray-100 transition-colors"
         >
           Request Demo
         </CalendlyButton>

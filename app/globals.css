@@ -1,27 +1,27 @@
 @import 'tailwindcss';
 
 :root {
-  /* Clean enterprise light theme - Harvey AI / Raft AI inspired */
+  /* Enterprise light theme - Linear / Harvey AI inspired */
   --background: #FFFFFF;
   --foreground: #0D0D0D;
   --card: #FFFFFF;
   --card-foreground: #0D0D0D;
   --popover: #FFFFFF;
   --popover-foreground: #0D0D0D;
-  --primary: #0A7B6C;
+  --primary: #0A5F52;
   --primary-foreground: #FFFFFF;
-  --secondary: #F8F7F5;
+  --secondary: #F9FAFB;
   --secondary-foreground: #0D0D0D;
   --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
-  --accent: #0A7B6C;
+  --muted-foreground: #4B5563;
+  --accent: #0A5F52;
   --accent-foreground: #FFFFFF;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #E5E7EB;
   --input: #E5E7EB;
-  --ring: #0A7B6C;
-  --radius: 8px;
+  --ring: #0A5F52;
+  --radius: 6px;
 }
 
 @theme inline {
