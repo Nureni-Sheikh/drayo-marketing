@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const spaceGrotesk = Space_Grotesk({ 
+const inter = Inter({ 
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space"
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter"
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Drayo — AI Operations for UK Freight Forwarders',
+  title: 'Drayo — Autonomous AI for Freight Operations',
   description: 'Drayo processes shipping documents, fills your TMS, validates compliance, and sends confirmations. Autonomously. 60 seconds.',
   generator: 'Drayo AI',
   icons: {
@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+    <html lang="en" className="bg-white">
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
