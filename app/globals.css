@@ -1,34 +1,37 @@
 @import 'tailwindcss';
 
 :root {
-  /* Enterprise light theme - Linear / Harvey AI inspired */
+  /* Exact color system - Linear/Harvey AI inspired */
   --background: #FFFFFF;
-  --foreground: #0D0D0D;
+  --foreground: #0D1117;
+  --surface: #F7F8FA;
   --card: #FFFFFF;
-  --card-foreground: #0D0D0D;
+  --card-foreground: #0D1117;
   --popover: #FFFFFF;
-  --popover-foreground: #0D0D0D;
-  --primary: #0A5F52;
+  --popover-foreground: #0D1117;
+  --primary: #006B5E;
   --primary-foreground: #FFFFFF;
-  --secondary: #F9FAFB;
-  --secondary-foreground: #0D0D0D;
-  --muted: #F3F4F6;
-  --muted-foreground: #4B5563;
-  --accent: #0A5F52;
+  --secondary: #F7F8FA;
+  --secondary-foreground: #0D1117;
+  --muted: #F7F8FA;
+  --muted-foreground: #5C6370;
+  --accent: #006B5E;
   --accent-foreground: #FFFFFF;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #E5E7EB;
-  --input: #E5E7EB;
-  --ring: #0A5F52;
-  --radius: 6px;
+  --warning: #B45309;
+  --border: #E2E5EA;
+  --input: #E2E5EA;
+  --ring: #006B5E;
+  --radius: 5px;
 }
 
 @theme inline {
   --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
-  --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -43,13 +46,13 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 4px);
-  --radius-xl: calc(var(--radius) + 8px);
+  --radius-lg: calc(var(--radius) + 3px);
 }
 
 @layer base {
@@ -58,18 +61,19 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    font-feature-settings: "ss01", "ss02", "cv01";
   }
   html {
     scroll-behavior: smooth;
   }
 }
 
-/* Custom scrollbar - subtle for light theme */
+/* Minimal scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F3F4F6;
+  background: #F7F8FA;
 }
 ::-webkit-scrollbar-thumb {
   background: #D1D5DB;
